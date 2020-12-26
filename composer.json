@@ -1,0 +1,90 @@
+{
+    "name": "yii-extension/user",
+    "type": "library",
+    "description": "Flexible user registration and authentication module for Yii3",
+    "keywords": [
+        "yii3",
+        "application",
+        "active-record",
+        "user-registration",
+        "user-authentication"
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "require": {
+        "php": "^7.4|^8.0",
+        "lasserafn/php-initial-avatar-generator": "^4.1",
+        "nyholm/psr7": "^1.3.0",
+        "yii-extension/user-settings": "^1.0.0",
+        "yii-extension/user-view-implementation": "^1.0.0",
+        "yii-extension/view-service": "@dev",
+        "yii-extension/fontawesome": "^1.0@dev",
+        "yii-extension/mailer-service": "^1.0@dev",
+        "yiisoft/active-record": "^3.0@dev",
+        "yiisoft/aliases": "^1.0",
+        "yiisoft/assets": "^1.0@dev",
+        "yiisoft/auth": "^1.0",
+        "yiisoft/cache": "^3.0@dev",
+        "yiisoft/cache-file": "^3.0@dev",
+        "yiisoft/data-response": "^3.0@dev",
+        "yiisoft/db-sqlite": "^3.0@dev",
+        "yiisoft/files": "^3.0@dev",
+        "yiisoft/form": "^1.0@dev",
+        "yiisoft/log": "^3.0@dev",
+        "yiisoft/log-target-file": "^3.0@dev",
+        "yiisoft/middleware-dispatcher": "^1.0@dev",
+        "yiisoft/router": "^3.0@dev",
+        "yiisoft/router-fastroute": "^3.0@dev",
+        "yiisoft/session": "^3.0@dev",
+        "yiisoft/user": "^3.0@dev",
+        "yiisoft/view": "^3.0@dev",
+        "yiisoft/yii-db-migration": "^1.0@dev"
+    },
+    "require-dev": {
+        "codeception/codeception": "^4.1.5",
+        "codeception/c3": "^2.6.0",
+        "codeception/module-asserts": "@dev",
+        "codeception/module-db": "^1.0",
+        "codeception/module-phpbrowser": "@dev",
+        "phpunit/phpunit": "^9.5",
+        "vimeo/psalm": "^4.3",
+        "yii-extension/user-view-bulma": "@dev",
+        "yiisoft/composer-config-plugin": "^1.0@dev",
+        "yiisoft/error-handler": "^3.0@dev",
+        "yiisoft/yii-web": "^3.0@dev"
+    },
+    "autoload": {
+        "psr-4": {
+            "Yii\\Extension\\User\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Yii\\Extension\\User\\Tests\\": "tests"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        },
+        "config-plugin-output-dir": "runtime/build/config",
+        "config-plugin": {
+            "common": [
+                "config/common/*.php"
+            ],
+            "params": "config/params.php",
+            "params-test": "config/tests/*",
+            "events": "config/events.php",
+            "routes": "config/routes.php"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://asset-packagist.org"
+        }
+    ]
+}
