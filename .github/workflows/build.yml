@@ -50,6 +50,7 @@ jobs:
       - name: Apply migration user module
         continue-on-error: true
         run: |
+          chmod +0777 ./demo-bulma/yii
           Alternatives='tests' ./demo-bulma/yii migrate/up --no-interaction
         shell: bash
 
