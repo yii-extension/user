@@ -48,9 +48,9 @@ jobs:
           composer require yii-extension/user yii-extension/user-view-bulma --ansi
 
       - name: Apply migration user module
+        continue-on-error: true
         run: |
-          cd demo-bulma
-          Alternatives='tests' sudo ./yii migrate/up
+          Alternatives='tests' ./demo-bulma/yii migrate/up --no-interaction
         shell: bash
 
       - name: Run tests with codeception
