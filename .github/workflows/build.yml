@@ -56,17 +56,19 @@ jobs:
         if: matrix.php == '8.0'
         run: composer create-project --prefer-dist --no-interaction --no-progress --ignore-platform-reqs --stability=dev yii-extension/app-bulma demo-bulma --ansi
 
-      - name: Access the application directory
-        run: cd demo-bulma
-
       - name: Install modules user, user-view-bulma
-        run: composer require yii-extension/user yii-extension/user-view-bulma
+        run: |
+          cd demo-bulma
+          composer require yii-extension/user yii-extension/user-view-bulma
 
       - name: Apply migration user module
-        run: Alternatives='tests' ./yii migrate/up
+        run:
+          cd demo-bulma
+          Alternatives='tests' ./yii migrate/up
         shell: bash
 
       - name: Run tests with codeception
         run: |
+          cd demo-bulma
           php -S 127.0.0.1:8080 -t public public/index-test.php > ./runtime/yii.log 2>&1 &
           vendor/bin/codecept run -c vendor/yii-extension/user
