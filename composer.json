@@ -35,7 +35,7 @@
         "yiisoft/middleware-dispatcher": "^1.0@dev",
         "yiisoft/router": "^3.0@dev",
         "yiisoft/router-fastroute": "^3.0@dev",
-        "yiisoft/session": "^3.0@dev",
+        "yiisoft/session": "^1.0.0",
         "yiisoft/user": "^3.0@dev",
         "yiisoft/view": "^3.0@dev",
         "yiisoft/yii-db-migration": "^1.0@dev"
