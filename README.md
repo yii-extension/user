@@ -7,7 +7,7 @@
 </p>
 
 [![Total Downloads](https://img.shields.io/packagist/dt/yii-extension/user)](https://packagist.org/packages/yii-extension/user)
-[![build](https://github.com/yii-extension/user/workflows/build/badge.svg)](https://github.com/yii-extension/user/actions)
+[![app-bulma](https://github.com/yii-extension/user/workflows/app-bulma/badge.svg)](https://github.com/yii-extension/user/actions)
 [![codecov](https://codecov.io/gh/yii-extension/user/branch/master/graph/badge.svg)](https://codecov.io/gh/yii-extension/user)
 [![static analysis](https://github.com/yii-extension/user/workflows/static%20analysis/badge.svg)](https://github.com/yii-extension/user/actions?query=workflow%3A%22static+analysis%22)
 [![type-coverage](https://shepherd.dev/github/yii-extension/user/coverage.svg)](https://shepherd.dev/github/yii-extension/user)

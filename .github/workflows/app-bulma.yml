@@ -1,0 +1,60 @@
+on:
+  - pull_request
+  - push
+
+name: app-bulma
+
+jobs:
+  tests:
+    name: PHP ${{ matrix.php }}-${{ matrix.os }}
+
+    env:
+      extensions: fileinfo, gd, pdo, pdo_sqlite
+      key: cache-v1
+
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os:
+          - ubuntu-latest
+          - windows-latest
+
+        php:
+          - "7.4"
+          - "8.0"
+
+    steps:
+      - name: Install PHP with extensions
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: ${{ env.extensions }}
+          ini-values: date.timezone='UTC'
+          coverage: pcov
+          tools: composer:v2
+
+      - name: Install template yii-extension/app-bulma with composer create project php 7.4
+        if: matrix.php == '7.4'
+        run: composer create-project --prefer-dist --no-interaction --no-progress --stability=dev yii-extension/app-bulma demo-bulma --ansi
+
+      - name: Install template yii-extension/app-bulma with composer create project php 8.0
+        if: matrix.php == '8.0'
+        run: composer create-project --prefer-dist --no-interaction --no-progress --ignore-platform-reqs --stability=dev yii-extension/app-bulma demo-bulma --ansi
+
+      - name: Install modules user, user-view-bulma
+        run: |
+          cd demo-bulma
+          composer require yii-extension/user yii-extension/user-view-bulma --ansi
+
+      - name: Apply migration user module
+        run: |
+          chmod +0777 ./demo-bulma/yii
+          Alternatives='tests' ./demo-bulma/yii migrate/up --no-interaction
+        shell: bash
+
+      - name: Run tests with codeception
+        run: |
+          cd demo-bulma
+          php -S 127.0.0.1:8080 -t public public/index-test.php > ./runtime/yii.log 2>&1 &
+          vendor/bin/codecept run -c vendor/yii-extension/user
