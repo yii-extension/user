@@ -14,7 +14,7 @@ modules:
             password: ''
             cleanup: true
         - PhpBrowser:
-            url: http://localhost:8080
+            url: http://127.0.0.1:8080
         # add a framework module here
         - \Yii\Extension\User\Tests\Helper\Functional
     step_decorators: ~

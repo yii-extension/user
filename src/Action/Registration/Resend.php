@@ -17,7 +17,6 @@ use Yii\Extension\User\Form\FormResend;
 use Yii\Extension\User\Settings\RepositorySetting;
 use Yii\Extension\User\Repository\RepositoryToken;
 use Yii\Extension\User\Repository\RepositoryUser;
-use Yiisoft\ActiveRecord\ActiveRecord;
 use Yiisoft\Aliases\Aliases;
 use Yiisoft\Router\UrlGeneratorInterface;
 
@@ -91,7 +90,7 @@ final class Resend
         Aliases $aliases,
         RepositorySetting $repositorySetting,
         ServiceMailer $serviceMailer,
-        ActiveRecord $token,
+        Token $token,
         UrlGeneratorInterface $urlGenerator,
         User $user
     ): void {

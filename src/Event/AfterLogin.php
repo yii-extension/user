@@ -10,6 +10,9 @@ use Yiisoft\User\User;
 
 final class AfterLogin
 {
+    /**
+     * @psalm-suppress UndefinedInterfaceMethod
+     */
     public function addFlash(
         RepositorySetting $repositorySetting,
         ServiceFlashMessage $serviceFlashMessage,

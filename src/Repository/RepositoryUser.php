@@ -63,7 +63,7 @@ final class RepositoryUser implements IdentityRepositoryInterface
         $this->userQuery();
     }
 
-    public function block(UserAR $user): bool
+    public function block(User $user): bool
     {
         return (bool) $user->updateAttributes([
             'blocked_at' => time(),
@@ -71,7 +71,7 @@ final class RepositoryUser implements IdentityRepositoryInterface
         ]);
     }
 
-    public function confirm(UserAR $user): bool
+    public function confirm(User $user): bool
     {
         return (bool) $user->updateAttributes(['confirmed_at' => time()]);
     }
@@ -214,7 +214,7 @@ final class RepositoryUser implements IdentityRepositoryInterface
         return $urlToken;
     }
 
-    public function loadData(UserAR $user, RegisterForm $formRegister): void
+    public function loadData(User $user, FormRegister $formRegister): void
     {
         $formRegister->setAttribute('email', $user->getEmail());
         $formRegister->setAttribute('username', $user->getUsername());
@@ -285,14 +285,14 @@ final class RepositoryUser implements IdentityRepositoryInterface
         return $result;
     }
 
-    public function resetPassword(UserAR $user): bool
+    public function resetPassword(User $user): bool
     {
         $user->password($this->generate(8));
 
         return $user->save();
     }
 
-    public function update(UserAr $user, RegisterForm $formRegister): bool
+    public function update(User $user, FormRegister $formRegister): bool
     {
         $password = empty($formRegister->getAttributeValue('password'))
             ? $this->generate(8)
@@ -313,7 +313,7 @@ final class RepositoryUser implements IdentityRepositoryInterface
         return (bool) $user->update();
     }
 
-    public function unblock(UserAr $user): bool
+    public function unblock(User $user): bool
     {
         return (bool) $user->updateAttributes(['blocked_at' => null]);
     }

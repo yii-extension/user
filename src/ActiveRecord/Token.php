@@ -39,23 +39,23 @@ final class Token extends ActiveRecord
 
     public function getCode(): string
     {
-        return $this->code;
+        return $this->getAttribute('code');
     }
 
 
     public function getId(): string
     {
-        return $this->id;
+        return $this->getAttribute('id');
     }
 
     public function getType(): int
     {
-        return $this->type;
+        return $this->getAttribute('type');
     }
 
     public function toUrl(): string
     {
-        switch ($this->type) {
+        switch ($this->getAttribute('type')) {
             case self::TYPE_CONFIRMATION:
                 $route = 'confirm';
                 break;
@@ -75,7 +75,7 @@ final class Token extends ActiveRecord
 
     public function isExpired(int $tokenConfirmWithin = 0, int $tokenRecoverWithin = 0): bool
     {
-        switch ($this->type) {
+        switch ($this->getAttribute('type')) {
             case self::TYPE_CONFIRMATION:
             case self::TYPE_CONFIRM_NEW_EMAIL:
             case self::TYPE_CONFIRM_OLD_EMAIL:

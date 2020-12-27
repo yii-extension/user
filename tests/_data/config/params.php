@@ -47,6 +47,7 @@ return [
             '@avatars' => dirname(__DIR__) . '/public/images/avatar',
             '@layout' => '@storage/views/layout',
             '@npm' => dirname(__DIR__, 3) . '/vendor/npm-asset',
+            '@runtime' => dirname(__DIR__) . '/runtime',
             '@user' => dirname(__DIR__, 3),
             '@views' => '@storage/views',
         ]

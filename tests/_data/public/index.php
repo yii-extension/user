@@ -37,7 +37,7 @@ require_once dirname(__DIR__, 3) . '/vendor/autoload.php';
 
 // Don't do it in production, assembling takes it's time
 $configTime = FileHelper::lastModifiedTime(dirname(__DIR__) . '/config/');
-$buildTime = FileHelper::lastModifiedTime(dirname(__DIR__, 3) . '/runtime/build/config/tests');
+$buildTime = FileHelper::lastModifiedTime(dirname(__DIR__) . '/runtime/build/tests');
 
 if ($buildTime < $configTime) {
     Builder::rebuild();

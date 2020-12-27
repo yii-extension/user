@@ -41,7 +41,7 @@
         "yiisoft/yii-db-migration": "^1.0@dev"
     },
     "require-dev": {
-        "codeception/codeception": "^4.1.5",
+        "codeception/codeception": "^4.1.13",
         "codeception/c3": "^2.6.0",
         "codeception/module-asserts": "@dev",
         "codeception/module-db": "^1.0",
@@ -67,7 +67,7 @@
         "branch-alias": {
             "dev-master": "1.0.x-dev"
         },
-        "config-plugin-output-dir": "runtime/build/config",
+        "config-plugin-output-dir": "tests/_data/runtime/build",
         "config-plugin": {
             "common": [
                 "config/common/*.php"

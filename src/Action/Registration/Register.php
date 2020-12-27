@@ -63,9 +63,10 @@ final class Register
                     [
                         'username' => $formRegister->getUsername(),
                         'password' => $formRegister->getPassword(),
-                        'url' => $urlGenerator !== null
-                            ? $repositoryUser->generateUrlToken($urlGenerator, $repositorySetting->isConfirmation()) : null,
-                            'showPassword' => $repositorySetting->isGeneratingPassword()
+                        'url' => $repositorySetting->isConfirmation()
+                            ? $repositoryUser->generateUrlToken($urlGenerator, $repositorySetting->isConfirmation())
+                            : null,
+                        'showPassword' => $repositorySetting->isGeneratingPassword()
                     ]
                 );
 
