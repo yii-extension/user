@@ -1,6 +1,6 @@
 <p align="center">
-    <a href="https://github.com/yiisoft" target="_blank">
-        <img src="https://github.com/yiisoft.png" height="100px">
+    <a href="https://github.com/yii-extension" target="_blank">
+        <img src="https://lh3.googleusercontent.com/ehSTPnXqrkk0M3U-UPCjC0fty9K6lgykK2WOUA2nUHp8gIkRjeTN8z8SABlkvcvR-9PIrboxIvPGujPgWebLQeHHgX7yLUoxFSduiZrTog6WoZLiAvqcTR1QTPVRmns2tYjACpp7EQ=w2400" height="100px">
     </a>
     <h1 align="center">Flexible user registration and authentication module for Yii3.</h1>
     <br>
@@ -13,8 +13,8 @@
 [![type-coverage](https://shepherd.dev/github/yii-extension/user/coverage.svg)](https://shepherd.dev/github/yii-extension/user)
 
 <p align="center">
-    <a href="https://github.com/yii-extension/app" target="_blank">
-        <img src="docs\images\home.png" >
+    <a href="https://github.com/yii-extension/app-bulma" target="_blank">
+        <img src="https://lh3.googleusercontent.com/0NUwRte-ZTFEICMVHaJy5goeSubb06ocqSHeU0e3OyaC6OQLM04pgTCirb7OZH8HDvAhZjEU6psRiiB-LBHvKE9GAVwQNL0Cw6OiJBodr4vud31ZzAPWR2fUszMTsCRQlu-Ppctsqw=w2400">
     </a>
 </p>
 
