@@ -24,7 +24,7 @@ return [
 
     RouteCollectionInterface::class => static function (RouteCollectorInterface $collector) {
         $collector->addGroup(
-            Group::create(null, require Builder::path('tests\routes'))
+            Group::create(null, require Builder::path('tests/routes'))
                 ->addMiddleware(FormatDataResponse::class)
         );
 
