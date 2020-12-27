@@ -13,7 +13,7 @@ final class RegisterFunctionalCest
         $I->amGoingTo('update settings register false');
         $I->updateInDatabase('settings', ['register' => false], ['id' => 1]);
 
-        $I->amGoingTo('page registration register');
+        $I->amGoingTo('go to the register page');
         $I->amOnPage('/register');
 
         $I->see('The page /register not found.');
@@ -27,7 +27,7 @@ final class RegisterFunctionalCest
         $I->amGoingTo('update settings confirmation true');
         $I->updateInDatabase('settings', ['confirmation' => true], ['id' => 1]);
 
-        $I->amGoingTo('page registration register');
+        $I->amGoingTo('go to the register page');
         $I->amOnPage('/register');
 
         $I->fillField('#register-email', 'administrator1@example.com');

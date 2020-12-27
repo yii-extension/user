@@ -55,6 +55,7 @@ final class Login
                     'action' => $urlGenerator->generate('login'),
                     'body' => $body,
                     'data' => $FormLogin,
+                    'isConfirmation' => $repositorySetting->isConfirmation(),
                     'isPasswordRecovery' => $repositorySetting->isPasswordRecovery(),
                     'linkResend' => $urlGenerator->generate('resend'),
                 ]

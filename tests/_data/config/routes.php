@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
+use Yii\Extension\User\Tests\App\Action\Index;
 use Yiisoft\Arrays\Modifier\ReverseBlockMerge;
+use Yiisoft\Router\Route;
 
 return [
-    'yiisoft/db-sqlite' => [
-        'path' => '@user/tests/_data/storage/yiitest.sq3',
-    ],
+    Route::get('/', [Index::class, 'run'])->name('index'),
     ReverseBlockMerge::class => new ReverseBlockMerge(),
 ];

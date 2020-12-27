@@ -8,13 +8,11 @@ use Yii\Extension\User\Tests\AcceptanceTester;
 
 final class LoginAcceptanceCest
 {
-    public function _before(AcceptanceTester $I): void
-    {
-        $I->amOnPage('/login');
-    }
-
     public function testAuthLoginPage(AcceptanceTester $I): void
     {
+        $I->amGoingTo('go to the login page');
+        $I->amOnPage('/login');
+
         $I->expectTo('see login page.');
         $I->see('Sing in.');
         $I->see('Please fill out the following.');
@@ -22,6 +20,9 @@ final class LoginAcceptanceCest
 
     public function testAuthLoginEmptyDataTest(AcceptanceTester $I): void
     {
+        $I->amGoingTo('go to the login page');
+        $I->amOnPage('/login');
+
         $I->click('Login', '#form-security-login');
 
         $I->expectTo('see validations errors.');
@@ -32,6 +33,9 @@ final class LoginAcceptanceCest
 
     public function testAuthLoginSubmitFormWrongData(AcceptanceTester $I): void
     {
+        $I->amGoingTo('go to the login page');
+        $I->amOnPage('/login');
+
         $I->fillField('#login-login', 'admin1');
         $I->fillField('#login-password', '1234567');
 
@@ -47,6 +51,9 @@ final class LoginAcceptanceCest
      */
     public function testAuthLoginUsernameSubmitFormSuccessData(AcceptanceTester $I): void
     {
+        $I->amGoingTo('go to the login page');
+        $I->amOnPage('/login');
+
         $I->fillField('#login-login', 'admin');
         $I->fillField('#login-password', '123456');
 
@@ -54,6 +61,12 @@ final class LoginAcceptanceCest
 
         $I->expectTo('see logged index page.');
         $I->see('Logout (admin)');
+
+        $I->click('#logout');
+
+        $I->expectTo('no see link logout');
+        $I->dontSeeLink('logout');
+        $I->see('login');
     }
 
     /**
@@ -61,6 +74,9 @@ final class LoginAcceptanceCest
      */
     public function testAuthLoginEmailSubmitFormSuccessData(AcceptanceTester $I): void
     {
+        $I->amGoingTo('go to the login page');
+        $I->amOnPage('/login');
+
         $I->fillField('#login-login', 'administrator@example.com');
         $I->fillField('#login-password', '123456');
 
@@ -68,10 +84,19 @@ final class LoginAcceptanceCest
 
         $I->expectTo('see logged index page.');
         $I->see('Logout (admin)');
+
+        $I->click('#logout');
+
+        $I->expectTo('no see link logout');
+        $I->dontSeeLink('logout');
+        $I->see('login');
     }
 
     public function testAuthLoginSettingsPasswordRecoveryTrue(AcceptanceTester $I): void
     {
+        $I->amGoingTo('go to the login page');
+        $I->amOnPage('/login');
+
         $I->expectTo('see link forgot password');
         $I->see('Forgot Password');
     }

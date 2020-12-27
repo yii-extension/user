@@ -13,8 +13,8 @@ final class LoginFunctionalCest
         $I->amGoingTo('update settings password recovery false');
         $I->updateInDatabase('settings', ['passwordRecovery' => false], ['id' => 1]);
 
-        $I->amGoingTo('page auth login');
-        $I->amOnPage('/auth/login');
+        $I->amGoingTo('go to the login page');
+        $I->amOnPage('/login');
 
         $I->expectTo('dont see link forgot password');
         $I->dontSeeLink('Forgot Password');

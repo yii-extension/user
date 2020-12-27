@@ -48,7 +48,7 @@ final class Resend
             if ($user === null) {
                 $formResend->addError(
                     'email',
-                    'Thank you. If said email is registered, you will get a password reset.'
+                    'Thank you. If said email is registered, you will get a password reset.',
                 );
             }
 
@@ -69,18 +69,22 @@ final class Resend
             }
         }
 
-        return $serviceView
-            ->viewPath('@user-view-views')
-            ->render(
-                '/registration/resend',
-                [
-                    'action' => $urlGenerator->generate('resend'),
-                    'body' => $body,
-                    'data' => $formResend,
-                    'settings' => $repositorySetting,
-                    'urlGenerator' => $urlGenerator
-                ]
-            );
+        if ($repositorySetting->isConfirmation()) {
+            return $serviceView
+                ->viewPath('@user-view-views')
+                ->render(
+                    '/registration/resend',
+                    [
+                        'action' => $urlGenerator->generate('resend'),
+                        'body' => $body,
+                        'data' => $formResend,
+                        'settings' => $repositorySetting,
+                        'urlGenerator' => $urlGenerator,
+                    ]
+                );
+        }
+
+        return $serviceView->viewPath('@user-view-views')->render('site/404');
     }
 
     private function sentEmail(

@@ -76,6 +76,33 @@
             "params-test": "config/tests/*",
             "events": "config/events.php",
             "routes": "config/routes.php"
+        },
+        "config-plugin-alternatives": {
+            "tests": {
+                "params": "tests/_data/config/params.php",
+                "common": [
+                    "tests/_data/config/common/*.php"
+                ],
+                "web": [
+                    "$common",
+                    "config/web/*.php",
+                    "tests/_data/config/web/*.php"
+                ],
+                "console": [
+                    "$common",
+                    "tests/_data/config/console/*.php"
+                ],
+                "providers": "tests/_data/config/providers.php",
+                "providers-web": [
+                    "$providers",
+                    "tests/_data/config/providers-web.php"
+                ],
+                "providers-console": [
+                    "$providers",
+                    "tests/_data/config/providers-console.php"
+                ],
+                "routes": "tests/_data/config/routes.php"
+            }
         }
     },
     "config": {

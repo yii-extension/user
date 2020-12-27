@@ -8,13 +8,11 @@ use Yii\Extension\User\Tests\AcceptanceTester;
 
 final class RegisterAcceptanceCest
 {
-    public function _before(AcceptanceTester $I): void
-    {
-        $I->amOnPage('/register');
-    }
-
     public function testRegisterPage(AcceptanceTester $I): void
     {
+        $I->amGoingTo('go to the register page');
+        $I->amOnPage('/register');
+
         $I->expectTo('see register page.');
         $I->see('Sign up');
         $I->see('Please fill out the following.');
@@ -22,6 +20,9 @@ final class RegisterAcceptanceCest
 
     public function testRegisterSuccessDataDefaultAccountConfirmationFalse(AcceptanceTester $I): void
     {
+        $I->amGoingTo('go to the register page');
+        $I->amOnPage('/register');
+
         $I->fillField('#register-email', 'administrator@example.com');
         $I->fillField('#register-username', 'admin');
         $I->fillField('#register-password', '123456');
@@ -35,6 +36,9 @@ final class RegisterAcceptanceCest
 
     public function testRegisterEmptyData(AcceptanceTester $I): void
     {
+        $I->amGoingTo('go to the register page');
+        $I->amOnPage('/register');
+
         $I->click('Register', '#form-registration-register');
 
         $I->expectTo('see registration register validation.');
@@ -46,6 +50,9 @@ final class RegisterAcceptanceCest
 
     public function testRegisterWrongEmailData(AcceptanceTester $I): void
     {
+        $I->amGoingTo('go to the register page');
+        $I->amOnPage('/register');
+
         $I->fillField('#register-email', 'register');
         $I->fillField('#register-username', 'register');
         $I->fillField('#register-password', '123456');
@@ -59,6 +66,9 @@ final class RegisterAcceptanceCest
 
     public function testRegisterEmailExistData(AcceptanceTester $I): void
     {
+        $I->amGoingTo('go to the register page');
+        $I->amOnPage('/register');
+
         $I->fillField('#register-email', 'administrator@example.com');
         $I->fillField('#register-username', 'administrator');
         $I->fillField('#register-password', '123456');
@@ -72,6 +82,9 @@ final class RegisterAcceptanceCest
 
     public function testsRegisterInvalidUsernameData(AcceptanceTester $I): void
     {
+        $I->amGoingTo('go to the register page');
+        $I->amOnPage('/register');
+
         $I->fillField('#register-email', 'demo@example.com');
         $I->fillField('#register-username', '**admin');
         $I->fillField('#register-password', '123456');
@@ -96,6 +109,9 @@ final class RegisterAcceptanceCest
 
     public function testRegisterUsernameExistData(AcceptanceTester $I): void
     {
+        $I->amGoingTo('go to the register page');
+        $I->amOnPage('/register');
+
         $I->fillField('#register-email', 'demo@example.com');
         $I->fillField('#register-username', 'admin');
         $I->fillField('#register-password', '123456');
@@ -109,6 +125,9 @@ final class RegisterAcceptanceCest
 
     public function testRegisterInvalidPasswordData(AcceptanceTester $I): void
     {
+        $I->amGoingTo('go to the register page');
+        $I->amOnPage('/register');
+
         $I->fillField('#register-email', 'demo@example.com');
         $I->fillField('#register-username', 'demo');
         $I->fillField('#register-password', '123');

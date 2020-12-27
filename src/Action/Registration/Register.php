@@ -52,7 +52,7 @@ final class Register
                 ->bodyFlashMessage(
                     $repositorySetting->isConfirmation()
                         ? 'Please check your email to activate your username.'
-                        : 'Your account has been created.'
+                        : 'Your account has been created.',
                 )
                 ->run(
                     $repositorySetting->getEmailFrom(),
