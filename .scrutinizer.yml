@@ -30,7 +30,8 @@ build:
                     -
                         command: |
                             php -S 127.0.0.1:8080 -t tests/_data/public > tests/_data/runtime/yii.log 2>&1 &
-                            vendor/bin/codecept run --coverage-xml
+                            vendor/bin/codecept run --coverage-xml -vvv
+                            cat /home/scrutinizer/build/tests/_output/Yii.Extension.User.Tests.Acceptance.LoginAcceptanceCest.testAuthLoginPage.fail.html
                         on_node: 1
                         coverage:
                             file: tests/_output/coverage.xml
