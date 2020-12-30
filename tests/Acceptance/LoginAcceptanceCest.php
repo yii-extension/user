@@ -14,7 +14,7 @@ final class LoginAcceptanceCest
         $I->amOnPage('/login');
 
         $I->expectTo('see login page.');
-        $I->see('Sing in.');
+        $I->see('Sign in.');
         $I->see('Please fill out the following.');
     }
 
