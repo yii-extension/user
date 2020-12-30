@@ -15,8 +15,8 @@
 
 | Css Framework |  PHP  | Build |
 |:-------------:|:-----:|:-----:|
-|[[user-view-bulma]](https://github.com/yii-extension/user-view-bulma)|**7.4 - 8.0**|[![build](https://github.com/yii-extension/bulma/workflows/build/badge.svg)](https://github.com/yii-extension/user/actions)
-|[[user-view-bootstrap5]](https://github.com/yii-extension/user-view-bootstrap5)|**7.4 - 8.0**|[![build](https://github.com/yii-extension/bootstrap5/workflows/build/badge.svg)](https://github.com/yii-extension/user/actions)
+|[[user-view-bulma]](https://github.com/yii-extension/user-view-bulma)|**7.4 - 8.0**|[![bulma](https://github.com/yii-extension/user/workflows/bulma/badge.svg)](https://github.com/yii-extension/user/actions)
+|[[user-view-bootstrap5]](https://github.com/yii-extension/user-view-bootstrap5)|**7.4 - 8.0**|[![boostrap5](https://github.com/yii-extension/user/workflows/bootstrap5/badge.svg)](https://github.com/yii-extension/user/actions)
 
 <br/>
 <br/>
