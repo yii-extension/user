@@ -13,6 +13,7 @@ build:
 
             tests:
                 override:
+                    - composer require yii-extension/user-view-bulma:@dev --dev --ansi
                     - php-scrutinizer-run
 
         tests-and-coverage:
@@ -28,7 +29,6 @@ build:
                 override:
                     -
                         command: |
-                            composer du
                             php -S 127.0.0.1:8080 -t tests/_data/public > tests/_data/runtime/yii.log 2>&1 &
                             vendor/bin/codecept run Unit,Acceptance,Functional --coverage-html
                         on_node: 1
