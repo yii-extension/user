@@ -9,7 +9,7 @@ jobs:
     name: PHP ${{ matrix.php }}-${{ matrix.os }}
 
     env:
-      extensions: fileinfo, gd, pdo, pdo_sqlite
+      extensions: fileinfo, gd, intl, pdo, pdo_sqlite
 
     runs-on: ${{ matrix.os }}
 
@@ -56,7 +56,7 @@ jobs:
         run: composer self-update
 
       - name: Install user-view-bulma
-        run: composer require yii-extension/user-view-bulma --ansi -vvv
+        run: composer require yii-extension/user-view-bulma --ansi
 
       - name: Run tests with codeception
         run: |
