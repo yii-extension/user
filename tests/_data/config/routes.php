@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-use Yii\Extension\User\Tests\App\Action\Index;
+use Yii\Extension\User\Tests\App\Controller\SiteController;
 use Yiisoft\Arrays\Modifier\ReverseBlockMerge;
 use Yiisoft\Router\Route;
 
 return [
-    Route::get('/', [Index::class, 'run'])->name('index'),
+    Route::get('/', [SiteController::class, 'index'])->name('site/index'),
     ReverseBlockMerge::class => new ReverseBlockMerge(),
 ];

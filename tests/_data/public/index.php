@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
@@ -18,7 +16,7 @@ use Yiisoft\Yii\Web\ServerRequestFactory;
 $c3 = dirname(__DIR__, 3) . '/c3.php';
 
 if (is_file($c3)) {
-    require_once $c3;
+    require $c3;
 }
 
 // PHP built-in server routing.
@@ -29,7 +27,7 @@ if (PHP_SAPI === 'cli-server') {
     }
 
     // Explicitly set for URLs with dot.
-    $_SERVER['SCRIPT_NAME'] = '/index.php';
+    $_SERVER['SCRIPT_NAME'] = '/index-test.php';
 }
 
 require_once dirname(__DIR__, 3) . '/vendor/autoload.php';
@@ -43,7 +41,6 @@ $startTime = microtime(true);
  * Register temporary error handler to catch error while container is building.
  */
 $errorHandler = new ErrorHandler(new NullLogger(), new HtmlRenderer());
-
 /**
  * Production mode
  * $errorHandler = $errorHandler->withoutExposedDetails();
@@ -51,8 +48,8 @@ $errorHandler = new ErrorHandler(new NullLogger(), new HtmlRenderer());
 $errorHandler->register();
 
 $container = new Container(
-    require Builder::path('tests/web'),
-    require Builder::path('tests/providers')
+    require Builder::path('tests\web'),
+    require Builder::path('tests\providers-web')
 );
 
 /**

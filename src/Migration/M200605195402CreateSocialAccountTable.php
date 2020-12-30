@@ -5,11 +5,12 @@ declare(strict_types=1);
 namespace Yii\Extension\User\Migration;
 
 use Yiisoft\Yii\Db\Migration\Migration;
+use Yiisoft\Yii\Db\Migration\RevertibleMigrationInterface;
 
 /**
  * Handles the creation of table `social_account`.
  */
-final class M200605195402CreateSocialAccountTable extends Migration
+final class M200605195402CreateSocialAccountTable extends Migration implements RevertibleMigrationInterface
 {
     public function up(): void
     {

@@ -8,7 +8,6 @@ use RuntimeException;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
 use LasseRafn\InitialAvatarGenerator\InitialAvatar;
-use Yii\Extension\Service\MailerService;
 use Yii\Extension\User\ActiveRecord\Profile;
 use Yii\Extension\User\ActiveRecord\User;
 use Yii\Extension\User\ActiveRecord\Token;

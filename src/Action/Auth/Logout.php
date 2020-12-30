@@ -8,18 +8,18 @@ use Psr\Http\Message\ResponseInterface;
 use Yii\Extension\Service\ServiceUrl;
 use Yii\Extension\User\Repository\RepositoryUser;
 use Yii\Extension\User\Service\ServiceLogout;
-use Yiisoft\User\User as IdentityUser;
+use Yiisoft\User\User;
 
 final class Logout
 {
     public function run(
-        IdentityUser $identityUser,
         RepositoryUser $repositoryUser,
         ServiceLogout $serviceLogout,
-        ServiceUrl $serviceUrl
+        ServiceUrl $serviceUrl,
+        User $user
     ): ResponseInterface {
-        $serviceLogout->run($repositoryUser, $identityUser);
+        $serviceLogout->run($repositoryUser, $user);
 
-        return $serviceUrl->run('index');
+        return $serviceUrl->run('site/index');
     }
 }

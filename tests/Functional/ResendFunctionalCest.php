@@ -84,6 +84,9 @@ final class ResendFormCest
 
         $I->amGoingTo('update settings confirmation false');
         $I->updateInDatabase('settings', ['confirmation' => false], ['id' => 1]);
+
+        $I->amGoingTo('update settings confirmation false');
+        $I->updateInDatabase('settings', ['confirmation' => false], ['id' => 1]);
     }
 
     /**
@@ -102,7 +105,8 @@ final class ResendFormCest
         $I->click('Continue', '#form-registration-resend');
 
         $I->expectTo('see registration register validation.');
-        $I->see('Please check your email to activate your username.');
+        $I->see('Hello!');
+        $I->see("Let's start something great with Yii3!");
         $I->dontSeeLink('Continue', '#form-registration-register');
 
         $I->amGoingTo('update settings confirmation false');

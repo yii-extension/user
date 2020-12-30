@@ -11,33 +11,22 @@ use RuntimeException;
 use Yiisoft\ActiveRecord\ActiveQuery;
 use Yiisoft\ActiveRecord\ActiveQueryInterface;
 use Yiisoft\ActiveRecord\ActiveRecordInterface;
-use Yiisoft\Aliases\Aliases;
 use Yiisoft\Db\Connection\ConnectionInterface;
 use Yiisoft\Db\Exception\Exception;
-use Yiisoft\Router\UrlGeneratorInterface;
 use Yiisoft\Security\Random;
 
 final class RepositoryToken
 {
-    private Aliases $aliases;
     private ConnectionInterface $db;
     private LoggerInterface $logger;
     private Token $token;
     private ?ActiveQuery $tokenQuery = null;
-    private UrlGeneratorInterface $url;
 
-    public function __construct(
-        Aliases $aliases,
-        ConnectionInterface $db,
-        LoggerInterface $logger,
-        Token $token,
-        UrlGeneratorInterface $url
-    ) {
-        $this->aliases = $aliases;
+    public function __construct(ConnectionInterface $db, LoggerInterface $logger, Token $token)
+    {
         $this->db = $db;
         $this->logger = $logger;
         $this->token = $token;
-        $this->url = $url;
         $this->tokenQuery();
     }
 

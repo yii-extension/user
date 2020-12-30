@@ -23,14 +23,14 @@ build:
                 override:
                     - composer self-update
                     - composer update --prefer-dist --no-interaction --no-progress --optimize-autoloader --ansi
-                    - vendor/bin/yii --config=tests migrate/up --no-interaction
+                    - composer require yii-extension/user-view-bulma --ansi
 
             tests:
                 override:
                     -
                         command: |
                             php -S 127.0.0.1:8080 -t tests/_data/public > tests/_data/runtime/yii.log 2>&1 &
-                            vendor/bin/codecept run --coverage-xml
+                            vendor/bin/codecept run Unit,Acceptance,Functional --coverage-html
                         on_node: 1
                         coverage:
                             file: tests/_output/coverage.xml

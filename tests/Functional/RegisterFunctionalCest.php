@@ -29,16 +29,22 @@ final class RegisterFunctionalCest
 
         $I->amGoingTo('go to the register page');
         $I->amOnPage('/register');
+        $I->submitForm('#form-registration-register', [
+            'Register[email]' => 'administrator1@example.com',
+            'Register[username]' => 'admin1',
+            'Register[password]' => '123456'
 
-        $I->fillField('#register-email', 'administrator1@example.com');
-        $I->fillField('#register-username', 'admin1');
-        $I->fillField('#register-password', '123456');
+        ]);
 
-        $I->click('Register', '#form-registration-register');
+        $I->amGoingTo('go to the login page');
+        $I->amOnPage('/login');
 
         $I->expectTo('see registration register validation.');
-        $I->see('Please check your email to activate your username.');
-        $I->dontSeeLink('Register', '#form-registration-register');
+        $I->submitForm('#form-security-login', [
+            'Login[login]' => 'admin1',
+            'Login[password]' => '123456',
+        ]);
+        $I->see('Please check your email to activate your account.');
 
         $I->amGoingTo('update settings confirmation false');
         $I->updateInDatabase('settings', ['confirmation' => false], ['id' => 1]);

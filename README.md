@@ -7,10 +7,19 @@
 </p>
 
 [![Total Downloads](https://img.shields.io/packagist/dt/yii-extension/user)](https://packagist.org/packages/yii-extension/user)
-[![app-bulma](https://github.com/yii-extension/user/workflows/app-bulma/badge.svg)](https://github.com/yii-extension/user/actions)
-[![codecov](https://codecov.io/gh/yii-extension/user/branch/master/graph/badge.svg)](https://codecov.io/gh/yii-extension/user)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/yii-extension/user/badges/quality-score.png?b=main)](https://scrutinizer-ci.com/g/yii-extension/user/?branch=main)
+[![Code Coverage](https://scrutinizer-ci.com/g/yii-extension/user/badges/coverage.png?b=main)](https://scrutinizer-ci.com/g/yii-extension/user/?branch=main)
 [![static analysis](https://github.com/yii-extension/user/workflows/static%20analysis/badge.svg)](https://github.com/yii-extension/user/actions?query=workflow%3A%22static+analysis%22)
 [![type-coverage](https://shepherd.dev/github/yii-extension/user/coverage.svg)](https://shepherd.dev/github/yii-extension/user)
+
+
+| Css Framework |  PHP  | Build |
+|:-------------:|:-----:|:-----:|
+|[[user-view-bulma]](https://github.com/yii-extension/user-view-bulma)|**7.4 - 8.0**|[![build](https://github.com/yii-extension/bulma/workflows/build/badge.svg)](https://github.com/yii-extension/user/actions)
+|[[user-view-bootstrap5]](https://github.com/yii-extension/user-view-bootstrap5)|**7.4 - 8.0**|[![build](https://github.com/yii-extension/bootstrap5/workflows/build/badge.svg)](https://github.com/yii-extension/user/actions)
+
+<br/>
+<br/>
 
 <p align="center">
     <a href="https://github.com/yii-extension/app-bulma" target="_blank">
@@ -27,13 +36,12 @@ Yii demo application for active record with db-sqlite is best for rapidly creati
       resources/mail      contains layout and view files for mailer
       resources/view      contains view files for the web application
       src/                application directory
-          Action          contains web action classes
-          Asset           contains assets definition
-          Form            contains form models
-          Module          contains modules application
-          Theme           contains theme application
-          Service         contains web services
-          Widget          continas widgets for web application
+          Action          contains action controller classes
+          ActiveRecord    contains active record classes
+          Form            contains form classes
+          Migration       contains migration classes
+          Repository      contains repository classes
+          Service         contains services classes
 
 ## Requirements
 
@@ -41,75 +49,61 @@ The minimum requirement by this project template that your Web server supports P
 
 ## Installation
 
-If you do not have [Composer](http://getcomposer.org/), you may install it by following the instructions
-at [getcomposer.org](http://getcomposer.org/doc/00-intro.md#installation-nix).
+With application template `yii-extension/app-bulma`:
 
-You can then install this project template using the following command:
+Bulma css framework:
 
-~~~
-composer create-project --prefer-dist --stability dev yii-extension/user <your project>
-~~~
+```php
+composer create-project --prefer-dist --stability dev yiisoft/app app
+composer require yii-extension/user yii-extension/user-view-bulma
+```
 
-Now you should be able to access the application through the following URL, assuming `app` is the directory
-directly under the `public` root.
+Bootstrap5 css framework:
 
-## Configuring your application
-
-All the configuration is in the `config directory` of the `application`.
+```php
+composer create-project --prefer-dist --stability dev yiisoft/app app
+composer require yii-extension/user yii-extension/user-view-bootstrap5
+```
 
 ## Run command console
 
-~~~
-./yii
-~~~
+```shell
+/vendor/bin/yii
+```
 
 ## Run migration
 
-~~~
-./yii migrate/up
-~~~
+Application template:
+
+```shel
+/vendor/bin/yii migrate/up
+```
+
+In developer mode without application template:
+
+```shel
+/vendor/bin/yii --config=tests migrate/up
+```
 
 ## Using PHP built-in server
 
-~~~
+```shell
 php -S 127.0.0.1:8080 -t public
-~~~
+```
 
 ## Wait till it is up, then open the following URL in your browser
 
-~~~
+```shell
 http://localhost:8080
-~~~
+```
 
 ## Includes the following features:
-
-- [x] Admin Panel Dashboard.
-    - [x] /index - Display index page.
-    - [x] /about - Display about page.
-    - [x] /contact - Display contact form page.
 
 - [x] User module:
     - [x] /auth/login - Display login form.
     - [x] /auth/logout - Logs the user out.
-    - [x] /recovery/request - Displays recovery request form.
-    - [x] /recovery/reset[/{id}/{code}] - Displays password reset form (requires id and token query params).
-    - [x] /registration/confirm[/{id}/{token}] - Confirms a user (requires id and token query params).
     - [x] /registration/register - Displays registration form.
     - [x] /registration/resend - Displays resend form.
-    - [x] /admin/index - Display user management interface.
-    - [x] /admin/create - Display form register user.
-    - [x] /admin/block[/{id}] - Allows you to block or unblock a user.
-    - [x] /admin/confirm[/{id}] - Confirms a user (requires id).
-    - [x] /admin/delete[/{id}] - Delete a user (requires id).
-    - [x] /admin/edit[/{id}] - Display form edit user (requires id).
-    - [x] /admin/info[/{id}] - Display info user (requires id).
-    - [x] /admin/reset[/{id}] - Send email resend password (requires id).
-
-- [x] Rbac Module:
-    - [x] /item/index - Display item management interface.
-    - [x] /item/create - Display form create item.
-    - [x] /item/edit[/{id}] - Display form edit item (requires id).
-    - [x] /item/delete[/{id}] - Delete a item (requires id).
 
 Note: check the directory `/runtime/mail`, the emails are stored in it.
 
@@ -117,15 +111,15 @@ Note: check the directory `/runtime/mail`, the emails are stored in it.
 
 The package is tested with [Codeception](https://github.com/Codeception/Codeception). To run tests:
 
-~~~
+```shell
 php -S 127.0.0.1:8080 -t public > yii.log 2>&1 &
 vendor/bin/codecept run
-~~~
+```
 
 ## Static analysis
 
 The code is statically analyzed with [Psalm](https://psalm.dev/docs). To run static analysis:
 
-```php
-./vendor/bin/psalm
+```shell
+/vendor/bin/psalm
 ```

@@ -7,7 +7,6 @@ namespace Yii\Extension\User\Action\Registration;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Yii\Extension\Service\ServiceView;
 use Yii\Extension\Service\ServiceUrl;
 use Yii\Extension\Service\ServiceMailer;
 use Yii\Extension\User\ActiveRecord\User;
@@ -19,6 +18,7 @@ use Yii\Extension\User\Repository\RepositoryToken;
 use Yii\Extension\User\Repository\RepositoryUser;
 use Yiisoft\Aliases\Aliases;
 use Yiisoft\Router\UrlGeneratorInterface;
+use Yiisoft\Yii\View\ViewRenderer;
 
 final class Resend
 {
@@ -31,17 +31,16 @@ final class Resend
         RepositorySetting $repositorySetting,
         UrlGeneratorInterface $urlGenerator,
         RepositoryUser $repositoryUser,
-        ServiceView $serviceView,
         ServiceUrl $serviceUrl,
         RepositoryToken $repositoryToken,
         ServiceMailer $serviceMailer,
-        Token $token
+        ViewRenderer $viewRenderer
     ): ResponseInterface {
         $body = $serverRequest->getParsedBody();
         $method = $serverRequest->getMethod();
 
         if ($method === 'POST' && $formResend->load($body) && $formResend->validate()) {
-            $email = $formResend->getAttributeValue('email');
+            $email = $formResend->getEmail();
             $user = $repositoryUser->findUserByUsernameOrEmail($email);
 
             if ($user === null) {
@@ -64,17 +63,16 @@ final class Resend
 
                 $eventDispatcher->dispatch($afterResend);
 
-                return $serviceUrl->run('index');
+                return $serviceUrl->run('site/index');
             }
         }
 
         if ($repositorySetting->isConfirmation()) {
-            return $serviceView
-                ->viewPath('@user-view-views')
+            return $viewRenderer
+                ->withViewPath('@user-view-views')
                 ->render(
                     '/registration/resend',
                     [
-                        'action' => $urlGenerator->generate('resend'),
                         'body' => $body,
                         'data' => $formResend,
                         'settings' => $repositorySetting,
@@ -83,7 +81,7 @@ final class Resend
                 );
         }
 
-        return $serviceView->viewPath('@user-view-views')->render('site/404');
+        return $viewRenderer->withViewPath('@user-view-views')->render('site/404');
     }
 
     private function sentEmail(

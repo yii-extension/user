@@ -7,15 +7,12 @@ namespace Yii\Extension\User\Action\Auth;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Yii\Extension\Service\ServiceFlashMessage;
 use Yii\Extension\Service\ServiceUrl;
-use Yii\Extension\Service\ServiceView;
 use Yii\Extension\User\Event\AfterLogin;
 use Yii\Extension\User\Form\FormLogin;
 use Yii\Extension\User\Repository\RepositoryUser;
 use Yii\Extension\User\Service\ServiceLogin;
-use Yii\Extension\User\Settings\RepositorySetting;
-use Yiisoft\Router\UrlGeneratorInterface;
+use Yiisoft\Yii\View\ViewRenderer;
 
 final class Login
 {
@@ -23,14 +20,11 @@ final class Login
         AfterLogin $afterLogin,
         EventDispatcherInterface $eventDispatcher,
         FormLogin $FormLogin,
-        RepositorySetting $repositorySetting,
         RepositoryUser $repositoryUser,
         ServerRequestInterface $serverRequest,
-        ServiceFlashMessage $serviceFlashMessage,
         ServiceLogin $serviceLogin,
         ServiceUrl $serviceUrl,
-        ServiceView $serviceView,
-        UrlGeneratorInterface $urlGenerator
+        ViewRenderer $viewRenderer
     ): ResponseInterface {
         $body = $serverRequest->getParsedBody();
         $method = $serverRequest->getMethod();
@@ -44,21 +38,17 @@ final class Login
         ) {
             $eventDispatcher->dispatch($afterLogin);
 
-            return $serviceUrl->run('index');
+            return $serviceUrl->run('site/index');
         }
 
-        return $serviceView
-            ->viewPath('@user-view-views')
+        return $viewRenderer
+            ->withViewPath('@user-view-views')
             ->render(
                 'auth/login',
                 [
-                    'action' => $urlGenerator->generate('login'),
                     'body' => $body,
                     'data' => $FormLogin,
-                    'isConfirmation' => $repositorySetting->isConfirmation(),
-                    'isPasswordRecovery' => $repositorySetting->isPasswordRecovery(),
-                    'linkResend' => $urlGenerator->generate('resend'),
-                ]
+                ],
             );
     }
 }

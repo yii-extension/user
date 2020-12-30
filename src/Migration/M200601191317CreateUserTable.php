@@ -5,11 +5,12 @@ declare(strict_types=1);
 namespace Yii\Extension\User\Migration;
 
 use Yiisoft\Yii\Db\Migration\Migration;
+use Yiisoft\Yii\Db\Migration\RevertibleMigrationInterface;
 
 /**
  * Handles the creation of table `user`.
  */
-final class M200601191317CreateUserTable extends Migration
+final class M200601191317CreateUserTable extends Migration implements RevertibleMigrationInterface
 {
     public function up(): void
     {

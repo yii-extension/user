@@ -7,16 +7,15 @@ namespace Yii\Extension\User\Action\Registration;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Yii\Extension\Service\ServiceFlashMessage;
 use Yii\Extension\Service\ServiceMailer;
 use Yii\Extension\Service\ServiceUrl;
-use Yii\Extension\Service\ServiceView;
 use Yii\Extension\User\Event\AfterRegister;
 use Yii\Extension\User\Form\FormRegister;
 use Yii\Extension\User\Settings\RepositorySetting;
 use Yii\Extension\User\Repository\RepositoryUser;
 use Yiisoft\Aliases\Aliases;
 use Yiisoft\Router\UrlGeneratorInterface;
+use Yiisoft\Yii\View\ViewRenderer;
 
 final class Register
 {
@@ -29,10 +28,9 @@ final class Register
         RepositoryUser $repositoryUser,
         ServerRequestInterface $serverRequest,
         UrlGeneratorInterface $urlGenerator,
-        ServiceFlashMessage $serviceFlashMessage,
         ServiceMailer $serviceMailer,
         ServiceUrl $serviceUrl,
-        ServiceView $serviceView
+        ViewRenderer $viewRenderer
     ): ResponseInterface {
         $body = $serverRequest->getParsedBody();
         $method = $serverRequest->getMethod();
@@ -72,24 +70,21 @@ final class Register
 
             $eventDispatcher->dispatch($afterRegister);
 
-            return $serviceUrl->run('index');
+            return $serviceUrl->run('site/index');
         }
 
         if ($repositorySetting->isRegister()) {
-            return $serviceView
-                ->viewPath('@user-view-views')
+            return $viewRenderer
+                ->withViewPath('@user-view-views')
                 ->render(
                     '/registration/register',
                     [
-                        'action' => $urlGenerator->generate('register'),
                         'body' => $body,
                         'data' => $formRegister,
-                        'settings' => $repositorySetting,
-                        'url' => $urlGenerator,
                     ]
                 );
         }
 
-        return $serviceView->viewPath('@user-view-views')->render('site/404');
+        return $viewRenderer->withViewPath('@user-view-views')->render('site/404');
     }
 }

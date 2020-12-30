@@ -2,65 +2,61 @@
 
 declare(strict_types=1);
 
-use Yii\Extension\User\Settings\RepositorySetting;
-use Yiisoft\User\User;
+use Yii\Extension\User\Tests\App\Command\Hello;
+use Yii\Extension\User\Tests\App\ViewInjection\ContentViewInjection;
+use Yii\Extension\User\Tests\App\ViewInjection\LayoutViewInjection;
+use Yiisoft\Arrays\Modifier\ReverseBlockMerge;
 use Yiisoft\Factory\Definitions\Reference;
+use Yiisoft\Yii\View\CsrfViewInjection;
 
 return [
     'app' => [
         'charset' => 'UTF-8',
-        'emailFrom' => 'tester@example.com',
-        'language' => 'en',
-        'logo' => '/images/yii-logo.jpg',
-
-        /** config widget nav */
-        'nav' => [
-            'guest' => [],
-            'logged' => [],
-        ],
-
-        /** config widget navBar */
-        'navBar' => [
-            'config' => [
-                'brandLabel()' => ['My Project'],
-                'brandImage()' => ['/images/yii-logo.jpg'],
-                'itemsOptions()' => [['class' => 'navbar-end']],
-                'options()' => [['class' => 'is-black', 'data-sticky' => '', 'data-sticky-shadow' => '']]                    ],
-        ],
-
+        'locale' => 'en',
         'name' => 'My Project',
-    ],
-
-    'yii-extension/view-services' => [
-        'defaultParameters' => [
-            'setting' => Reference::to(RepositorySetting::class),
-            'user' => Reference::to(User::class),
-        ]
     ],
 
     'yiisoft/aliases' => [
         'aliases' => [
-            '@root' => dirname(__DIR__, 3),
-            '@storage' => dirname(__DIR__) . '/storage',
-            '@assets' =>  dirname(__DIR__) . '/public/assets',
+            '@root' => dirname(__DIR__),
+            '@assets' => '@root/public/assets',
             '@assetsUrl' => '/assets',
-            '@avatars' => dirname(__DIR__) . '/public/images/avatar',
-            '@layout' => '@storage/views/layout',
             '@npm' => dirname(__DIR__, 3) . '/vendor/npm-asset',
-            '@runtime' => dirname(__DIR__) . '/runtime',
-            '@user' => dirname(__DIR__, 3),
-            '@views' => '@storage/views',
-        ]
+            '@public' => '@root/public',
+            '@resources' => '@root/resources',
+            '@runtime' => '@root/runtime',
+            '@views' => '@root/resources/views',
+            '@message' => '@root/resources/message',
+        ],
     ],
 
     'yiisoft/view' => [
         'basePath' => '@views',
     ],
 
-    'yiisoft/yii-db-migration' => [
-        'createNamespace' => 'Yii\\Extension\\User\\Migration',
-        'updateNamespace' => [
-            'Yii\\Extension\\User\\Migration',
-        ]
-    ]
+    'yiisoft/yii-console' => [
+        'commands' => [
+            'hello' => Hello::class,
+        ],
+    ],
+
+    'yiisoft/yii-debug' => [
+        'enabled' => true,
+    ],
+
+    'yiisoft/yii-view' => [
+        'viewBasePath' => '@views',
+        'layout' => '@resources/layout/main',
+        'injections' => [
+            Reference::to(ContentViewInjection::class),
+            Reference::to(CsrfViewInjection::class),
+            Reference::to(LayoutViewInjection::class),
+        ],
+    ],
+
+    'yiisoft/router' => [
+        'enableCache' => false,
+    ],
+
+    ReverseBlockMerge::class => new ReverseBlockMerge(),
 ];

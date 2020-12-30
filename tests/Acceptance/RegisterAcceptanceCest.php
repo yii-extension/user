@@ -14,7 +14,7 @@ final class RegisterAcceptanceCest
         $I->amOnPage('/register');
 
         $I->expectTo('see register page.');
-        $I->see('Sign up');
+        $I->see('Register.');
         $I->see('Please fill out the following.');
     }
 
@@ -30,7 +30,6 @@ final class RegisterAcceptanceCest
         $I->click('Register', '#form-registration-register');
 
         $I->expectTo('see registration register validation.');
-        $I->see('Your account has been created.');
         $I->dontSeeLink('Register', '#form-registration-register');
     }
 
@@ -80,7 +79,7 @@ final class RegisterAcceptanceCest
         $I->see('Register', '#form-registration-register');
     }
 
-    public function testsRegisterInvalidUsernameData(AcceptanceTester $I): void
+    public function testRegisterInvalidUsernameData(AcceptanceTester $I): void
     {
         $I->amGoingTo('go to the register page');
         $I->amOnPage('/register');

@@ -8,13 +8,13 @@
 actor: FunctionalTester
 modules:
     enabled:
+        - PhpBrowser:
+            url: http://localhost:8080
         - Db:
-            dsn: 'sqlite:/tests/_data/storage/yiitest.sq3'
+            dsn: 'sqlite:/tests/_output/yiitest.sq3'
             user: ''
             password: ''
             cleanup: true
-        - PhpBrowser:
-            url: http://127.0.0.1:8080
         # add a framework module here
         - \Yii\Extension\User\Tests\Helper\Functional
     step_decorators: ~

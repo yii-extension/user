@@ -60,13 +60,20 @@ final class LoginAcceptanceCest
         $I->click('Login', '#form-security-login');
 
         $I->expectTo('see logged index page.');
+        $I->see('Hello!');
+        $I->see("Let's start something great with Yii3!");
         $I->see('Logout (admin)');
+
+        $I->amOnPage('/login');
+
+        $I->expectTo('no see page login');
+        $I->see('404');
+        $I->see('The page /login not found.');
 
         $I->click('#logout');
 
         $I->expectTo('no see link logout');
         $I->dontSeeLink('logout');
-        $I->see('login');
     }
 
     /**
@@ -83,13 +90,20 @@ final class LoginAcceptanceCest
         $I->click('Login', '#form-security-login');
 
         $I->expectTo('see logged index page.');
+        $I->see('Hello!');
+        $I->see("Let's start something great with Yii3!");
         $I->see('Logout (admin)');
+
+        $I->amOnPage('/login');
+
+        $I->expectTo('no see page login');
+        $I->see('404');
+        $I->see('The page /login not found.');
 
         $I->click('#logout');
 
         $I->expectTo('no see link logout');
         $I->dontSeeLink('logout');
-        $I->see('login');
     }
 
     public function testAuthLoginSettingsPasswordRecoveryTrue(AcceptanceTester $I): void
