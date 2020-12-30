@@ -59,6 +59,13 @@ jobs:
         run: composer require yii-extension/user-view-bulma:@dev --dev --ansi
 
       - name: Run tests with codeception
+        continue-on-error: true
         run: |
           php -S 127.0.0.1:8080 -t tests/_data/public > ./runtime/yii.log 2>&1 &
           vendor/bin/codecept run Unit,Acceptance,Functional
+
+      - name: Use the Upload Artifact GitHub Action
+        uses: actions/upload-artifact@v2
+        with:
+          name: errors
+          path: tests/data/_output
