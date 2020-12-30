@@ -24,8 +24,8 @@ final class MigrationUnitCest
     public function _before(UnitTester $I): void
     {
         $this->container = new Container(
-            require Builder::path('tests\web'),
-            require Builder::path('tests\providers')
+            require Builder::path('tests/web'),
+            require Builder::path('tests/providers')
         );
     }
 
@@ -48,7 +48,7 @@ final class MigrationUnitCest
             FileHelper::unlink($file);
         }
 
-        $params = require Builder::path('tests\params');
+        $params = require Builder::path('tests/params');
 
         $application = $this->container->get(Application::class);
 
@@ -79,7 +79,7 @@ final class MigrationUnitCest
         $consoleHelper->output()->setVerbosity(OutputInterface::VERBOSITY_QUIET);
         $migration->compact(true);
 
-        $params = require Builder::path('tests\params');
+        $params = require Builder::path('tests/params');
 
         $application = $this->container->get(Application::class);
 
@@ -110,7 +110,7 @@ final class MigrationUnitCest
         $consoleHelper->output()->setVerbosity(OutputInterface::VERBOSITY_QUIET);
         $migration->compact(true);
 
-        $params = require Builder::path('tests\params');
+        $params = require Builder::path('tests/params');
 
         $application = $this->container->get(Application::class);
 
