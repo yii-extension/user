@@ -11,9 +11,12 @@ build:
             environment:
                 php: 7.4.12
 
-            tests:
+            dependencies:
                 override:
                     - composer require yii-extension/user-view-bulma:@dev --dev --ansi
+
+            tests:
+                override:
                     - php-scrutinizer-run
 
         tests-and-coverage:
