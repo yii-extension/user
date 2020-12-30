@@ -27,7 +27,7 @@ if (PHP_SAPI === 'cli-server') {
     }
 
     // Explicitly set for URLs with dot.
-    $_SERVER['SCRIPT_NAME'] = '/index-test.php';
+    $_SERVER['SCRIPT_NAME'] = '/index.php';
 }
 
 require_once dirname(__DIR__, 3) . '/vendor/autoload.php';

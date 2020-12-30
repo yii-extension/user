@@ -56,7 +56,7 @@ jobs:
         run: composer self-update
 
       - name: Install user-view-bootstrap5
-        run: composer require yii-extension/user-view-bootstrap5 --ansi
+        run: composer require yii-extension/user-view-bootstrap5:@dev --dev --ansi
 
       - name: Run tests with codeception
         run: |

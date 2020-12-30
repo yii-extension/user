@@ -56,7 +56,7 @@ jobs:
         run: composer self-update
 
       - name: Install user-view-bulma
-        run: composer require yii-extension/user-view-bulma --ansi
+        run: composer require yii-extension/user-view-bulma:@dev --dev --ansi
 
       - name: Run tests with codeception
         run: |

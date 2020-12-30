@@ -55,14 +55,14 @@ Bulma css framework:
 
 ```php
 composer create-project --prefer-dist --stability dev yiisoft/app app
-composer require yii-extension/user yii-extension/user-view-bulma
+composer require yii-extension/user:@dev yii-extension/user-view-bulma:@dev
 ```
 
 Bootstrap5 css framework:
 
 ```php
 composer create-project --prefer-dist --stability dev yiisoft/app app
-composer require yii-extension/user yii-extension/user-view-bootstrap5
+composer require yii-extension/user:@dev yii-extension/user-view-bootstrap5:@dev
 ```
 
 ## Run command console
