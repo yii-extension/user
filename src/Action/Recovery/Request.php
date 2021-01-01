@@ -51,7 +51,7 @@ final class Request
             }
 
             if ($user !== null && !$user->isConfirmed()) {
-                $requestForm->addError('email', 'Inactive user.');
+                $formRequest->addError('email', 'Inactive user.');
             }
 
             if ($user !== null && $user->isConfirmed()) {
