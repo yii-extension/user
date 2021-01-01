@@ -70,7 +70,7 @@ final class RepositoryUser implements IdentityRepositoryInterface
         ]);
     }
 
-    public function confirm(User $user): bool
+    public function isConfirm(User $user): bool
     {
         return (bool) $user->updateAttributes(['confirmed_at' => time()]);
     }

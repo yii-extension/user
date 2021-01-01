@@ -76,13 +76,7 @@ final class Register
         if ($repositorySetting->isRegister()) {
             return $viewRenderer
                 ->withViewPath('@user-view-views')
-                ->render(
-                    '/registration/register',
-                    [
-                        'body' => $body,
-                        'data' => $formRegister,
-                    ]
-                );
+                ->render('/registration/register', ['body' => $body, 'data' => $formRegister]);
         }
 
         return $viewRenderer->withViewPath('@user-view-views')->render('site/404');

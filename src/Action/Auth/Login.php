@@ -43,12 +43,6 @@ final class Login
 
         return $viewRenderer
             ->withViewPath('@user-view-views')
-            ->render(
-                'auth/login',
-                [
-                    'body' => $body,
-                    'data' => $FormLogin,
-                ],
-            );
+            ->render('auth/login', ['body' => $body, 'data' => $FormLogin]);
     }
 }

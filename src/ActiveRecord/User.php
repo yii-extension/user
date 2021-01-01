@@ -50,6 +50,7 @@ final class User extends ActiveRecord implements IdentityInterface
     {
         return '{{%user}}';
     }
+
     public function isBlocked(): bool
     {
         return $this->getAttribute('blocked_at') !== null;

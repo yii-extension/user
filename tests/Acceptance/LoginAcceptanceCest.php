@@ -8,30 +8,29 @@ use Yii\Extension\User\Tests\AcceptanceTester;
 
 final class LoginAcceptanceCest
 {
-    public function testAuthLoginPage(AcceptanceTester $I): void
+    public function testLoginPage(AcceptanceTester $I): void
     {
         $I->amGoingTo('go to the login page');
         $I->amOnPage('/login');
 
         $I->expectTo('see login page.');
-        $I->see('Sign in.');
-        $I->see('Please fill out the following.');
+        $I->see('Sign in');
     }
 
-    public function testAuthLoginEmptyDataTest(AcceptanceTester $I): void
+    public function testLoginEmptyDataTest(AcceptanceTester $I): void
     {
         $I->amGoingTo('go to the login page');
         $I->amOnPage('/login');
 
-        $I->click('Login', '#form-security-login');
+        $I->click('Login', '#form-auth-login');
 
         $I->expectTo('see validations errors.');
         $I->see('Value cannot be blank.');
         $I->see('Value cannot be blank.');
-        $I->see('Login', '#form-security-login');
+        $I->see('Login', '#form-auth-login');
     }
 
-    public function testAuthLoginSubmitFormWrongData(AcceptanceTester $I): void
+    public function testLoginSubmitFormWrongData(AcceptanceTester $I): void
     {
         $I->amGoingTo('go to the login page');
         $I->amOnPage('/login');
@@ -39,17 +38,17 @@ final class LoginAcceptanceCest
         $I->fillField('#login-login', 'admin1');
         $I->fillField('#login-password', '1234567');
 
-        $I->click('Login', '#form-security-login');
+        $I->click('Login', '#form-auth-login');
 
         $I->expectTo('see validations errors.');
         $I->see('Unregistered user/Invalid password.');
-        $I->see('Login', '#form-security-login');
+        $I->see('Login', '#form-auth-login');
     }
 
     /**
      * @depends Yii\Extension\User\Tests\Acceptance\RegisterAcceptanceCest:testRegisterSuccessDataDefaultAccountConfirmationFalse
      */
-    public function testAuthLoginUsernameSubmitFormSuccessData(AcceptanceTester $I): void
+    public function testLoginUsernameSubmitFormSuccessData(AcceptanceTester $I): void
     {
         $I->amGoingTo('go to the login page');
         $I->amOnPage('/login');
@@ -57,18 +56,19 @@ final class LoginAcceptanceCest
         $I->fillField('#login-login', 'admin');
         $I->fillField('#login-password', '123456');
 
-        $I->click('Login', '#form-security-login');
+        $I->click('Login', '#form-auth-login');
 
         $I->expectTo('see logged index page.');
         $I->see('Hello!');
         $I->see("Let's start something great with Yii3!");
         $I->see('Logout (admin)');
 
+        $I->amGoingTo('go to the login page');
         $I->amOnPage('/login');
 
         $I->expectTo('no see page login');
         $I->see('404');
-        $I->see('The page /login not found.');
+        $I->see('The page /login was not found.');
 
         $I->click('#logout');
 
@@ -79,7 +79,7 @@ final class LoginAcceptanceCest
     /**
      * @depends Yii\Extension\User\Tests\Acceptance\RegisterAcceptanceCest:testRegisterSuccessDataDefaultAccountConfirmationFalse
      */
-    public function testAuthLoginEmailSubmitFormSuccessData(AcceptanceTester $I): void
+    public function testLoginEmailSubmitFormSuccessData(AcceptanceTester $I): void
     {
         $I->amGoingTo('go to the login page');
         $I->amOnPage('/login');
@@ -87,18 +87,19 @@ final class LoginAcceptanceCest
         $I->fillField('#login-login', 'administrator@example.com');
         $I->fillField('#login-password', '123456');
 
-        $I->click('Login', '#form-security-login');
+        $I->click('Login', '#form-auth-login');
 
         $I->expectTo('see logged index page.');
         $I->see('Hello!');
         $I->see("Let's start something great with Yii3!");
         $I->see('Logout (admin)');
 
+        $I->amGoingTo('go to the login page');
         $I->amOnPage('/login');
 
         $I->expectTo('no see page login');
         $I->see('404');
-        $I->see('The page /login not found.');
+        $I->see('The page /login was not found.');
 
         $I->click('#logout');
 
@@ -106,12 +107,12 @@ final class LoginAcceptanceCest
         $I->dontSeeLink('logout');
     }
 
-    public function testAuthLoginSettingsPasswordRecoveryTrue(AcceptanceTester $I): void
+    public function testLoginSettingsPasswordRecoveryTrue(AcceptanceTester $I): void
     {
         $I->amGoingTo('go to the login page');
         $I->amOnPage('/login');
 
         $I->expectTo('see link forgot password');
-        $I->see('Forgot Password');
+        $I->see('Recovery your password');
     }
 }

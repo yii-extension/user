@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Yii\Extension\User\Action\Registration;
+namespace Yii\Extension\User\Action\Recovery;
 
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Yii\Extension\User\Event\AfterResend;
 use Yii\Extension\Service\ServiceUrl;
 use Yii\Extension\Service\ServiceMailer;
 use Yii\Extension\User\ActiveRecord\User;
 use Yii\Extension\User\ActiveRecord\Token;
-use Yii\Extension\User\Event\AfterResend;
 use Yii\Extension\User\Form\FormResend;
 use Yii\Extension\User\Settings\RepositorySetting;
 use Yii\Extension\User\Repository\RepositoryToken;
@@ -70,15 +70,7 @@ final class Resend
         if ($repositorySetting->isConfirmation()) {
             return $viewRenderer
                 ->withViewPath('@user-view-views')
-                ->render(
-                    '/registration/resend',
-                    [
-                        'body' => $body,
-                        'data' => $formResend,
-                        'settings' => $repositorySetting,
-                        'urlGenerator' => $urlGenerator,
-                    ]
-                );
+                ->render('/recovery/resend', ['body' => $body, 'data' => $formResend]);
         }
 
         return $viewRenderer->withViewPath('@user-view-views')->render('site/404');

@@ -45,7 +45,7 @@ final class RepositoryToken
         return $this->findTokenByCondition(['user_id' => $id, 'code' => $code, 'type' => $type]);
     }
 
-    public function register(int $id, int $token): bool
+    public function register(string $id, int $token): bool
     {
         $result = false;
 
@@ -57,7 +57,7 @@ final class RepositoryToken
         $transaction = $this->db->beginTransaction();
 
         try {
-            $this->token->setAttribute('user_id', $id);
+            $this->token->setAttribute('user_id', (int) $id);
             $this->token->setAttribute('type', $token);
             $this->token->setAttribute('created_at', time());
             $this->token->setAttribute('code', Random::string());
