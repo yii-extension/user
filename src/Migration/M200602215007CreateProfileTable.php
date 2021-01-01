@@ -20,7 +20,7 @@ final class M200602215007CreateProfileTable extends Migration implements Reverti
         }
 
         $this->createTable(
-            'profile',
+            '{{%profile}}',
             [
                 'user_id' => $this->primaryKey(),
                 'name' => $this->string(255),
@@ -35,9 +35,9 @@ final class M200602215007CreateProfileTable extends Migration implements Reverti
 
         $this->addForeignKey(
             'fk_user_profile',
-            'profile',
+            '{{%profile}}',
             ['user_id'],
-            'user',
+            '{{%user}}',
             ['id'],
             'CASCADE',
             'RESTRICT'
@@ -46,6 +46,6 @@ final class M200602215007CreateProfileTable extends Migration implements Reverti
 
     public function down(): void
     {
-        $this->dropTable('profile');
+        $this->dropTable('{{%profile}}');
     }
 }

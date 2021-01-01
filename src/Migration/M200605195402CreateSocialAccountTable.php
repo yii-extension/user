@@ -20,7 +20,7 @@ final class M200605195402CreateSocialAccountTable extends Migration implements R
         }
 
         $this->createTable(
-            'social_account',
+            '{{%social_account}}',
             [
                 'id' => $this->primaryKey(),
                 'user_id' => $this->integer(),
@@ -35,14 +35,14 @@ final class M200605195402CreateSocialAccountTable extends Migration implements R
             $tableOptions
         );
 
-        $this->createIndex('account_unique', 'social_account', ['provider', 'client_id'], true);
-        $this->createIndex('account_unique_code', 'social_account', ['code'], true);
+        $this->createIndex('account_unique', '{{%social_account}}', ['provider', 'client_id'], true);
+        $this->createIndex('account_unique_code', '{{%social_account}}', ['code'], true);
 
         $this->addForeignKey(
             'fk_user_account',
-            'social_account',
+            '{{%social_account}}',
             ['user_id'],
-            'user',
+            '{{%user}}',
             ['id'],
             'CASCADE',
             'RESTRICT'
@@ -51,6 +51,6 @@ final class M200605195402CreateSocialAccountTable extends Migration implements R
 
     public function down(): void
     {
-        $this->dropTable('social_account');
+        $this->dropTable('{{%social_account}}');
     }
 }

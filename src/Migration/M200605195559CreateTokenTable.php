@@ -20,7 +20,7 @@ final class M200605195559CreateTokenTable extends Migration implements Revertibl
         }
 
         $this->createTable(
-            'token',
+            '{{%token}}',
             [
                 'user_id' => $this->primaryKey(),
                 'code' => $this->string(32),
@@ -30,13 +30,13 @@ final class M200605195559CreateTokenTable extends Migration implements Revertibl
             $tableOptions
         );
 
-        $this->createIndex('token_unique', 'token', ['user_id', 'code', 'type'], true);
+        $this->createIndex('token_unique', '{{%token}}', ['user_id', 'code', 'type'], true);
 
         $this->addForeignKey(
             'fk_user_token',
-            'token',
+            '{{%token}}',
             ['user_id'],
-            'user',
+            '{{%user}}',
             ['id'],
             'CASCADE',
             'RESTRICT'
@@ -45,6 +45,6 @@ final class M200605195559CreateTokenTable extends Migration implements Revertibl
 
     public function down(): void
     {
-        $this->dropTable('token');
+        $this->dropTable('{{%token}}');
     }
 }

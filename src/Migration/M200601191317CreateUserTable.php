@@ -21,7 +21,7 @@ final class M200601191317CreateUserTable extends Migration implements Revertible
         }
 
         $this->createTable(
-            'user',
+            '{{%user}}',
             [
                 'id' => $this->primaryKey(),
                 'username' => $this->string(255),
@@ -42,12 +42,12 @@ final class M200601191317CreateUserTable extends Migration implements Revertible
             $tableOptions
         );
 
-        $this->createIndex('user_unique_email', 'user', ['email'], true);
-        $this->createIndex('user_unique_username', 'user', ['username'], true);
+        $this->createIndex('user_unique_email', '{{%user}}', ['email'], true);
+        $this->createIndex('user_unique_username', '{{%user}}', ['username'], true);
     }
 
     public function down(): void
     {
-        $this->dropTable('user');
+        $this->dropTable('{{%user}}');
     }
 }
