@@ -14,7 +14,7 @@ final class LoginAcceptanceCest
         $I->amOnPage('/login');
 
         $I->expectTo('see login page.');
-        $I->see('Sign in');
+        $I->see('Login');
     }
 
     public function testLoginEmptyDataTest(AcceptanceTester $I): void
@@ -113,6 +113,15 @@ final class LoginAcceptanceCest
         $I->amOnPage('/login');
 
         $I->expectTo('see link forgot password');
-        $I->see('Recovery your password');
+        $I->see('Forgot password');
+    }
+
+    public function testLoginSettingsRegisterTrue(AcceptanceTester $I): void
+    {
+        $I->amGoingTo('go to the login page');
+        $I->amOnPage('/login');
+
+        $I->expectTo('see link register');
+        $I->see("Don't have an account - Sign up!");
     }
 }

@@ -23,6 +23,21 @@ final class LoginFunctionalCest
         $I->updateInDatabase('settings', ['passwordRecovery' => true], ['id' => 1]);
     }
 
+    public function testLoginSettingsRegisterFalse(FunctionalTester $I): void
+    {
+        $I->amGoingTo('update settings register false');
+        $I->updateInDatabase('settings', ['register' => false], ['id' => 1]);
+
+        $I->amGoingTo('go to the login page');
+        $I->amOnPage('/login');
+
+        $I->expectTo('dont see link register');
+        $I->dontSeeLink("Don't have an account - Sign up!");
+
+        $I->amGoingTo('update settings register true');
+        $I->updateInDatabase('settings', ['register' => true], ['id' => 1]);
+    }
+
     public function testLoginSettingsUserNameCaseSensitiveDefault(FunctionalTester $I): void
     {
         $I->amGoingTo('go to the register page');
