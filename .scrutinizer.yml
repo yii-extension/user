@@ -27,8 +27,6 @@ build:
                 override:
                     - composer self-update
                     - composer require yii-extension/user-view-bulma:@dev --dev --ansi
-                    - sudo mkdir tests/_output
-                    - sudo mkdir tests/_output/runtime
                     - sudo mkdir tests/_output/runtime/cache
                     - sudo mkdir tests/_output/runtime/logs
                     - sudo mkdir tests/_output/runtime/mail
