@@ -26,8 +26,13 @@ final class Login
         ServiceUrl $serviceUrl,
         ViewRenderer $viewRenderer
     ): ResponseInterface {
+        /** @var array $body */
         $body = $serverRequest->getParsedBody();
+
+        /** @var string $method */
         $method = $serverRequest->getMethod();
+
+        /** @var string $ip */
         $ip = $serverRequest->getServerParams()['REMOTE_ADDR'];
 
         if (

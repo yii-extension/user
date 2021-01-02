@@ -24,7 +24,7 @@ return [
             '@npm' => dirname(__DIR__, 3) . '/vendor/npm-asset',
             '@public' => '@root/public',
             '@resources' => '@root/resources',
-            '@runtime' => '@root/runtime',
+            '@runtime' => '../../_output/runtime',
             '@views' => '@root/resources/views',
             '@message' => '@root/resources/message',
         ],

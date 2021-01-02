@@ -6,6 +6,7 @@ use Yii\Extension\User\Action\Auth\Login;
 use Yii\Extension\User\Action\Auth\Logout;
 use Yii\Extension\User\Action\Recovery\Request;
 use Yii\Extension\User\Action\Recovery\Resend;
+use Yii\Extension\User\Action\Registration\Confirm;
 use Yii\Extension\User\Action\Registration\Register;
 use Yii\Extension\User\Middleware\Guest;
 use Yiisoft\Router\Group;

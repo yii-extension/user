@@ -5,18 +5,18 @@ declare(strict_types=1);
 namespace Yii\Extension\User\Action\Recovery;
 
 use Psr\EventDispatcher\EventDispatcherInterface;
-use Yiisoft\Aliases\Aliases;
-use Yii\Extension\User\Event\AfterRequest;
-use Yii\Extension\User\ActiveRecord\Token;
-use Yii\Extension\User\ActiveRecord\User;
-use Yii\Extension\User\Form\FormRequest;
-use Yii\Extension\User\Settings\RepositorySetting;
-use Yii\Extension\Service\ServiceMailer;
-use Yii\Extension\User\Repository\RepositoryToken;
-use Yii\Extension\User\Repository\RepositoryUser;
-use Yii\Extension\Service\ServiceUrl;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Yii\Extension\Service\ServiceMailer;
+use Yii\Extension\Service\ServiceUrl;
+use Yii\Extension\User\ActiveRecord\Token;
+use Yii\Extension\User\ActiveRecord\User;
+use Yii\Extension\User\Event\AfterRequest;
+use Yii\Extension\User\Form\FormRequest;
+use Yii\Extension\User\Repository\RepositoryToken;
+use Yii\Extension\User\Repository\RepositoryUser;
+use Yii\Extension\User\Settings\RepositorySetting;
+use Yiisoft\Aliases\Aliases;
 use Yiisoft\Router\UrlGeneratorInterface;
 use Yiisoft\Yii\View\ViewRenderer;
 
@@ -27,23 +27,26 @@ final class Request
         Aliases $aliases,
         EventDispatcherInterface $eventDispatcher,
         FormRequest $formRequest,
+        RepositorySetting $repositorySetting,
+        RepositoryToken $repositoryToken,
+        RepositoryUser $repositoryUser,
         ServerRequestInterface $serverRequest,
         ServiceMailer $serviceMailer,
-        RepositoryToken $repositoryToken,
-        RepositorySetting $repositorySetting,
-        UrlGeneratorInterface $urlGenerator,
-        RepositoryUser $repositoryUser,
         ServiceUrl $serviceUrl,
-        ViewRenderer $viewRenderer,
-        Token $token
+        Token $token,
+        UrlGeneratorInterface $urlGenerator,
+        ViewRenderer $viewRenderer
     ): ResponseInterface {
+        /** @var array $body */
         $body = $serverRequest->getParsedBody();
+
+        /** @var string $method */
         $method = $serverRequest->getMethod();
 
         if ($method === 'POST' && $formRequest->load($body) && $formRequest->validate()) {
             $email = $formRequest->getEmail();
 
-            /** @var User $user*/
+            /** @var User|null $user */
             $user = $repositoryUser->findUserByUsernameOrEmail($email);
 
             if ($user === null) {
@@ -55,7 +58,6 @@ final class Request
             }
 
             if ($user !== null && $user->isConfirmed()) {
-                /** @var Token $token */
                 $token->deleteAll(
                     [
                         'user_id' => $user->getId(),
@@ -65,6 +67,7 @@ final class Request
 
                 $repositoryToken->register($user->getId(), Token::TYPE_RECOVERY);
 
+                /** @var Token $token */
                 $token = $repositoryToken->findTokenById($user->getId());
 
                 $this->sentEmail($aliases, $repositorySetting, $serviceMailer, $token, $urlGenerator, $user);

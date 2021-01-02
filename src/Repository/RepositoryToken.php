@@ -40,9 +40,9 @@ final class RepositoryToken
         return $this->findTokenByCondition(['user_id' => (int) $id]);
     }
 
-    public function findTokenByParams(int $id, string $code, int $type): ?ActiveRecordInterface
+    public function findTokenByParams(string $id, string $code, int $type): ?ActiveRecordInterface
     {
-        return $this->findTokenByCondition(['user_id' => $id, 'code' => $code, 'type' => $type]);
+        return $this->findTokenByCondition(['user_id' => (int) $id, 'code' => $code, 'type' => $type]);
     }
 
     public function register(string $id, int $token): bool

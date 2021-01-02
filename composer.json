@@ -66,7 +66,7 @@
         "branch-alias": {
             "dev-master": "1.0.x-dev"
         },
-        "config-plugin-output-dir": "tests/_data/runtime/build/config",
+        "config-plugin-output-dir": "tests/_output/runtime/build/config",
         "config-plugin": {
             "params": "config/params.php",
             "common": [

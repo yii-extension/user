@@ -11,8 +11,8 @@ use Yii\Extension\Service\ServiceMailer;
 use Yii\Extension\Service\ServiceUrl;
 use Yii\Extension\User\Event\AfterRegister;
 use Yii\Extension\User\Form\FormRegister;
-use Yii\Extension\User\Settings\RepositorySetting;
 use Yii\Extension\User\Repository\RepositoryUser;
+use Yii\Extension\User\Settings\RepositorySetting;
 use Yiisoft\Aliases\Aliases;
 use Yiisoft\Router\UrlGeneratorInterface;
 use Yiisoft\Yii\View\ViewRenderer;
@@ -27,13 +27,17 @@ final class Register
         RepositorySetting $repositorySetting,
         RepositoryUser $repositoryUser,
         ServerRequestInterface $serverRequest,
-        UrlGeneratorInterface $urlGenerator,
         ServiceMailer $serviceMailer,
         ServiceUrl $serviceUrl,
+        UrlGeneratorInterface $urlGenerator,
         ViewRenderer $viewRenderer
     ): ResponseInterface {
+        /** @var array $body */
         $body = $serverRequest->getParsedBody();
+
+        /** @var string $method */
         $method = $serverRequest->getMethod();
+
         $formRegister->ip($serverRequest->getServerParams()['REMOTE_ADDR']);
 
         if (
