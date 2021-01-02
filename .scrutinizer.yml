@@ -27,7 +27,6 @@ build:
                 override:
                     - composer self-update
                     - composer require yii-extension/user-view-bulma:@dev --dev --ansi
-                    - chmod +0777 tests/_output/runtime
 
             tests:
                 override:
