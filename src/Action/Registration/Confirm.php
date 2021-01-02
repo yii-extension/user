@@ -6,6 +6,7 @@ namespace Yii\Extension\User\Action\Registration;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Yii\Extension\Service\ServiceFlashMessage;
 use Yii\Extension\Service\ServiceUrl;
 use Yii\Extension\User\ActiveRecord\Token;
 use Yii\Extension\User\ActiveRecord\User;
@@ -23,6 +24,7 @@ final class Confirm
         RepositorySetting $repositorySetting,
         RepositoryToken $repositoryToken,
         RepositoryUser $repositoryUser,
+        ServiceFlashMessage $serviceFlashMessage,
         ServiceUrl $serviceUrl,
         ViewRenderer $viewRenderer
     ): ResponseInterface {
@@ -63,6 +65,12 @@ final class Confirm
                 'unconfirmed_email' => null,
                 'confirmed_at' => time()
             ]);
+
+            $serviceFlashMessage->run(
+                'success',
+                $repositorySetting->getMessageHeader(),
+                'Your user has been confirmed.'
+            );
         }
 
         return $serviceUrl->run('site/index');

@@ -9,7 +9,7 @@ build:
     nodes:
         analysis:
             environment:
-                php: 7.4.12
+                php: 7.4.13
 
             dependencies:
                 override:
@@ -21,12 +21,13 @@ build:
 
         tests-and-coverage:
             environment:
-                php: 7.4.12
+                php: 7.4.13
 
             dependencies:
                 override:
                     - composer self-update
                     - composer require yii-extension/user-view-bulma:@dev --dev --ansi
+                    - chmod +0777 tests/_output/runtime
 
             tests:
                 override:
