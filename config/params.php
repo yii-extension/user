@@ -16,8 +16,4 @@ return [
             'Yii\\Extension\\User\\Migration',
         ]
     ],
-
-    'yiisoft/router' => [
-        'enableCache' => false,
-    ],
 ];

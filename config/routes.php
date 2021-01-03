@@ -10,7 +10,6 @@ use Yii\Extension\User\Action\Recovery\Reset;
 use Yii\Extension\User\Action\Registration\Confirm;
 use Yii\Extension\User\Action\Registration\Register;
 use Yii\Extension\User\Middleware\Guest;
-use Yiisoft\Router\Group;
 use Yiisoft\Router\Route;
 
 return [
