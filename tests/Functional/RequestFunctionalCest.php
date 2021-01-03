@@ -13,9 +13,11 @@ final class RequestFunctionalCest
         $I->amGoingTo('update settings password recovery false');
         $I->updateInDatabase('settings', ['passwordRecovery' => false], ['id' => 1]);
 
-        $I->amGoingTo('go to the register page');
+        $I->amGoingTo('go to the request page');
         $I->amOnPage('/request');
 
+        $I->expectTo('no see request page');
+        $I->see('404');
         $I->see('The page /request was not found.');
 
         $I->amGoingTo('update settings password recovery true');

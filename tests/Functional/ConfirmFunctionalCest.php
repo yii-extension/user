@@ -40,33 +40,30 @@ final class ConfirmFunctionalCest
     {
         $I->amGoingTo('register fixture unconfirmed user.');
 
-        $this->unconfirmedUser($I);
-
-        $token = $I->grabColumnFromDatabase('token', 'code', ['user_id' => 100]);
+        $id = 4;
+        $code = 'NO2aCmBIjFQX624xmAc3VBu7Th3NJoa6';
 
         $I->amGoingTo('page recovery confirm.');
-        $I->amOnPage('/confirm/4/' . $token[0]);
+        $I->amOnPage('/confirm' . '/' . $id . '/' . $code);
 
-        $I->expectTo('see registration confirm validation message.');
+        $I->expectTo('see confirm validation message.');
         $I->see('404');
-        $I->see('The page /confirm/4/NO2aCmBIjFQX624xmAc3VBu7Th3NJoa6 was not found.');
+        $I->see('The page /confirm/' . $id . '/' . $code . ' was not found.');
     }
 
     public function testRegistationConfirmAccountWrongCode(FunctionalTester $I): void
     {
         $I->amGoingTo('register fixture unconfirmed user.');
 
-        $this->unconfirmedUser($I);
-
-        $id = $I->grabColumnFromDatabase('token', 'user_id', ['user_id' => 100]);
-        $token = $I->grabColumnFromDatabase('token', 'code', ['user_id' => 100]);
+        $id = 100;
+        $code = 'NO2aCmBIjFQX624xmAc3VBu7Th3NJoa1';
 
         $I->amGoingTo('page recovery confirm.');
-        $I->amOnPage('/confirm' . '/' . $id[0] . '/NO2aCmBIjFQX624xmAc3VBu7Th3NJoa7');
+        $I->amOnPage('/confirm' . '/' . $id . '/' . $code);
 
-        $I->expectTo('see registration confirm validation message.');
+        $I->expectTo('see confirm validation message.');
         $I->see('404');
-        $I->see('The page /confirm/100/NO2aCmBIjFQX624xmAc3VBu7Th3NJoa7 was not found.');
+        $I->see('The page /confirm/' . $id . '/' . $code . ' was not found.');
     }
 
     public function testRegistationConfirmAccountWithTokenExpired(FunctionalTester $I): void

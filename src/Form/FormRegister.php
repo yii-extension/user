@@ -10,6 +10,7 @@ use Yiisoft\Validator\Rule\Email;
 use Yiisoft\Validator\Rule\HasLength;
 use Yiisoft\Validator\Rule\MatchRegularExpression;
 use Yiisoft\Validator\Rule\Required;
+use Yiisoft\Translator\Translator;
 use Yiisoft\Validator\ValidatorFactoryInterface;
 
 use function strtolower;
@@ -21,12 +22,15 @@ final class FormRegister extends FormModel
     private string $password = '';
     private string $ip = '';
     private RepositorySetting $repositorySetting;
+    private Translator $translator;
 
     public function __construct(
         RepositorySetting $repositorySetting,
+        Translator $translator,
         ValidatorFactoryInterface $validatorFactory
     ) {
         $this->repositorySetting = $repositorySetting;
+        $this->translator = $translator;
 
         parent::__construct($validatorFactory);
     }
@@ -34,9 +38,9 @@ final class FormRegister extends FormModel
     public function attributeLabels(): array
     {
         return [
-            'email' => 'Email',
-            'username' => 'Username',
-            'password' => 'Password'
+            'email' => $this->translator->translate('Email'),
+            'username' => $this->translator->translate('Username'),
+            'password' => $this->translator->translate('Password'),
         ];
     }
 

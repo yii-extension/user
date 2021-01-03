@@ -5,16 +5,14 @@ declare(strict_types=1);
 namespace Yii\Extension\User\Form;
 
 use Yiisoft\Form\FormModel;
-use Yiisoft\Validator\Rule\Email;
+use Yiisoft\Validator\Rule\HasLength;
 use Yiisoft\Validator\Rule\Required;
 use Yiisoft\Translator\Translator;
 use Yiisoft\Validator\ValidatorFactoryInterface;
 
-use function strtolower;
-
-final class FormResend extends FormModel
+final class FormReset extends FormModel
 {
-    private string $email = '';
+    private string $password = '';
     private Translator $translator;
 
     public function __construct(
@@ -29,27 +27,27 @@ final class FormResend extends FormModel
     public function attributeLabels(): array
     {
         return [
-            'email' => $this->translator->translate('Email'),
+            'password' => $this->translator->translate('Password'),
         ];
+    }
+
+    public function getPassword(): string
+    {
+        return $this->password;
     }
 
     public function formName(): string
     {
-        return 'Resend';
-    }
-
-    public function getEmail(): string
-    {
-        return strtolower($this->email);
+        return 'Reset';
     }
 
     public function rules(): array
     {
         return [
-            'email' => [
+            'password' => [
                 new Required(),
-                new Email()
-            ]
+                (new HasLength())->min(6)->max(72)->tooShortMessage('Password should contain at least 6 characters.')
+            ],
         ];
     }
 }

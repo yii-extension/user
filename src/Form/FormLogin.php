@@ -6,6 +6,7 @@ namespace Yii\Extension\User\Form;
 
 use Yii\Extension\User\Settings\RepositorySetting;
 use Yiisoft\Form\FormModel;
+use Yiisoft\Translator\Translator;
 use Yiisoft\Validator\Rule\Required;
 use Yiisoft\Validator\ValidatorFactoryInterface;
 
@@ -16,10 +17,15 @@ final class FormLogin extends FormModel
     private string $login = '';
     private string $password = '';
     private RepositorySetting $repositorySetting;
+    private Translator $translator;
 
-    public function __construct(RepositorySetting $repositorySetting, ValidatorFactoryInterface $validatorFactory)
-    {
+    public function __construct(
+        RepositorySetting $repositorySetting,
+        Translator $translator,
+        ValidatorFactoryInterface $validatorFactory
+    ) {
         $this->repositorySetting = $repositorySetting;
+        $this->translator = $translator;
 
         parent::__construct($validatorFactory);
     }
@@ -27,8 +33,8 @@ final class FormLogin extends FormModel
     public function attributeLabels(): array
     {
         return [
-            'login' => 'Login',
-            'password' => 'Password'
+            'login' => $this->translator->translate('Login'),
+            'password' => $this->translator->translate('Password'),
         ];
     }
 

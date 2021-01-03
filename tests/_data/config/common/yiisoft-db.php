@@ -13,6 +13,6 @@ return [
         '__class' => Connection::class,
         '__construct()' => [
             'dsn' => 'sqlite:' . dirname(__DIR__, 3) . '/_output/yiitest.sq3',
-        ]
+        ],
     ]
 ];

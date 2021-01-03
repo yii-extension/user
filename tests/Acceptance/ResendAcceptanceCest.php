@@ -13,7 +13,7 @@ final class ResendAcceptanceCest
         $I->amGoingTo('go to the resend page');
         $I->amOnPage('/resend');
 
-        $I->expectTo('registration resend options default [accountConfirmation = false].');
+        $I->expectTo('no see resend page');
         $I->see('404');
         $I->see('The page /resend was not found.');
     }

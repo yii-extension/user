@@ -6,6 +6,7 @@ use Yii\Extension\User\Action\Auth\Login;
 use Yii\Extension\User\Action\Auth\Logout;
 use Yii\Extension\User\Action\Recovery\Request;
 use Yii\Extension\User\Action\Recovery\Resend;
+use Yii\Extension\User\Action\Recovery\Reset;
 use Yii\Extension\User\Action\Registration\Confirm;
 use Yii\Extension\User\Action\Registration\Register;
 use Yii\Extension\User\Middleware\Guest;
@@ -30,7 +31,7 @@ return [
     Route::methods(['GET', 'POST'], '/resend', [Resend::class, 'run'])
         ->name('resend')
         ->addMiddleware(Guest::class),
-    Route::methods(['GET', 'POST'], '/reset[/{id}/{code}]', [Reset::class, 'reset'])
-        ->addMiddleware(Guest::class)
-        ->name('reset'),
+    Route::methods(['GET', 'POST'], '/reset[/{id}/{code}]', [Reset::class, 'run'])
+        ->name('reset')
+        ->addMiddleware(Guest::class),
 ];
