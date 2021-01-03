@@ -33,7 +33,7 @@ final class FormLogin extends FormModel
     public function attributeLabels(): array
     {
         return [
-            'login' => $this->translator->translate('Login'),
+            'login' => $this->translator->translate('Username'),
             'password' => $this->translator->translate('Password'),
         ];
     }
