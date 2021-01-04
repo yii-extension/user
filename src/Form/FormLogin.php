@@ -17,7 +17,7 @@ final class FormLogin extends FormModel
 {
     private string $login = '';
     private string $password = '';
-    private string $remember = false;
+    private bool $remember = false;
     private RepositorySetting $repositorySetting;
     private Translator $translator;
 
