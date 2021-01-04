@@ -27,6 +27,7 @@
         "yiisoft/data-response": "^3.0@dev",
         "yiisoft/files": "^3.0@dev",
         "yiisoft/form": "^1.0@dev",
+        "yiisoft/http": "^1.1",
         "yiisoft/log": "^3.0@dev",
         "yiisoft/log-target-file": "^3.0@dev",
         "yiisoft/middleware-dispatcher": "^1.0@dev",
