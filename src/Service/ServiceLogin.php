@@ -25,6 +25,7 @@ final class ServiceLogin
     {
         $login = $this->formLogin->getLogin();
         $password = $this->formLogin->getPassword();
+        $remember = $this->formLogin->getRemember();
 
         /** @var User $user */
         $user = $repositoryUser->findUserByUsernameOrEmail($login);

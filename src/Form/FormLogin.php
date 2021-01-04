@@ -7,6 +7,7 @@ namespace Yii\Extension\User\Form;
 use Yii\Extension\User\Settings\RepositorySetting;
 use Yiisoft\Form\FormModel;
 use Yiisoft\Translator\Translator;
+use Yiisoft\Validator\Rule\Boolean;
 use Yiisoft\Validator\Rule\Required;
 use Yiisoft\Validator\ValidatorFactoryInterface;
 
@@ -16,6 +17,7 @@ final class FormLogin extends FormModel
 {
     private string $login = '';
     private string $password = '';
+    private string $remember = false;
     private RepositorySetting $repositorySetting;
     private Translator $translator;
 
@@ -35,6 +37,7 @@ final class FormLogin extends FormModel
         return [
             'login' => $this->translator->translate('Username'),
             'password' => $this->translator->translate('Password'),
+            'remember' => $this->translator->translate('Remember me'),
         ];
     }
 
@@ -57,11 +60,17 @@ final class FormLogin extends FormModel
         return $this->password;
     }
 
+    public function getRemember(): bool
+    {
+        return $this->remember;
+    }
+
     public function rules(): array
     {
         return [
             'login' => [new Required()],
-            'password' => [new Required()]
+            'password' => [new Required()],
+            'remember' => [new Boolean()]
         ];
     }
 }
