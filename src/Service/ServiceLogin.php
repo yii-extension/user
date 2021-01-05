@@ -48,6 +48,8 @@ final class ServiceLogin
         ) {
             $this->updateAttributeLogin($user, $ip);
 
+            $this->formLogin->lastLogin($user->getLastLogin());
+
             /** @var IdentityInterface $user */
             $result = $this->identityUser->login($user);
         } else {

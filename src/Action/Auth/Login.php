@@ -21,7 +21,7 @@ final class Login
     public function run(
         AfterLogin $afterLogin,
         EventDispatcherInterface $eventDispatcher,
-        FormLogin $FormLogin,
+        FormLogin $formLogin,
         RepositorySetting $repositorySetting,
         RepositoryUser $repositoryUser,
         ServerRequestInterface $serverRequest,
@@ -41,8 +41,8 @@ final class Login
 
         if (
             $method === 'POST'
-            && $FormLogin->load($body)
-            && $FormLogin->validate()
+            && $formLogin->load($body)
+            && $formLogin->validate()
             && $serviceLogin->run($repositoryUser, $ip)
         ) {
             $eventDispatcher->dispatch($afterLogin);
@@ -50,7 +50,7 @@ final class Login
             $serviceFlashMessage->run(
                 'success',
                 $repositorySetting->getMessageHeader(),
-                'Sign in successful - ' . date("F j, Y, g:i a")
+                'Sign in successful - ' . date('Y-m-d G:i:s', $formLogin->getLastLogin()),
             );
 
             return $serviceUrl->run('site/index');
@@ -58,6 +58,6 @@ final class Login
 
         return $viewRenderer
             ->withViewPath('@user-view-views')
-            ->render('auth/login', ['body' => $body, 'data' => $FormLogin]);
+            ->render('auth/login', ['body' => $body, 'data' => $formLogin]);
     }
 }

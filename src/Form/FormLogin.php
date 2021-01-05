@@ -20,6 +20,7 @@ final class FormLogin extends FormModel
     private bool $remember = false;
     private RepositorySetting $repositorySetting;
     private Translator $translator;
+    private int $lastLogin;
 
     public function __construct(
         RepositorySetting $repositorySetting,
@@ -46,6 +47,11 @@ final class FormLogin extends FormModel
         return 'Login';
     }
 
+    public function getLastLogin(): int
+    {
+        return $this->lastLogin;
+    }
+
     public function getLogin(): string
     {
         if (!$this->repositorySetting->getUserNameCaseSensitive()) {
@@ -63,6 +69,11 @@ final class FormLogin extends FormModel
     public function getRemember(): bool
     {
         return $this->remember;
+    }
+
+    public function lastLogin(int $value): void
+    {
+        $this->lastLogin = $value;
     }
 
     public function rules(): array

@@ -73,6 +73,11 @@ final class User extends ActiveRecord implements IdentityInterface
         return $this->flags;
     }
 
+    public function getLastLogin(): int
+    {
+        return $this->getAttribute('last_login_at');
+    }
+
     public function getUsername(): string
     {
         return $this->getAttribute('username');
