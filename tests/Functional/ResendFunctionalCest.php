@@ -17,7 +17,7 @@ final class ResendFormCest
         $I->amOnPage('/resend');
 
         $I->expectTo('see resend page.');
-        $I->see('Resend confirmation message');
+        $I->seeInTitle('Resend confirmation message');
 
         $I->amGoingTo('update settings confirmation false');
         $I->updateInDatabase('settings', ['confirmation' => false], ['id' => 1]);

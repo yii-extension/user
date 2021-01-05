@@ -14,7 +14,7 @@ final class RegisterAcceptanceCest
         $I->amOnPage('/register');
 
         $I->expectTo('see register page.');
-        $I->see('Register');
+        $I->seeInTitle('Register');
     }
 
     public function testRegisterSuccessDataDefaultAccountConfirmationFalse(AcceptanceTester $I): void

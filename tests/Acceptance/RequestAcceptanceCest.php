@@ -14,7 +14,7 @@ final class RequestAcceptanceCest
         $I->amOnPage('/request');
 
         $I->expectTo('see login page.');
-        $I->see('Reset password');
+        $I->seeInTitle('Reset password');
     }
 
     public function testRequestEmptyDataTest(AcceptanceTester $I): void

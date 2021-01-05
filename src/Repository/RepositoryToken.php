@@ -80,10 +80,6 @@ final class RepositoryToken
 
     private function tokenQuery(): ActiveQueryInterface
     {
-        if ($this->tokenQuery === null) {
-            $this->tokenQuery = new ActiveQuery(Token::class, $this->db);
-        }
-
-        return $this->tokenQuery;
+        return $this->tokenQuery = new ActiveQuery(Token::class, $this->db);
     }
 }

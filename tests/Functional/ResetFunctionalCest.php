@@ -8,7 +8,7 @@ use Yii\Extension\User\Tests\FunctionalTester;
 
 final class ResetFunctionalCest
 {
-    public function testResetPasswordWithEmptyQueryParams(FunctionalTester $I)
+    public function testResetPasswordWithEmptyQueryParams(FunctionalTester $I): void
     {
         $I->amGoingTo('go to the reset page');
         $I->amOnPage('/reset');
@@ -18,7 +18,7 @@ final class ResetFunctionalCest
         $I->see('The page /reset was not found.');
     }
 
-    public function testResetPasswordWrongId(FunctionalTester $I)
+    public function testResetPasswordWrongId(FunctionalTester $I): void
     {
         $id = 25;
         $code = '6f5d0dad53ef73e6ba6f01a441c0e602';
@@ -31,7 +31,7 @@ final class ResetFunctionalCest
         $I->see('The page /reset/' . $id . '/' . $code . ' was not found.');
     }
 
-    public function testResetPasswordWrongCode(FunctionalTester $I)
+    public function testResetPasswordWrongCode(FunctionalTester $I): void
     {
         $id = 100;
         $code = '6f5d0dad53ef73e6ba6f01a441c0e601';
@@ -44,7 +44,7 @@ final class ResetFunctionalCest
         $I->see('The page /reset/' . $id . '/' . $code . ' was not found.');
     }
 
-    public function testResetPasswordWithTokenExpired(FunctionalTester $I)
+    public function testResetPasswordWithTokenExpired(FunctionalTester $I): void
     {
         $I->amGoingTo('register fixture user with token expired.');
 
@@ -61,7 +61,7 @@ final class ResetFunctionalCest
         $I->see('The page /reset/' . $id[0] . '/' . $token[0] . ' was not found.');
     }
 
-    public function testResetPasswordSuccessData(FunctionalTester $I)
+    public function testResetPasswordSuccessData(FunctionalTester $I): void
     {
         $I->amGoingTo('register fixture user recovery.');
 

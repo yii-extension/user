@@ -6,7 +6,6 @@ namespace Yii\Extension\User\ActiveRecord;
 
 use Yiisoft\ActiveRecord\ActiveRecord;
 use Yiisoft\ActiveRecord\ActiveQuery;
-use Yiisoft\Db\Exception\InvalidArgumentException;
 
 /**
  * ProfileAR Active Record - Module AR User.
@@ -28,66 +27,66 @@ final class Profile extends ActiveRecord
         return '{{%profile}}';
     }
 
+    public function getBio(): ?string
+    {
+        return $this->getAttribute('bio');
+    }
+
+    public function getLocation(): ?string
+    {
+        return $this->getAttribute('location');
+    }
+
+    public function getPublicEmail(): ?string
+    {
+        return $this->getAttribute('public_email');
+    }
+
+    public function getName(): ?string
+    {
+        return $this->getAttribute('name');
+    }
+
+    public function getTimezone(): ?string
+    {
+        return $this->getAttribute('timezone');
+    }
+
+    public function getWebsite(): ?string
+    {
+        return $this->getAttribute('website');
+    }
+
     public function getUser(): ActiveQuery
     {
         return $this->hasOne(User::class, ['id' => 'user_id']);
     }
 
-    /**
-     * @param string|null $value
-     *
-     * @throws InvalidArgumentException
-     */
     public function name(?string $value): void
     {
         $this->setAttribute('name', $value);
     }
 
-    /**
-     * @param string|null $value
-     *
-     * @throws InvalidArgumentException
-     */
     public function publicEmail(?string $value): void
     {
         $this->setAttribute('public_email', $value);
     }
 
-    /**
-     * @param string|null $value
-     *
-     * @throws InvalidArgumentException
-     */
     public function location(?string $value): void
     {
         $this->setAttribute('location', $value);
     }
 
-    /**
-     * @param string|null $value
-     *
-     * @throws InvalidArgumentException
-     */
     public function website(?string $value): void
     {
         $this->setAttribute('website', $value);
     }
 
-    /**
-     * @param string|null $value
-     *
-     * @throws InvalidArgumentException
-     */
     public function bio(?string $value): void
     {
         $this->setAttribute('bio', $value);
     }
 
-    /**
-     * @param string|null $value
-     *
-     * @throws InvalidArgumentException
-     */
     public function timezone(?string $value): void
     {
         $this->setAttribute('timezone', $value);

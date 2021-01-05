@@ -14,7 +14,7 @@ final class LoginAcceptanceCest
         $I->amOnPage('/login');
 
         $I->expectTo('see login page.');
-        $I->see('Login');
+        $I->seeInTitle('Login');
     }
 
     public function testLoginEmptyDataTest(AcceptanceTester $I): void
