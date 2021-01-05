@@ -7,24 +7,13 @@
 </p>
 
 [![Total Downloads](https://img.shields.io/packagist/dt/yii-extension/user)](https://packagist.org/packages/yii-extension/user)
+[![bulma](https://github.com/yii-extension/user/workflows/bulma/badge.svg)](https://github.com/yii-extension/user-view-bulma)
+[![boostrap5](https://github.com/yii-extension/user/workflows/bootstrap5/badge.svg)](https://github.com/yii-extension/user-view-bootstrap5)
 [![codecov](https://codecov.io/gh/yii-extension/user/branch/main/graph/badge.svg?token=AZAF464ILD)](https://codecov.io/gh/yii-extension/user)
 [![static analysis](https://github.com/yii-extension/user/workflows/static%20analysis/badge.svg)](https://github.com/yii-extension/user/actions?query=workflow%3A%22static+analysis%22)
 [![type-coverage](https://shepherd.dev/github/yii-extension/user/coverage.svg)](https://shepherd.dev/github/yii-extension/user)
 
-
-| Css Framework |  PHP  | Build |
-|:-------------:|:-----:|:-----:|
-|[[user-view-bulma]](https://github.com/yii-extension/user-view-bulma)|**7.4 - 8.0**|[![bulma](https://github.com/yii-extension/user/workflows/bulma/badge.svg)](https://github.com/yii-extension/user/actions)
-|[[user-view-bootstrap5]](https://github.com/yii-extension/user-view-bootstrap5)|**7.4 - 8.0**|[![boostrap5](https://github.com/yii-extension/user/workflows/bootstrap5/badge.svg)](https://github.com/yii-extension/user/actions)
-
 <br/>
-<br/>
-
-<p align="center">
-    <a href="https://github.com/yii-extension/app-bulma" target="_blank">
-        <img src="https://lh3.googleusercontent.com/0NUwRte-ZTFEICMVHaJy5goeSubb06ocqSHeU0e3OyaC6OQLM04pgTCirb7OZH8HDvAhZjEU6psRiiB-LBHvKE9GAVwQNL0Cw6OiJBodr4vud31ZzAPWR2fUszMTsCRQlu-Ppctsqw=w2400">
-    </a>
-</p>
 
 Yii demo application for active record with db-sqlite is best for rapidly creating projects.
 
@@ -38,9 +27,15 @@ Yii demo application for active record with db-sqlite is best for rapidly creati
           Action          contains action controller classes
           ActiveRecord    contains active record classes
           Form            contains form classes
+          Helper          contains helper classes
+          Middleware      contains class middleware
           Migration       contains migration classes
           Repository      contains repository classes
           Service         contains services classes
+
+## Project
+
+In this link you will find the lists of tasks to implement: [task-list](https://github.com/yii-extension/user/projects/1)
 
 ## Requirements
 
@@ -99,10 +94,13 @@ http://localhost:8080
 ## Includes the following features:
 
 - [x] User module:
-    - [x] /auth/login - Display login form.
-    - [x] /auth/logout - Logs the user out.
-    - [x] /registration/register - Displays registration form.
-    - [x] /registration/resend - Displays resend form.
+    - [x] /login - Display login form.
+    - [x] /logout - Logs the user out.
+    - [x] /confirm[/{id}/{token}] - Confirms a user (requires id and token query params).
+    - [x] /register - Displays registration form.
+    - [x] /request - Displays recovery request form.
+    - [x] /resend - Displays resend form.
+    - [x] /reset[/{id}/{code}] - Displays password reset form (requires id and token query params).
 
 Note: check the directory `/runtime/mail`, the emails are stored in it.
 
