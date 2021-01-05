@@ -43,7 +43,7 @@ The minimum requirement by this project template that your Web server supports P
 
 ## Installation
 
-With application template `yii-extension/app-bulma`:
+With application template [yiisoft/app](https://github.com/yiisoft/app):
 
 Bulma css framework:
 
@@ -51,6 +51,8 @@ Bulma css framework:
 composer create-project --prefer-dist --stability dev yiisoft/app app
 composer require yii-extension/user:@dev yii-extension/user-view-bulma:@dev
 ```
+
+With application template [yii-extension/app-bootstrap5](https://github.com/yii-extension/app-bootstrap5):
 
 Bootstrap5 css framework:
 
@@ -95,7 +97,7 @@ http://localhost:8080
 
 - [x] User module:
     - [x] /login - Display login form.
-    - [x] /logout - Logs the user out.
+    - [x] /logout - Log the user out.
     - [x] /confirm[/{id}/{token}] - Confirms a user (requires id and token query params).
     - [x] /register - Displays registration form.
     - [x] /request - Displays recovery request form.
