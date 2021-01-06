@@ -46,7 +46,7 @@ final class ServiceLogin
             ) &&
             $this->validateConfirmed($user)
         ) {
-            $this->formLogin->lastLogin($user->getLastLogin());
+            $this->formLogin->lastLogout($user->getLastLogout());
 
             $this->updateAttributeLogin($user, $ip);
 

@@ -47,10 +47,16 @@ final class Login
         ) {
             $eventDispatcher->dispatch($afterLogin);
 
+            $body = 'Sign in successful - you are welcome.';
+
+            if ($formLogin->getLastLogout() > 0) {
+                $body = 'Sign in successful - ' . date('Y-m-d G:i:s', $formLogin->getLastLogout());
+            }
+
             $serviceFlashMessage->run(
                 'success',
                 $repositorySetting->getMessageHeader(),
-                'Sign in successful - ' . date('Y-m-d G:i:s', $formLogin->getLastLogin()),
+                $body,
             );
 
             return $serviceUrl->run('site/index');

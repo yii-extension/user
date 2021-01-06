@@ -20,7 +20,7 @@ final class FormLogin extends FormModel
     private bool $remember = false;
     private RepositorySetting $repositorySetting;
     private Translator $translator;
-    private int $lastLogin;
+    private int $lastLogout;
 
     public function __construct(
         RepositorySetting $repositorySetting,
@@ -47,9 +47,9 @@ final class FormLogin extends FormModel
         return 'Login';
     }
 
-    public function getLastLogin(): int
+    public function getLastLogout(): int
     {
-        return $this->lastLogin;
+        return $this->lastLogout;
     }
 
     public function getLogin(): string
@@ -71,9 +71,9 @@ final class FormLogin extends FormModel
         return $this->remember;
     }
 
-    public function lastLogin(int $value): void
+    public function lastLogout(int $value): void
     {
-        $this->lastLogin = $value;
+        $this->lastLogout = $value;
     }
 
     public function rules(): array
