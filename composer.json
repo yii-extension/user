@@ -18,6 +18,7 @@
         "yii-extension/mailer-service": "^1.0@dev",
         "yii-extension/url-service": "@dev",
         "yii-extension/user-settings": "^1.0.0",
+        "yii-extension/user-translations": "^1.0.0",
         "yii-extension/user-view-implementation": "^1.0.0",
         "yiisoft/active-record": "^3.0@dev",
         "yiisoft/aliases": "^1.0",
