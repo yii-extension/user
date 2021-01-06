@@ -111,7 +111,7 @@ Note: check the directory `/runtime/mail`, the emails are stored in it.
 The package is tested with [Codeception](https://github.com/Codeception/Codeception). To run tests:
 
 ```shell
-php -S 127.0.0.1:8080 -t public > yii.log 2>&1 &
+php -S 127.0.0.1:8080 -t tests/_data/public > /dev/null 2>&1&
 vendor/bin/codecept run
 ```
 

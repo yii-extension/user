@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Composer\InstalledVersions;
 use Yii\Extension\User\Tests\App\Command\Hello;
 use Yii\Extension\User\Tests\App\ViewInjection\ContentViewInjection;
 use Yii\Extension\User\Tests\App\ViewInjection\LayoutViewInjection;
@@ -25,9 +26,19 @@ return [
             '@public' => '@root/public',
             '@resources' => '@root/resources',
             '@runtime' => '../../_output/runtime',
-            '@views' => '@root/resources/views',
+            '@views' => InstalledVersions::isInstalled('yii-extension/user-view-bulma')
+                ? '@resources/views/bulma' : '@resources/views/bootstrap5',
             '@message' => '@root/resources/message',
         ],
+    ],
+
+    'yiisoft/form' => [
+        'bootstrap5' => [
+            'enabled' => InstalledVersions::isInstalled('yii-extension/user-view-bootstrap5'),
+        ],
+        'bulma' => [
+            'enabled' => InstalledVersions::isInstalled('yii-extension/user-view-bulma'),
+        ]
     ],
 
     'yiisoft/view' => [
@@ -46,7 +57,8 @@ return [
 
     'yiisoft/yii-view' => [
         'viewBasePath' => '@views',
-        'layout' => '@resources/layout/main',
+        'layout' => InstalledVersions::isInstalled('yii-extension/user-view-bulma')
+            ? '@resources/layout/bulma/main' : '@resources/layout/bootstrap5/main',
         'injections' => [
             Reference::to(ContentViewInjection::class),
             Reference::to(CsrfViewInjection::class),

@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 use Yii\Extension\User\Tests\App\Asset\AppAsset;
-use Yii\Extension\User\Tests\App\Asset\CdnFontAwesomeAsset;
+use Yii\Extension\Widget\FlashMessage;
 use Yiisoft\Html\Html;
 use Yiisoft\I18n\Locale;
 
@@ -19,7 +19,6 @@ use Yiisoft\I18n\Locale;
 
 $assetManager->register([
     AppAsset::class,
-    CdnFontAwesomeAsset::class,
 ]);
 
 $this->setCssFiles($assetManager->getCssFiles());
@@ -49,6 +48,9 @@ $this->setJsVar($assetManager->getJsVar());
                             'user' => $user,
                         ]
                     ) ?>
+                </div>
+                <div>
+                    <?= FlashMessage::widget() ?>
                 </div>
                 <div class="hero-body is-light">
                     <div class="container has-text-centered">
