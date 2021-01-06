@@ -18,6 +18,7 @@ use Yii\Extension\User\Repository\RepositoryUser;
 use Yii\Extension\User\Settings\RepositorySetting;
 use Yiisoft\Aliases\Aliases;
 use Yiisoft\Router\UrlGeneratorInterface;
+use Yiisoft\Translator\Translator;
 use Yiisoft\Yii\View\ViewRenderer;
 
 final class Request
@@ -34,6 +35,7 @@ final class Request
         ServiceMailer $serviceMailer,
         ServiceUrl $serviceUrl,
         Token $token,
+        Translator $translator,
         UrlGeneratorInterface $urlGenerator,
         ViewRenderer $viewRenderer
     ): ResponseInterface {
@@ -70,7 +72,15 @@ final class Request
                 /** @var Token $token */
                 $token = $repositoryToken->findTokenById($user->getId());
 
-                $this->sentEmail($aliases, $repositorySetting, $serviceMailer, $token, $urlGenerator, $user);
+                $this->sentEmail(
+                    $aliases,
+                    $repositorySetting,
+                    $serviceMailer,
+                    $token,
+                    $translator,
+                    $urlGenerator,
+                    $user,
+                );
 
                 $eventDispatcher->dispatch($afterRequest);
 
@@ -92,12 +102,14 @@ final class Request
         RepositorySetting $repositorySetting,
         ServiceMailer $serviceMailer,
         Token $token,
+        Translator $translator,
         UrlGeneratorInterface $urlGenerator,
         User $user
     ): void {
         $serviceMailer
             ->typeFlashMessageSent('info')
-            ->bodyFlashMessage('Please check your email to change your password.')
+            ->headerFlashMessage($translator->translate($repositorySetting->getMessageHeader()))
+            ->bodyFlashMessage($translator->translate('Please check your email to change your password'))
             ->run(
                 $repositorySetting->getEmailFrom(),
                 $user->getEmail(),

@@ -15,6 +15,7 @@ use Yii\Extension\User\Repository\RepositoryUser;
 use Yii\Extension\User\Settings\RepositorySetting;
 use Yiisoft\Aliases\Aliases;
 use Yiisoft\Router\UrlGeneratorInterface;
+use Yiisoft\Translator\Translator;
 use Yiisoft\Yii\View\ViewRenderer;
 
 final class Register
@@ -29,6 +30,7 @@ final class Register
         ServerRequestInterface $serverRequest,
         ServiceMailer $serviceMailer,
         ServiceUrl $serviceUrl,
+        Translator $translator,
         UrlGeneratorInterface $urlGenerator,
         ViewRenderer $viewRenderer
     ): ResponseInterface {
@@ -51,10 +53,11 @@ final class Register
             )
         ) {
             $serviceMailer
+                ->headerFlashMessage($translator->translate($repositorySetting->getMessageHeader()))
                 ->bodyFlashMessage(
                     $repositorySetting->isConfirmation()
-                        ? 'Please check your email to activate your username.'
-                        : 'Your account has been created.',
+                        ? $translator->translate('Please check your email to activate your username')
+                        : $translator->translate('Your account has been created'),
                 )
                 ->run(
                     $repositorySetting->getEmailFrom(),

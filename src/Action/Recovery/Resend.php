@@ -18,6 +18,7 @@ use Yii\Extension\User\Repository\RepositoryUser;
 use Yii\Extension\User\Settings\RepositorySetting;
 use Yiisoft\Aliases\Aliases;
 use Yiisoft\Router\UrlGeneratorInterface;
+use Yiisoft\Translator\Translator;
 use Yiisoft\Yii\View\ViewRenderer;
 
 final class Resend
@@ -33,6 +34,7 @@ final class Resend
         ServerRequestInterface $serverRequest,
         ServiceMailer $serviceMailer,
         ServiceUrl $serviceUrl,
+        Translator $translator,
         UrlGeneratorInterface $urlGenerator,
         ViewRenderer $viewRenderer
     ): ResponseInterface {
@@ -51,7 +53,7 @@ final class Resend
             if ($user === null) {
                 $formResend->addError(
                     'email',
-                    'Thank you. If said email is registered, you will get a password reset.',
+                    'Thank you. If said email is registered, you will get a password reset' . '.',
                 );
             }
 
@@ -63,7 +65,15 @@ final class Resend
                 /** @var Token $token */
                 $token = $repositoryToken->findTokenById($user->getId());
 
-                $this->sentEmail($aliases, $repositorySetting, $serviceMailer, $token, $urlGenerator, $user);
+                $this->sentEmail(
+                    $aliases,
+                    $repositorySetting,
+                    $serviceMailer,
+                    $token,
+                    $translator,
+                    $urlGenerator,
+                    $user
+                );
 
                 $eventDispatcher->dispatch($afterResend);
 
@@ -85,12 +95,14 @@ final class Resend
         RepositorySetting $repositorySetting,
         ServiceMailer $serviceMailer,
         Token $token,
+        Translator $translator,
         UrlGeneratorInterface $urlGenerator,
         User $user
     ): void {
         $serviceMailer
             ->typeFlashMessageSent('warning')
-            ->bodyFlashMessage('Please check your email to activate your username.')
+            ->headerFlashMessage($translator->translate($repositorySetting->getMessageHeader()))
+            ->bodyFlashMessage($translator->translate('Please check your email to activate your username'))
             ->run(
                 $repositorySetting->getEmailFrom(),
                 $user->getEmail(),

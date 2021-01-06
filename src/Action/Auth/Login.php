@@ -14,6 +14,7 @@ use Yii\Extension\User\Form\FormLogin;
 use Yii\Extension\User\Repository\RepositoryUser;
 use Yii\Extension\User\Service\ServiceLogin;
 use Yii\Extension\User\Settings\RepositorySetting;
+use Yiisoft\Translator\Translator;
 use Yiisoft\Yii\View\ViewRenderer;
 
 final class Login
@@ -28,6 +29,7 @@ final class Login
         ServiceFlashMessage $serviceFlashMessage,
         ServiceLogin $serviceLogin,
         ServiceUrl $serviceUrl,
+        Translator $translator,
         ViewRenderer $viewRenderer
     ): ResponseInterface {
         /** @var array $body */
@@ -47,15 +49,16 @@ final class Login
         ) {
             $eventDispatcher->dispatch($afterLogin);
 
-            $body = 'Sign in successful - you are welcome.';
+            $body = $translator->translate('Sign in successful - you are welcome');
 
             if ($formLogin->getLastLogout() > 0) {
-                $body = 'Sign in successful - ' . date('Y-m-d G:i:s', $formLogin->getLastLogout());
+                $body = $translator->translate('Sign in successful') . ' - ' .
+                    date('Y-m-d G:i:s', $formLogin->getLastLogout());
             }
 
             $serviceFlashMessage->run(
                 'success',
-                $repositorySetting->getMessageHeader(),
+                $translator->translate($repositorySetting->getMessageHeader()),
                 $body,
             );
 

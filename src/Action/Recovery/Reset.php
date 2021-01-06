@@ -15,6 +15,7 @@ use Yii\Extension\User\Repository\RepositoryToken;
 use Yii\Extension\User\Repository\RepositoryUser;
 use Yii\Extension\Service\ServiceUrl;
 use Yiisoft\Router\UrlGeneratorInterface;
+use Yiisoft\Translator\Translator;
 use Yiisoft\Yii\View\ViewRenderer;
 
 final class Reset
@@ -29,6 +30,7 @@ final class Reset
         RepositoryUser $repositoryUser,
         ServiceFlashMessage $serviceFlashMessage,
         ServiceUrl $serviceUrl,
+        Translator $translator,
         ViewRenderer $viewRenderer
     ): ResponseInterface {
         /** @var array $body */
@@ -74,8 +76,8 @@ final class Reset
 
             $serviceFlashMessage->run(
                 'success',
-                $repositorySetting->getMessageHeader(),
-                'Your password has been changed.',
+                $translator->translate($repositorySetting->getMessageHeader()),
+                $translator->translate('Your password has been changed'),
             );
 
             return $serviceUrl->run('site/index');
