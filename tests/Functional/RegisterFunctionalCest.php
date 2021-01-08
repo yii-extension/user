@@ -39,7 +39,7 @@ final class RegisterFunctionalCest
         $I->amGoingTo('go to the login page');
         $I->amOnPage('/login');
 
-        $I->expectTo('see registration register validation.');
+        $I->expectTo('see register validation.');
         $I->submitForm('#form-auth-login', [
             'Login[login]' => 'admin1',
             'Login[password]' => '123456',

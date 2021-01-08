@@ -53,7 +53,7 @@ $this->setJsVar($assetManager->getJsVar());
                     <?= FlashMessage::widget() ?>
                 </div>
                 <div class="hero-body is-light">
-                    <div class="container has-text-centered">
+                    <div class="container">
                         <?= $content ?>
                     </div>
                 </div>

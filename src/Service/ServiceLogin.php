@@ -31,9 +31,9 @@ final class ServiceLogin
         $user = $repositoryUser->findUserByUsernameOrEmail($login);
 
         if ($user === null) {
-            $this->formLogin->addError('password', 'Unregistered user/Invalid password.');
+            $this->formLogin->addError('password', 'Unregistered user/Invalid password');
         } elseif ($user->isBlocked()) {
-            $this->formLogin->addError('password', 'Your user has been blocked, contact an administrator.');
+            $this->formLogin->addError('password', 'Your user has been blocked, contact an administrator');
         }
 
         if (

@@ -65,7 +65,7 @@ final class ResetFunctionalCest
     {
         $I->amGoingTo('register fixture user recovery.');
 
-        $this->recoveryResetUser($I);
+        $this->resetUser($I);
 
         $id = $I->grabColumnFromDatabase('token', 'user_id', ['user_id' => 100]);
         $token = $I->grabColumnFromDatabase('token', 'code', ['user_id' => 100]);
@@ -80,7 +80,7 @@ final class ResetFunctionalCest
         $I->see("Let's start something great with Yii3!");
     }
 
-    private function recoveryResetUser(FunctionalTester $I): void
+    private function resetUser(FunctionalTester $I): void
     {
         $time = time();
 

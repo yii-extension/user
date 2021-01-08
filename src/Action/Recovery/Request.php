@@ -60,12 +60,7 @@ final class Request
             }
 
             if ($user !== null && $user->isConfirmed()) {
-                $token->deleteAll(
-                    [
-                        'user_id' => $user->getId(),
-                        'type' => Token::TYPE_RECOVERY,
-                    ]
-                );
+                $token->deleteAll(['user_id' => $user->getId(), 'type' => Token::TYPE_RECOVERY]);
 
                 $repositoryToken->register($user->getId(), Token::TYPE_RECOVERY);
 
