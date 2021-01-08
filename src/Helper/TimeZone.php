@@ -16,11 +16,12 @@ final class TimeZone
         $timeZoneIdentifiers = DateTimeZone::listIdentifiers();
 
         foreach ($timeZoneIdentifiers as $timeZone) {
+            $name = str_replace('_', ' ', $timeZone);
             $date = new DateTime('now', new DateTimeZone($timeZone));
 
             $timeZones[] = [
                 'timezone' => $timeZone,
-                'name' => "{$timeZone} (UTC {$date->format('P')})",
+                'name' => "{$name} (UTC {$date->format('P')})",
                 'offset' => $date->getOffset(),
             ];
         }
