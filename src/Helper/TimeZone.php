@@ -17,15 +17,12 @@ final class TimeZone
 
         foreach ($timeZoneIdentifiers as $timeZone) {
             $date = new DateTime('now', new DateTimeZone($timeZone));
-            $offset = $date->getOffset();
 
-            if ($offset > 0) {
-                $tz = '+' . gmdate('H:i', (int) abs($offset));
-            } else {
-                $tz = '-' . gmdate('H:i', (int) abs($offset));
-            }
-
-            $timeZones[] = ['timezone' => $timeZone, 'name' => "{$timeZone} (UTC {$tz})", 'offset' => $offset];
+            $timeZones[] = [
+                'timezone' => $timeZone,
+                'name' => "{$timeZone} (UTC {$date->format('P')})",
+                'offset' => $date->getOffset(),
+            ];
         }
 
         ArraySorter::multisort($timeZones, 'offset', SORT_DESC, SORT_NUMERIC);
