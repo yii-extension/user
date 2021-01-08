@@ -6,29 +6,27 @@ namespace Yii\Extension\User\Repository;
 
 use Yii\Extension\User\ActiveRecord\Profile;
 use Yii\Extension\User\Form\FormProfile;
-use Yiisoft\ActiveRecord\ActiveQuery;
 use Yiisoft\ActiveRecord\ActiveQueryInterface;
-use Yiisoft\Db\Connection\ConnectionInterface;
+use Yiisoft\ActiveRecord\ActiveRecordFactory;
+use Yiisoft\ActiveRecord\ActiveRecordInterface;
 
 final class RepositoryProfile
 {
-    private ConnectionInterface $db;
-    private Profile $profile;
-    private ?ActiveQuery $profileQuery = null;
+    private ActiveRecordFactory $activeRecordFactory;
 
-    public function __construct(ConnectionInterface $db, Profile $profile)
+    public function __construct(ActiveRecordFactory $activeRecordFactory)
     {
-        $this->db = $db;
-        $this->profile = $profile;
+        $this->activeRecordFactory = $activeRecordFactory;
     }
 
-    public function findProfileByCondition(array $condition): ?Profile
+    public function findProfileByCondition(array $condition): ?ActiveRecordInterface
     {
         return $this->profileQuery()->findOne($condition);
     }
 
     public function loadData(string $id, FormProfile $formProfile): void
     {
+        /** @var Profile $profile */
         $profile = $this->findProfileByCondition(['user_id' => (int) $id]);
 
         $formProfile->name($profile->getName() ?? '');
@@ -41,6 +39,7 @@ final class RepositoryProfile
 
     public function update(string $id, FormProfile $formProfile): bool
     {
+        /** @var Profile $profile */
         $profile = $this->findProfileByCondition(['user_id' => (int) $id]);
 
         $profile->name($formProfile->getName());
@@ -55,6 +54,6 @@ final class RepositoryProfile
 
     private function profileQuery(): ActiveQueryInterface
     {
-        return $this->profileQuery = new ActiveQuery(Profile::class, $this->db);
+        return $this->activeRecordFactory->createQueryTo(Profile::class);
     }
 }

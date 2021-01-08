@@ -4,21 +4,20 @@ declare(strict_types=1);
 
 namespace Yii\Extension\User\Repository;
 
-use RuntimeException;
-use Psr\Log\LoggerInterface;
-use Psr\Log\LogLevel;
 use LasseRafn\InitialAvatarGenerator\InitialAvatar;
+use Psr\Log\LogLevel;
+use Psr\Log\LoggerInterface;
+use RuntimeException;
 use Yii\Extension\User\ActiveRecord\Profile;
-use Yii\Extension\User\ActiveRecord\User;
 use Yii\Extension\User\ActiveRecord\Token;
+use Yii\Extension\User\ActiveRecord\User;
 use Yii\Extension\User\Form\FormRegister;
-use Yiisoft\Aliases\Aliases;
-use Yiisoft\ActiveRecord\ActiveRecordInterface;
-use Yiisoft\ActiveRecord\ActiveQuery;
 use Yiisoft\ActiveRecord\ActiveQueryInterface;
+use Yiisoft\ActiveRecord\ActiveRecordFactory;
+use Yiisoft\ActiveRecord\ActiveRecordInterface;
+use Yiisoft\Aliases\Aliases;
 use Yiisoft\Auth\IdentityInterface;
 use Yiisoft\Auth\IdentityRepositoryInterface;
-use Yiisoft\Db\Connection\ConnectionInterface;
 use Yiisoft\Db\Exception\Exception;
 use Yiisoft\Files\FileHelper;
 use Yiisoft\Form\FormModelInterface;
@@ -34,32 +33,27 @@ use function str_split;
 
 final class RepositoryUser implements IdentityRepositoryInterface
 {
+    private ActiveRecordFactory $activeRecordFactory;
     private Aliases $aliases;
     private InitialAvatar $avatar;
-    private ConnectionInterface $db;
     private LoggerInterface $logger;
     private Profile $profile;
     private Token $token;
     private User $user;
-    private ?ActiveQuery $userQuery = null;
 
     public function __construct(
+        ActiveRecordFactory $activeRecordFactory,
         Aliases $aliases,
         InitialAvatar $avatar,
-        ConnectionInterface $db,
-        LoggerInterface $logger,
-        Profile $profile,
-        Token $token,
-        User $user
+        LoggerInterface $logger
     ) {
+        $this->activeRecordFactory = $activeRecordFactory;
         $this->aliases = $aliases;
         $this->avatar = $avatar;
-        $this->db = $db;
         $this->logger = $logger;
-        $this->token = $token;
-        $this->profile = $profile;
-        $this->user = $user;
-        $this->userQuery();
+        $this->token = $activeRecordFactory->createAR(Token::class);
+        $this->profile = $activeRecordFactory->createAR(Profile::class);
+        $this->user = $activeRecordFactory->createAR(User::class);
     }
 
     public function block(User $user): bool
@@ -91,8 +85,10 @@ final class RepositoryUser implements IdentityRepositoryInterface
             return false;
         }
 
+        $db = $this->activeRecordFactory->getConnection();
+
         /** @psalm-suppress UndefinedInterfaceMethod */
-        $transaction = $this->db->beginTransaction();
+        $transaction = $db->beginTransaction();
 
         try {
             $password = empty($formRegister->getAttributeValue('password'))
@@ -159,17 +155,17 @@ final class RepositoryUser implements IdentityRepositoryInterface
 
     public function findUserAll(): array
     {
-        return $this->userQuery->all();
+        return $this->userQuery()->all();
     }
 
     public function findUserAllAsArray(): array
     {
-        return $this->userQuery->asArray()->all();
+        return $this->userQuery()->asArray()->all();
     }
 
     public function findUserByCondition(array $condition): ?ActiveRecordInterface
     {
-        return $this->userQuery->findOne($condition);
+        return $this->userQuery()->findOne($condition);
     }
 
     public function findUserById(string $id): ?ActiveRecordInterface
@@ -235,8 +231,10 @@ final class RepositoryUser implements IdentityRepositoryInterface
             return false;
         }
 
+        $db = $this->activeRecordFactory->getConnection();
+
         /** @psalm-suppress UndefinedInterfaceMethod */
-        $transaction = $this->db->beginTransaction();
+        $transaction = $db->beginTransaction();
 
         try {
             $password = $isGeneratingPassword
@@ -399,6 +397,6 @@ final class RepositoryUser implements IdentityRepositoryInterface
 
     private function userQuery(): ActiveQueryInterface
     {
-        return $this->userQuery = new ActiveQuery(User::class, $this->db);
+        return $this->activeRecordFactory->createQueryTo(User::class);
     }
 }
