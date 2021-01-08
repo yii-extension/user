@@ -10,7 +10,5 @@ use Yiisoft\Auth\IdentityRepositoryInterface;
 /** @var array $params */
 
 return [
-    IdentityRepositoryInterface::class => [
-        '__class' => RepositoryUser::class,
-    ]
+    IdentityRepositoryInterface::class => RepositoryUser::class,
 ];
