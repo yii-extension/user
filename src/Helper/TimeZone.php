@@ -16,19 +16,17 @@ final class TimeZone
         $timeZoneIdentifiers = DateTimeZone::listIdentifiers();
 
         foreach ($timeZoneIdentifiers as $timeZone) {
+            $name = str_replace('_', ' ', $timeZone);
             $date = new DateTime('now', new DateTimeZone($timeZone));
-            $offset = $date->getOffset();
 
-            if ($offset > 0) {
-                $tz = '+' . gmdate('H:i', (int) abs($offset));
-            } else {
-                $tz = '-' . gmdate('H:i', (int) abs($offset));
-            }
-
-            $timeZones[] = ['timezone' => $timeZone, 'name' => "{$timeZone} (UTC {$tz})", 'offset' => $offset];
+            $timeZones[] = [
+                'timezone' => $timeZone,
+                'name' => "{$name} (UTC {$date->format('P')})",
+                'offset' => $date->getOffset(),
+            ];
         }
 
-        ArraySorter::multisort($timeZones, 'offset', SORT_DESC, SORT_NUMERIC);
+        ArraySorter::multisort($timeZones, 'offset', SORT_ASC, SORT_NUMERIC);
 
         return $timeZones;
     }
