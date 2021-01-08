@@ -26,7 +26,7 @@ final class TimeZone
             ];
         }
 
-        ArraySorter::multisort($timeZones, 'offset', SORT_DESC, SORT_NUMERIC);
+        ArraySorter::multisort($timeZones, 'offset', SORT_ASC, SORT_NUMERIC);
 
         return $timeZones;
     }
