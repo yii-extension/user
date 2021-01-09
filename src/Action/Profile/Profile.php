@@ -38,7 +38,7 @@ final class Profile
             && $repositoryProfile->update($user->getId(), $formProfile)
         ) {
             $serviceFlashMessage->run(
-                'info',
+                'success',
                 $translator->translate($repositorySetting->getMessageHeader()),
                 $translator->translate('Your data has been saved'),
             );

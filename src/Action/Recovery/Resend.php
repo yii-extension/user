@@ -77,7 +77,7 @@ final class Resend
 
                 $eventDispatcher->dispatch($afterResend);
 
-                return $serviceUrl->run('site/index');
+                return $serviceUrl->run('login');
             }
         }
 

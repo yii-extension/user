@@ -79,7 +79,7 @@ final class Request
 
                 $eventDispatcher->dispatch($afterRequest);
 
-                return $serviceUrl->run('site/index');
+                return $serviceUrl->run('login');
             }
         }
 

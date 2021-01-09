@@ -100,9 +100,8 @@ final class ResendFormCest
 
         $I->click('Continue', '#form-recovery-resend');
 
-        $I->expectTo('go to page index');
-        $I->see('Hello!');
-        $I->see("Let's start something great with Yii3!");
+        $I->expectTo('go to page login');
+        $I->see('Login');
         $I->dontSeeLink('Continue', '#form-recovery-register');
 
         $I->amGoingTo('update settings confirmation false');

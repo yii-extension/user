@@ -41,6 +41,10 @@ return [
         ]
     ],
 
+    'yiisoft/translator' => [
+        'locale' => 'en',
+    ],
+
     'yiisoft/view' => [
         'basePath' => '@views',
     ],

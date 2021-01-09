@@ -19,11 +19,14 @@ final class TimeZone
             $name = str_replace('_', ' ', $timeZone);
             $date = new DateTime('now', new DateTimeZone($timeZone));
 
-            $timeZones[] = [
-                'timezone' => $timeZone,
-                'name' => "{$name} (UTC {$date->format('P')})",
-                'offset' => $date->getOffset(),
-            ];
+            array_push(
+                $timeZones,
+                [
+                    'timezone' => $timeZone,
+                    'name' => "{$name} (UTC {$date->format('P')})",
+                    'offset' => $date->getOffset(),
+                ]
+            );
         }
 
         ArraySorter::multisort($timeZones, 'offset', SORT_ASC, SORT_NUMERIC);
