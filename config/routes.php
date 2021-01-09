@@ -12,7 +12,6 @@ use Yii\Extension\User\Action\Registration\Confirm;
 use Yii\Extension\User\Action\Registration\Register;
 use Yiisoft\Auth\Middleware\Authentication;
 use Yii\Extension\User\Middleware\Guest;
-use Yiisoft\Router\Group;
 use Yiisoft\Router\Route;
 
 return [
