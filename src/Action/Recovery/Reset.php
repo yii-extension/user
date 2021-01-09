@@ -80,7 +80,7 @@ final class Reset
                 $translator->translate('Your password has been changed'),
             );
 
-            return $serviceUrl->run('site/index');
+            return $serviceUrl->run('login');
         }
 
         return $viewRenderer
