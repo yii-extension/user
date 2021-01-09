@@ -37,7 +37,7 @@ final class FormProfile extends FormModel
             'location' => $this->translator->translate('Location'),
             'website' => $this->translator->translate('Website'),
             'bio' => $this->translator->translate('Bio'),
-            'timezone' => $this->translator->translate('TimeZone'),
+            'timezone' => $this->translator->translate('Time zone'),
         ];
     }
 
