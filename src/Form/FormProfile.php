@@ -6,7 +6,7 @@ namespace Yii\Extension\User\Form;
 
 use Yiisoft\Form\FormModel;
 use Yiisoft\Validator\ValidatorFactoryInterface;
-use Yiisoft\Translator\Translator;
+use Yiisoft\Translator\TranslatorInterface;
 use Yiisoft\Validator\Rule\Email;
 use Yiisoft\Validator\Rule\Url;
 
@@ -18,23 +18,26 @@ final class FormProfile extends FormModel
     private ?string $website = '';
     private ?string $bio = '';
     private ?string $timezone = '';
+    private TranslatorInterface $translator;
 
     public function __construct(
-        Translator $translator,
+        TranslatorInterface $translator,
         ValidatorFactoryInterface $validator
     ) {
+        $this->translator = $translator;
+
         parent::__construct($validator);
     }
 
     public function attributeLabels(): array
     {
         return [
-            'name' => 'Name',
-            'publicEmail' => 'Public email',
-            'location' => 'Location',
-            'website' => 'Website',
-            'bio' => 'Bio',
-            'timezone' => 'TimeZone'
+            'name' => $this->translator->translate('Name'),
+            'publicEmail' => $this->translator->translate('Public email'),
+            'location' => $this->translator->translate('Location'),
+            'website' => $this->translator->translate('Website'),
+            'bio' => $this->translator->translate('Bio'),
+            'timezone' => $this->translator->translate('TimeZone'),
         ];
     }
 
