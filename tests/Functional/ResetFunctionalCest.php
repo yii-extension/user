@@ -75,9 +75,8 @@ final class ResetFunctionalCest
 
         $I->submitForm('#form-recovery-reset', ['Reset[password]' => 'newpass']);
 
-        $I->expectTo('see index page.');
-        $I->see('Hello!');
-        $I->see("Let's start something great with Yii3!");
+        $I->expectTo('see login page.');
+        $I->seeInTitle('Login');
     }
 
     private function resetUser(FunctionalTester $I): void
