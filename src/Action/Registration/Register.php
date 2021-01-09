@@ -77,7 +77,10 @@ final class Register
 
             $eventDispatcher->dispatch($afterRegister);
 
-            return $serviceUrl->run('site/index');
+            $redirect = $repositorySetting->isConfirmation() === false && $repositorySetting->isGeneratingPassword() === false
+                ? 'login'
+                : 'site/index';
+            return $serviceUrl->run($redirect);
         }
 
         if ($repositorySetting->isRegister()) {
