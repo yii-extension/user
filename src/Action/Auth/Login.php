@@ -14,7 +14,7 @@ use Yii\Extension\User\Form\FormLogin;
 use Yii\Extension\User\Repository\RepositoryUser;
 use Yii\Extension\User\Service\ServiceLogin;
 use Yii\Extension\User\Settings\RepositorySetting;
-use Yiisoft\Translator\Translator;
+use Yiisoft\Translator\TranslatorInterface;
 use Yiisoft\Yii\View\ViewRenderer;
 
 final class Login
@@ -29,7 +29,7 @@ final class Login
         ServiceFlashMessage $serviceFlashMessage,
         ServiceLogin $serviceLogin,
         ServiceUrl $serviceUrl,
-        Translator $translator,
+        TranslatorInterface $translator,
         ViewRenderer $viewRenderer
     ): ResponseInterface {
         /** @var array $body */

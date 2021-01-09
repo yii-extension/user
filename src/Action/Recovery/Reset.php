@@ -15,7 +15,7 @@ use Yii\Extension\User\Repository\RepositoryToken;
 use Yii\Extension\User\Repository\RepositoryUser;
 use Yii\Extension\Service\ServiceUrl;
 use Yiisoft\Router\UrlGeneratorInterface;
-use Yiisoft\Translator\Translator;
+use Yiisoft\Translator\TranslatorInterface;
 use Yiisoft\Yii\View\ViewRenderer;
 
 final class Reset
@@ -30,7 +30,7 @@ final class Reset
         RepositoryUser $repositoryUser,
         ServiceFlashMessage $serviceFlashMessage,
         ServiceUrl $serviceUrl,
-        Translator $translator,
+        TranslatorInterface $translator,
         ViewRenderer $viewRenderer
     ): ResponseInterface {
         /** @var array $body */

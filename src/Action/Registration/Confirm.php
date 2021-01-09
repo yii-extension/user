@@ -14,7 +14,7 @@ use Yii\Extension\User\Repository\RepositoryToken;
 use Yii\Extension\User\Repository\RepositoryUser;
 use Yii\Extension\User\Service\ServiceLogin;
 use Yii\Extension\User\Settings\RepositorySetting;
-use Yiisoft\Translator\Translator;
+use Yiisoft\Translator\TranslatorInterface;
 use Yiisoft\Yii\View\ViewRenderer;
 
 final class Confirm
@@ -27,7 +27,7 @@ final class Confirm
         RepositoryUser $repositoryUser,
         ServiceFlashMessage $serviceFlashMessage,
         ServiceUrl $serviceUrl,
-        Translator $translator,
+        TranslatorInterface $translator,
         ViewRenderer $viewRenderer
     ): ResponseInterface {
         /** @var string|null $id */

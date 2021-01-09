@@ -18,7 +18,7 @@ use Yii\Extension\User\Repository\RepositoryUser;
 use Yii\Extension\User\Settings\RepositorySetting;
 use Yiisoft\Aliases\Aliases;
 use Yiisoft\Router\UrlGeneratorInterface;
-use Yiisoft\Translator\Translator;
+use Yiisoft\Translator\TranslatorInterface;
 use Yiisoft\Yii\View\ViewRenderer;
 
 final class Request
@@ -35,7 +35,7 @@ final class Request
         ServiceMailer $serviceMailer,
         ServiceUrl $serviceUrl,
         Token $token,
-        Translator $translator,
+        TranslatorInterface $translator,
         UrlGeneratorInterface $urlGenerator,
         ViewRenderer $viewRenderer
     ): ResponseInterface {
