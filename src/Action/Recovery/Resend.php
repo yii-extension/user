@@ -95,7 +95,7 @@ final class Resend
         RepositorySetting $repositorySetting,
         ServiceMailer $serviceMailer,
         Token $token,
-        Translator $translator,
+        TranslatorInterface $translator,
         UrlGeneratorInterface $urlGenerator,
         User $user
     ): void {
