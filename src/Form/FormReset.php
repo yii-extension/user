@@ -7,16 +7,16 @@ namespace Yii\Extension\User\Form;
 use Yiisoft\Form\FormModel;
 use Yiisoft\Validator\Rule\HasLength;
 use Yiisoft\Validator\Rule\Required;
-use Yiisoft\Translator\Translator;
+use Yiisoft\Translator\TranslatorInterface;
 use Yiisoft\Validator\ValidatorFactoryInterface;
 
 final class FormReset extends FormModel
 {
     private string $password = '';
-    private Translator $translator;
+    private TranslatorInterface $translator;
 
     public function __construct(
-        Translator $translator,
+        TranslatorInterface $translator,
         ValidatorFactoryInterface $validatorFactory
     ) {
         $this->translator = $translator;

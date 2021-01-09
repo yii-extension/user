@@ -5,7 +5,7 @@ declare(strict_types=1);
 return [
     'yiisoft/aliases' => [
         'aliases' => [
-            '@avatars' => '@root/public/images/avatar',
+            '@avatars' => '@assets/images/avatar',
             '@user' => dirname(__DIR__),
         ]
     ],
@@ -15,9 +15,5 @@ return [
         'updateNamespace' => [
             'Yii\\Extension\\User\\Migration',
         ]
-    ],
-
-    'yiisoft/router' => [
-        'enableCache' => false,
     ],
 ];

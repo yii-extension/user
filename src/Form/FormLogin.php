@@ -6,7 +6,7 @@ namespace Yii\Extension\User\Form;
 
 use Yii\Extension\User\Settings\RepositorySetting;
 use Yiisoft\Form\FormModel;
-use Yiisoft\Translator\Translator;
+use Yiisoft\Translator\TranslatorInterface;
 use Yiisoft\Validator\Rule\Boolean;
 use Yiisoft\Validator\Rule\Required;
 use Yiisoft\Validator\ValidatorFactoryInterface;
@@ -19,12 +19,12 @@ final class FormLogin extends FormModel
     private string $password = '';
     private bool $remember = false;
     private RepositorySetting $repositorySetting;
-    private Translator $translator;
+    private TranslatorInterface $translator;
     private int $lastLogout;
 
     public function __construct(
         RepositorySetting $repositorySetting,
-        Translator $translator,
+        TranslatorInterface $translator,
         ValidatorFactoryInterface $validatorFactory
     ) {
         $this->repositorySetting = $repositorySetting;

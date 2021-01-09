@@ -7,7 +7,7 @@ namespace Yii\Extension\User\Form;
 use Yiisoft\Form\FormModel;
 use Yiisoft\Validator\Rule\Email;
 use Yiisoft\Validator\Rule\Required;
-use Yiisoft\Translator\Translator;
+use Yiisoft\Translator\TranslatorInterface;
 use Yiisoft\Validator\ValidatorFactoryInterface;
 
 use function strtolower;
@@ -15,10 +15,10 @@ use function strtolower;
 final class FormRequest extends FormModel
 {
     private string $email = '';
-    private Translator $translator;
+    private TranslatorInterface $translator;
 
     public function __construct(
-        Translator $translator,
+        TranslatorInterface $translator,
         ValidatorFactoryInterface $validatorFactory
     ) {
         $this->translator = $translator;
