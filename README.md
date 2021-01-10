@@ -31,7 +31,6 @@ Yii demo application for active record with db-sqlite is best for rapidly creati
           Middleware      contains class middleware
           Migration       contains migration classes
           Repository      contains repository classes
-          Service         contains services classes
 
 ## Project
 
@@ -99,6 +98,7 @@ http://localhost:8080
     - [x] /login - Display login form.
     - [x] /logout - Log the user out.
     - [x] /confirm[/{id}/{token}] - Confirms a user (requires id and token query params).
+    - [x] /profile - Displays profile form.
     - [x] /register - Displays registration form.
     - [x] /request - Displays recovery request form.
     - [x] /resend - Displays resend form.
