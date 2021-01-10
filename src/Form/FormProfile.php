@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace Yii\Extension\User\Form;
 
+use DateTimeZone;
 use Yiisoft\Form\FormModel;
 use Yiisoft\Validator\ValidatorFactoryInterface;
 use Yiisoft\Translator\TranslatorInterface;
 use Yiisoft\Validator\Rule\Email;
+use Yiisoft\Validator\Rule\InRange;
 use Yiisoft\Validator\Rule\Url;
 
 final class FormProfile extends FormModel
@@ -106,6 +108,7 @@ final class FormProfile extends FormModel
         return [
             'publicEmail' => [(new Email())->skipOnEmpty(true)],
             'website' => [(new Url())->skipOnEmpty(true)],
+            'timezone' => [new InRange(DateTimeZone::listIdentifiers())],
         ];
     }
 }
