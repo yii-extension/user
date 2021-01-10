@@ -19,6 +19,11 @@ $assetManager->register([
 ]);
 
 $aliases->set('@icons', $assetManager->getBundle(BootstrapIconsAsset::class)->baseUrl);
+$currentUri = $urlMatcher->getCurrentUri();
+
+if ($currentUri !== null) {
+    $currentUrl = $currentUri->getPath();
+}
 
 $this->setCssFiles($assetManager->getCssFiles());
 $this->setJsFiles($assetManager->getJsFiles());
@@ -44,10 +49,14 @@ $this->setJsFiles($assetManager->getJsFiles());
                                 'user' => $user
                             ]
                         ) ?>
-                        <?= AlertMessage::widget() ?>
+
+                        <?php if (!in_array($currentUrl, ['/login', '/profile'])) : ?>
+                            <?= AlertMessage::widget() ?>
+                        <?php endif; ?>
+
                     </header>
 
-                    <main class="px-3">
+                    <main>
                         <?= $content ?>
                     </main>
 

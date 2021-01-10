@@ -3,20 +3,19 @@
 }
 
 .hero-footer a {
-    color: #fff;
-}
-
-a:hover, a:active {
-    text-decoration: underline;
-    color: #72dcff;
+    color: #3273dc;
 }
 
 .hero.is-light a.navbar-item.is-active {
     background-color: transparent !important;
 }
 
-.navbar-item.is-active {
+.navbar-item {
     color: #3273dc !important;
+}
+
+.navbar-item.is-active {
+    color: #fff !important;
 }
 
 .input::-moz-placeholder, .textarea::-moz-placeholder, .select select::-moz-placeholder {
