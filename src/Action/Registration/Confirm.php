@@ -12,15 +12,15 @@ use Yii\Extension\User\ActiveRecord\Token;
 use Yii\Extension\User\ActiveRecord\User;
 use Yii\Extension\User\Repository\RepositoryToken;
 use Yii\Extension\User\Repository\RepositoryUser;
-use Yii\Extension\User\Service\ServiceLogin;
 use Yii\Extension\User\Settings\RepositorySetting;
 use Yiisoft\Translator\TranslatorInterface;
+use Yiisoft\User\User as Identity;
 use Yiisoft\Yii\View\ViewRenderer;
 
 final class Confirm
 {
     public function run(
-        ServiceLogin $serviceLogin,
+        Identity $identity,
         ServerRequestInterface $serverRequest,
         RepositorySetting $repositorySetting,
         RepositoryToken $repositoryToken,
@@ -57,16 +57,17 @@ final class Confirm
             return $viewRenderer->withViewPath('@user-view-views')->render('site/404');
         }
 
-        if (
-            $serviceLogin->isLoginConfirm($user, $ip)
-            && !$token->isExpired($repositorySetting->getTokenConfirmWithin())
-        ) {
+        if (!$token->isExpired($repositorySetting->getTokenConfirmWithin())) {
             $token->delete();
 
             $user->updateAttributes([
+                'confirmed_at' => time(),
+                'ip_last_login' => $ip,
+                'last_login_at' => time(),
                 'unconfirmed_email' => null,
-                'confirmed_at' => time()
             ]);
+
+            $identity->login($user);
 
             $serviceFlashMessage->run(
                 'success',

@@ -30,13 +30,28 @@ final class LoginAcceptanceCest
         $I->see('Login', '#form-auth-login');
     }
 
-    public function testLoginSubmitFormWrongData(AcceptanceTester $I): void
+    public function testLoginSubmitFormWrongDataUsername(AcceptanceTester $I): void
     {
         $I->amGoingTo('go to the login page');
         $I->amOnPage('/login');
 
         $I->fillField('#login-login', 'admin1');
-        $I->fillField('#login-password', '1234567');
+        $I->fillField('#login-password', '123456');
+
+        $I->click('Login', '#form-auth-login');
+
+        $I->expectTo('see validations errors.');
+        $I->see('Unregistered user/Invalid password');
+        $I->see('Login', '#form-auth-login');
+    }
+
+    public function testLoginSubmitFormWrongDataPassword(AcceptanceTester $I): void
+    {
+        $I->amGoingTo('go to the login page');
+        $I->amOnPage('/login');
+
+        $I->fillField('#login-login', 'admin');
+        $I->fillField('#login-password', '1');
 
         $I->click('Login', '#form-auth-login');
 

@@ -22,7 +22,6 @@ use Yiisoft\Db\Exception\Exception;
 use Yiisoft\Files\FileHelper;
 use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Router\UrlGeneratorInterface;
-use Yiisoft\Security\PasswordHasher;
 use Yiisoft\Security\Random;
 
 use function array_rand;
@@ -56,78 +55,6 @@ final class RepositoryUser implements IdentityRepositoryInterface
         $this->user = $activeRecordFactory->createAR(User::class);
     }
 
-    public function block(User $user): bool
-    {
-        return (bool) $user->updateAttributes([
-            'blocked_at' => time(),
-            'auth_key' => Random::string(),
-        ]);
-    }
-
-    public function isConfirm(User $user): bool
-    {
-        return (bool) $user->updateAttributes(['confirmed_at' => time()]);
-    }
-
-    public function create(FormRegister $formRegister): bool
-    {
-        if ($this->user->getIsNewRecord() === false) {
-            throw new RuntimeException('Calling "' . __CLASS__ . '::' . __METHOD__ . '" on existing user');
-        }
-
-        if ($this->findUserByUsernameOrEmail($formRegister->getEmail())) {
-            $formRegister->addError('email', 'Email already registered.');
-            return false;
-        }
-
-        if ($this->findUserByUsernameOrEmail($formRegister->getUsername())) {
-            $formRegister->addError('username', 'Username already registered.');
-            return false;
-        }
-
-        $db = $this->activeRecordFactory->getConnection();
-
-        /** @psalm-suppress UndefinedInterfaceMethod */
-        $transaction = $db->beginTransaction();
-
-        try {
-            $password = empty($formRegister->getAttributeValue('password'))
-                ? $this->generate(8)
-                : $formRegister->getAttributeValue('password');
-
-            $this->user->username($formRegister->getUsername());
-            $this->user->email($formRegister->getEmail());
-            $this->user->unconfirmedEmail(null);
-            $this->user->password($password);
-            $this->user->passwordHash($password);
-            $this->user->authKey();
-            $this->user->registrationIp($formRegister->getAttributeValue('ip'));
-            $this->user->confirmedAt();
-            $this->user->createdAt();
-            $this->user->updatedAt();
-            $this->user->flags(0);
-
-            if (!$this->user->save()) {
-                $transaction->rollBack();
-                return false;
-            }
-
-            $this->generateAvatar();
-
-            $this->profile->link('user', $this->user);
-
-            $transaction->commit();
-
-            $result = true;
-        } catch (Exception $e) {
-            $transaction->rollBack();
-            $this->logger->log(LogLevel::WARNING, $e->getMessage());
-            throw $e;
-        }
-
-        return $result;
-    }
-
     /**
      * @param string $id
      *
@@ -151,16 +78,6 @@ final class RepositoryUser implements IdentityRepositoryInterface
     public function findIdentityByToken(string $token, ?string $type = null): ?IdentityInterface
     {
         return $this->findUserByCondition(['auth_key' => $token]);
-    }
-
-    public function findUserAll(): array
-    {
-        return $this->userQuery()->all();
-    }
-
-    public function findUserAllAsArray(): array
-    {
-        return $this->userQuery()->asArray()->all();
     }
 
     public function findUserByCondition(array $condition): ?ActiveRecordInterface
@@ -207,12 +124,6 @@ final class RepositoryUser implements IdentityRepositoryInterface
         }
 
         return $urlToken;
-    }
-
-    public function loadData(User $user, FormRegister $formRegister): void
-    {
-        $formRegister->setAttribute('email', $user->getEmail());
-        $formRegister->setAttribute('username', $user->getUsername());
     }
 
     public function register(FormRegister $formRegister, bool $isConfirmation, bool $isGeneratingPassword): bool
@@ -277,51 +188,6 @@ final class RepositoryUser implements IdentityRepositoryInterface
             $transaction->rollBack();
             $this->logger->log(LogLevel::WARNING, $e->getMessage());
             throw $e;
-        }
-
-        return $result;
-    }
-
-    public function resetPassword(User $user): bool
-    {
-        $user->password($this->generate(8));
-
-        return $user->save();
-    }
-
-    public function update(User $user, FormRegister $formRegister): bool
-    {
-        $password = empty($formRegister->getAttributeValue('password'))
-            ? $this->generate(8)
-            : $formRegister->getAttributeValue('password');
-
-        $user->username($formRegister->getUsername());
-        $user->email($formRegister->getEmail());
-        $user->unconfirmedEmail(null);
-        $user->password($password);
-        $user->passwordHash($password);
-        $user->authKey();
-        $user->registrationIp($formRegister->getAttributeValue('ip'));
-        $user->confirmedAt();
-        $user->createdAt();
-        $user->updatedAt();
-        $user->flags(0);
-
-        return (bool) $user->update();
-    }
-
-    public function unblock(User $user): bool
-    {
-        return (bool) $user->updateAttributes(['blocked_at' => null]);
-    }
-
-    public function validatePassword(FormModelInterface $form, string $password, string $password_hash): bool
-    {
-        $result = true;
-
-        if (!(new PasswordHasher())->validate($password, $password_hash)) {
-            $form->addError('currentPassword', 'Invalid password.');
-            $result = false;
         }
 
         return $result;

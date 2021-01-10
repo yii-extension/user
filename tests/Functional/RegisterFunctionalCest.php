@@ -44,7 +44,7 @@ final class RegisterFunctionalCest
             'Login[login]' => 'admin1',
             'Login[password]' => '123456',
         ]);
-        $I->see('Please check your email to activate your account.');
+        $I->see('Please check your email to activate your account');
 
         $I->amGoingTo('update settings confirmation false');
         $I->updateInDatabase('settings', ['confirmation' => false], ['id' => 1]);

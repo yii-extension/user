@@ -109,6 +109,38 @@ final class LoginFunctionalCest
         $I->updateInDatabase('settings', ['userNameCaseSensitive' => true], ['id' => 1]);
     }
 
+    public function testLoginSubmitFormWrongDataUsername(FunctionalTester $I): void
+    {
+        $I->amGoingTo('go to the login page');
+        $I->amOnPage('/login');
+
+        $I->expectTo('see login form.');
+        $I->submitForm('#form-auth-login', [
+            'Login[login]' => 'admin1',
+            'Login[password]' => '123456',
+        ]);
+
+        $I->expectTo('see validations errors.');
+        $I->see('Unregistered user/Invalid password');
+        $I->see('Login', '#form-auth-login');
+    }
+
+    public function testLoginSubmitFormWrongDataPassword(FunctionalTester $I): void
+    {
+        $I->amGoingTo('go to the login page');
+        $I->amOnPage('/login');
+
+        $I->expectTo('see login form.');
+        $I->submitForm('#form-auth-login', [
+            'Login[login]' => 'admin',
+            'Login[password]' => '1',
+        ]);
+
+        $I->expectTo('see validations errors.');
+        $I->see('Unregistered user/Invalid password');
+        $I->see('Login', '#form-auth-login');
+    }
+
     public function testLoginUserIsBlocked(FunctionalTester $I): void
     {
         $this->loginUser($I);

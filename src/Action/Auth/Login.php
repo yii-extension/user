@@ -12,8 +12,8 @@ use Yii\Extension\Service\ServiceUrl;
 use Yii\Extension\User\Event\AfterLogin;
 use Yii\Extension\User\Form\FormLogin;
 use Yii\Extension\User\Repository\RepositoryUser;
-use Yii\Extension\User\Service\ServiceLogin;
 use Yii\Extension\User\Settings\RepositorySetting;
+use Yiisoft\Auth\IdentityInterface;
 use Yiisoft\Translator\TranslatorInterface;
 use Yiisoft\Yii\View\ViewRenderer;
 
@@ -27,7 +27,6 @@ final class Login
         RepositoryUser $repositoryUser,
         ServerRequestInterface $serverRequest,
         ServiceFlashMessage $serviceFlashMessage,
-        ServiceLogin $serviceLogin,
         ServiceUrl $serviceUrl,
         TranslatorInterface $translator,
         ViewRenderer $viewRenderer
@@ -38,15 +37,9 @@ final class Login
         /** @var string $method */
         $method = $serverRequest->getMethod();
 
-        /** @var string $ip */
-        $ip = $serverRequest->getServerParams()['REMOTE_ADDR'];
+        $formLogin->ip($serverRequest->getServerParams()['REMOTE_ADDR']);
 
-        if (
-            $method === 'POST'
-            && $formLogin->load($body)
-            && $formLogin->validate()
-            && $serviceLogin->run($repositoryUser, $ip)
-        ) {
+        if ($method === 'POST' && $formLogin->load($body) && $formLogin->validate()) {
             $eventDispatcher->dispatch($afterLogin);
 
             $body = $translator->translate('Sign in successful - you are welcome');
