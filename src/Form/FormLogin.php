@@ -8,12 +8,12 @@ use Yii\Extension\User\ActiveRecord\User;
 use Yii\Extension\User\Repository\RepositoryUser;
 use Yii\Extension\User\Settings\RepositorySetting;
 use Yiisoft\Form\FormModel;
+use Yiisoft\Security\PasswordHasher;
 use Yiisoft\Translator\TranslatorInterface;
 use Yiisoft\User\User as Identity;
-use Yiisoft\Security\PasswordHasher;
+use Yiisoft\Validator\Result;
 use Yiisoft\Validator\Rule\Boolean;
 use Yiisoft\Validator\Rule\Required;
-use Yiisoft\Validator\Result;
 use Yiisoft\Validator\ValidatorFactoryInterface;
 
 use function strtolower;
@@ -73,21 +73,12 @@ final class FormLogin extends FormModel
     public function rules(): array
     {
         return [
-            'login' => [new Required()],
+            'login' => [(new Required())->message($this->translator->translate('Value cannot be blank'))],
             'password' => $this->passwordRules(),
-            'remember' => [new Boolean()]
+            'remember' => [
+                (new Boolean())->message($this->translator->translate('The value must be either "1" or "0"')),
+            ],
         ];
-    }
-
-    public function validate(): bool
-    {
-        if (!$this->repositorySetting->getUserNameCaseSensitive()) {
-            $this->login = strtolower($this->login);
-        }
-
-        $this->user = $this->repositoryUser->findUserByUsernameOrEmail($this->login);
-
-        return parent::validate();
     }
 
     private function passwordRules(): array
@@ -97,6 +88,12 @@ final class FormLogin extends FormModel
         return [
             new Required(),
             function () use ($passwordHasher): Result {
+                if (!$this->repositorySetting->getUserNameCaseSensitive()) {
+                    $this->login = strtolower($this->login);
+                }
+
+                $this->user = $this->repositoryUser->findUserByUsernameOrEmail($this->login);
+
                 $result = new Result();
 
                 if ($this->user === null) {

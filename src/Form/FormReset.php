@@ -45,8 +45,8 @@ final class FormReset extends FormModel
     {
         return [
             'password' => [
-                new Required(),
-                (new HasLength())->min(6)->max(72)->tooShortMessage('Password should contain at least 6 characters.')
+                (new Required())->message($this->translator->translate('Value cannot be blank')),
+                (new HasLength())->min(6)->max(72)->tooShortMessage('Password should contain at least 6 characters')
             ],
         ];
     }

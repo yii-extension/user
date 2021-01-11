@@ -47,8 +47,8 @@ final class FormRequest extends FormModel
     {
         return [
             'email' => [
-                new Required(),
-                new Email()
+                (new Required())->message($this->translator->translate('Value cannot be blank')),
+                (new Email())->message($this->translator->translate('This value is not a valid email address')),
             ]
         ];
     }
