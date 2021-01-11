@@ -108,13 +108,13 @@ final class FormProfile extends FormModel
         return [
             'publicEmail' => [
                 (new Email())
-                    ->skipOnEmpty(true)
                     ->message($this->translator->translate('This value is not a valid email address'))
+                    ->skipOnEmpty(true)
             ],
             'website' => [
                 (new Url())
-                    ->skipOnEmpty(true)
                     ->message($this->translator->translate('This value is not a valid URL'))
+                    ->skipOnEmpty(true)
             ],
             'timezone' => [
                 (new InRange(DateTimeZone::listIdentifiers()))

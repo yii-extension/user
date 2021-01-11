@@ -29,7 +29,6 @@ final class FormLogin extends FormModel
     private RepositoryUser $repositoryUser;
     private RepositorySetting $repositorySetting;
     private TranslatorInterface $translator;
-    private ?User $user = null;
 
     public function __construct(
         Identity $identity,
@@ -92,34 +91,35 @@ final class FormLogin extends FormModel
                     $this->login = strtolower($this->login);
                 }
 
-                $this->user = $this->repositoryUser->findUserByUsernameOrEmail($this->login);
+                /** @var User|null $user */
+                $user = $this->repositoryUser->findUserByUsernameOrEmail($this->login);
 
                 $result = new Result();
 
-                if ($this->user === null) {
+                if ($user === null) {
                     $result->addError($this->translator->translate('Unregistered user/Invalid password'));
                 }
 
-                if ($this->user !== null && $this->user->isBlocked()) {
+                if ($user !== null && $user->isBlocked()) {
                     $result->addError(
                         $this->translator->translate('Your user has been blocked, contact an administrator')
                     );
                 }
 
-                if ($this->user !== null && !$this->user->isConfirmed()) {
+                if ($user !== null && !$user->isConfirmed()) {
                     $result->addError(
                         $this->translator->translate('Please check your email to activate your account')
                     );
                 }
 
-                if ($this->user !== null && !$passwordHasher->validate($this->password, $this->user->getPasswordHash())) {
+                if ($user !== null && !$passwordHasher->validate($this->password, $user->getPasswordHash())) {
                     $result->addError($this->translator->translate('Unregistered user/Invalid password'));
                 }
 
                 if ($result->isValid()) {
-                    $this->lastLogout = $this->user->getLastLogout();
-                    $this->user->updateAttributes(['ip_last_login' => $this->ip, 'last_login_at' => time()]);
-                    $this->identity->login($this->user);
+                    $this->lastLogout = $user->getLastLogout();
+                    $user->updateAttributes(['ip_last_login' => $this->ip, 'last_login_at' => time()]);
+                    $this->identity->login($user);
                 }
 
                 return $result;
