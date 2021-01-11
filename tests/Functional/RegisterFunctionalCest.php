@@ -49,4 +49,24 @@ final class RegisterFunctionalCest
         $I->amGoingTo('update settings confirmation false');
         $I->updateInDatabase('settings', ['confirmation' => false], ['id' => 1]);
     }
+
+    public function testRegisterSuccessDataGeratingPasswordTrue(FunctionalTester $I): void
+    {
+        $I->amGoingTo('update settings generating password true');
+        $I->updateInDatabase('settings', ['generatingPassword' => true], ['id' => 1]);
+
+        $I->amGoingTo('go to the register page');
+        $I->amOnPage('/register');
+        $I->submitForm('#form-registration-register', [
+            'Register[email]' => 'admin2@example.com',
+            'Register[username]' => 'admin2',
+
+        ]);
+
+        $I->amGoingTo('go to the login page');
+        $I->amOnPage('/login');
+
+        $I->amGoingTo('update settings generating password false');
+        $I->updateInDatabase('settings', ['generatingPassword' => false], ['id' => 1]);
+    }
 }

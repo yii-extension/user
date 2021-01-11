@@ -31,7 +31,7 @@ final class ResendFormCest
         $I->amGoingTo('go to the resend page');
         $I->amOnPage('/resend');
 
-        $I->click('Continue', '#form-recovery-resend');
+        $I->submitForm('#form-recovery-resend', ['Resend[email]' => '']);
 
         $I->expectTo('see validations errors.');
         $I->see('Value cannot be blank.');
@@ -48,16 +48,12 @@ final class ResendFormCest
         $I->amGoingTo('go to the resend page');
         $I->amOnPage('/resend');
 
-        $I->fillField('#resend-email', 'noExist');
-
-        $I->click('Continue', '#form-recovery-resend');
+        $I->submitForm('#form-recovery-resend', ['Resend[email]' => 'noExist']);
 
         $I->expectTo('see validations errors.');
         $I->see('This value is not a valid email address.');
 
-        $I->fillField('#resend-email', 'noExist@example.com');
-
-        $I->click('Continue', '#form-recovery-resend');
+        $I->submitForm('#form-recovery-resend', ['Resend[email]' => 'noExist@example.com']);
 
         $I->expectTo('see validations errors.');
         $I->see('Thank you. If said email is registered, you will get a password reset.');
@@ -74,9 +70,7 @@ final class ResendFormCest
         $I->amGoingTo('go to the resend page');
         $I->amOnPage('/resend');
 
-        $I->fillField('#resend-email', 'administrator@example.com');
-
-        $I->click('Continue', '#form-recovery-resend');
+        $I->submitForm('#form-recovery-resend', ['Resend[email]' => 'administrator@example.com']);
 
         $I->expectTo('see validations errors.');
         $I->see('User is active.');
@@ -96,11 +90,9 @@ final class ResendFormCest
         $I->amGoingTo('go to the resend page');
         $I->amOnPage('/resend');
 
-        $I->fillField('#resend-email', 'administrator1@example.com');
+        $I->submitForm('#form-recovery-resend', ['Resend[email]' => 'administrator1@example.com']);
 
-        $I->click('Continue', '#form-recovery-resend');
-
-        $I->expectTo('go to page login');
+        $I->expectTo('see to page login');
         $I->see('Login');
         $I->dontSeeLink('Continue', '#form-recovery-register');
 
