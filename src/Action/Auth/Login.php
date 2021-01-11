@@ -42,17 +42,17 @@ final class Login
         if ($method === 'POST' && $formLogin->load($body) && $formLogin->validate()) {
             $eventDispatcher->dispatch($afterLogin);
 
-            $body = $translator->translate('Sign in successful - you are welcome');
+            $bodyMessage = $translator->translate('Sign in successful - you are welcome');
 
             if ($formLogin->getLastLogout() > 0) {
-                $body = $translator->translate('Sign in successful') . ' - ' .
+                $bodyMessage = $translator->translate('Sign in successful') . ' - ' .
                     date('Y-m-d G:i:s', $formLogin->getLastLogout());
             }
 
             $serviceFlashMessage->run(
                 'success',
                 $translator->translate($repositorySetting->getMessageHeader()),
-                $body,
+                $bodyMessage,
             );
 
             return $serviceUrl->run('site/index');

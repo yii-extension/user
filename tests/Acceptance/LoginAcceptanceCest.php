@@ -25,8 +25,8 @@ final class LoginAcceptanceCest
         $I->click('Login', '#form-auth-login');
 
         $I->expectTo('see validations errors.');
-        $I->see('Value cannot be blank.');
-        $I->see('Value cannot be blank.');
+        $I->see('Value cannot be blank');
+        $I->see('Value cannot be blank');
         $I->see('Login', '#form-auth-login');
     }
 

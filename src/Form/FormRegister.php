@@ -6,11 +6,11 @@ namespace Yii\Extension\User\Form;
 
 use Yii\Extension\User\Settings\RepositorySetting;
 use Yiisoft\Form\FormModel;
+use Yiisoft\Translator\TranslatorInterface;
 use Yiisoft\Validator\Rule\Email;
 use Yiisoft\Validator\Rule\HasLength;
 use Yiisoft\Validator\Rule\MatchRegularExpression;
 use Yiisoft\Validator\Rule\Required;
-use Yiisoft\Translator\TranslatorInterface;
 use Yiisoft\Validator\ValidatorFactoryInterface;
 
 use function strtolower;
@@ -73,6 +73,11 @@ final class FormRegister extends FormModel
         $this->ip = $value;
     }
 
+    public function password(string $value): void
+    {
+        $this->password = $value;
+    }
+
     public function rules(): array
     {
         return [
@@ -82,7 +87,9 @@ final class FormRegister extends FormModel
             ],
             'username' => [
                 new Required(),
-                (new HasLength())->min(3)->max(255)->tooShortMessage('Username should contain at least 3 characters.'),
+                (new HasLength())->min(3)->max(255)->tooShortMessage(
+                    $this->translator->translate('Username should contain at least 3 characters'),
+                ),
                 new MatchRegularExpression($this->repositorySetting->getUsernameRegExp()),
             ],
             'password' => $this->passwordRules(),

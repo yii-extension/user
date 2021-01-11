@@ -7,11 +7,12 @@ namespace Yii\Extension\User\Action\Registration;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Yii\Extension\Service\ServiceMailer;
+use Yii\Extension\Service\ServiceFlashMessage;
 use Yii\Extension\Service\ServiceUrl;
 use Yii\Extension\User\Event\AfterRegister;
 use Yii\Extension\User\Form\FormRegister;
 use Yii\Extension\User\Repository\RepositoryUser;
+use Yii\Extension\User\Service\MailerUser;
 use Yii\Extension\User\Settings\RepositorySetting;
 use Yiisoft\Aliases\Aliases;
 use Yiisoft\Router\UrlGeneratorInterface;
@@ -25,10 +26,11 @@ final class Register
         Aliases $aliases,
         EventDispatcherInterface $eventDispatcher,
         FormRegister $formRegister,
+        MailerUser $mailerUser,
         RepositorySetting $repositorySetting,
         RepositoryUser $repositoryUser,
         ServerRequestInterface $serverRequest,
-        ServiceMailer $serviceMailer,
+        ServiceFlashMessage $serviceFlashMessage,
         ServiceUrl $serviceUrl,
         TranslatorInterface $translator,
         UrlGeneratorInterface $urlGenerator,
@@ -52,32 +54,31 @@ final class Register
                 $repositorySetting->isGeneratingPassword()
             )
         ) {
-            $serviceMailer
-                ->headerFlashMessage($translator->translate($repositorySetting->getMessageHeader()))
-                ->bodyFlashMessage(
-                    $repositorySetting->isConfirmation()
-                        ? $translator->translate('Please check your email to activate your username')
-                        : $translator->translate('Your account has been created'),
-                )
-                ->run(
-                    $repositorySetting->getEmailFrom(),
-                    $formRegister->getEmail(),
-                    $repositorySetting->getSubjectWelcome(),
-                    $aliases->get('@user-view-mail'),
-                    ['html' => 'welcome', 'text' => 'text/welcome'],
-                    [
-                        'username' => $formRegister->getUsername(),
-                        'password' => $formRegister->getPassword(),
-                        'url' => $repositorySetting->isConfirmation()
-                            ? $repositoryUser->generateUrlToken($urlGenerator, $repositorySetting->isConfirmation())
-                            : null,
-                        'showPassword' => $repositorySetting->isGeneratingPassword()
-                    ]
+            $email = $formRegister->getEmail();
+            $params = [
+                'username' => $formRegister->getUsername(),
+                'password' => $formRegister->getPassword(),
+                'url' => $repositorySetting->isConfirmation()
+                    ? $repositoryUser->generateUrlToken($urlGenerator, $repositorySetting->isConfirmation())
+                    : null,
+                'showPassword' => $repositorySetting->isGeneratingPassword()
+            ];
+
+            if ($mailerUser->sendWelcomeMessage($email, $params)) {
+                $bodyMessage = $repositorySetting->isConfirmation()
+                    ? $translator->translate('Please check your email to activate your username')
+                    : $translator->translate('Your account has been created');
+
+                $serviceFlashMessage->run(
+                    'success',
+                    $translator->translate($repositorySetting->getMessageHeader()),
+                    $bodyMessage,
                 );
+            }
 
             $eventDispatcher->dispatch($afterRegister);
 
-            $redirect = $repositorySetting->isConfirmation() === false && $repositorySetting->isGeneratingPassword() === false
+            $redirect = !$repositorySetting->isConfirmation() && !$repositorySetting->isGeneratingPassword()
                 ? 'login'
                 : 'site/index';
             return $serviceUrl->run($redirect);

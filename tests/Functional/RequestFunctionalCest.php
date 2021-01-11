@@ -49,7 +49,7 @@ final class RequestFunctionalCest
         ]);
 
         $I->expectTo('see error request form.');
-        $I->see('Inactive user.');
+        $I->see('Inactive user');
 
         $I->amGoingTo('update settings confirmation false');
         $I->updateInDatabase('settings', ['confirmation' => false], ['id' => 1]);

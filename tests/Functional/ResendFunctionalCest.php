@@ -34,7 +34,7 @@ final class ResendFormCest
         $I->submitForm('#form-recovery-resend', ['Resend[email]' => '']);
 
         $I->expectTo('see validations errors.');
-        $I->see('Value cannot be blank.');
+        $I->see('Value cannot be blank');
 
         $I->amGoingTo('update settings confirmation false');
         $I->updateInDatabase('settings', ['confirmation' => false], ['id' => 1]);
@@ -51,12 +51,12 @@ final class ResendFormCest
         $I->submitForm('#form-recovery-resend', ['Resend[email]' => 'noExist']);
 
         $I->expectTo('see validations errors.');
-        $I->see('This value is not a valid email address.');
+        $I->see('This value is not a valid email address');
 
         $I->submitForm('#form-recovery-resend', ['Resend[email]' => 'noExist@example.com']);
 
         $I->expectTo('see validations errors.');
-        $I->see('Thank you. If said email is registered, you will get a password reset.');
+        $I->see('Thank you. If said email is registered, you will get a password reset');
 
         $I->amGoingTo('update settings confirmation false');
         $I->updateInDatabase('settings', ['confirmation' => false], ['id' => 1]);
@@ -73,7 +73,7 @@ final class ResendFormCest
         $I->submitForm('#form-recovery-resend', ['Resend[email]' => 'administrator@example.com']);
 
         $I->expectTo('see validations errors.');
-        $I->see('User is active.');
+        $I->see('User is active');
 
         $I->amGoingTo('update settings confirmation false');
         $I->updateInDatabase('settings', ['confirmation' => false], ['id' => 1]);

@@ -7,7 +7,7 @@ namespace Yii\Extension\User\Action\Recovery;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Yii\Extension\Service\ServiceMailer;
+use Yii\Extension\Service\ServiceFlashMessage;
 use Yii\Extension\Service\ServiceUrl;
 use Yii\Extension\User\ActiveRecord\Token;
 use Yii\Extension\User\ActiveRecord\User;
@@ -15,8 +15,8 @@ use Yii\Extension\User\Event\AfterRequest;
 use Yii\Extension\User\Form\FormRequest;
 use Yii\Extension\User\Repository\RepositoryToken;
 use Yii\Extension\User\Repository\RepositoryUser;
+use Yii\Extension\User\Service\MailerUser;
 use Yii\Extension\User\Settings\RepositorySetting;
-use Yiisoft\Aliases\Aliases;
 use Yiisoft\Router\UrlGeneratorInterface;
 use Yiisoft\Translator\TranslatorInterface;
 use Yiisoft\Yii\View\ViewRenderer;
@@ -25,14 +25,14 @@ final class Request
 {
     public function run(
         AfterRequest $afterRequest,
-        Aliases $aliases,
         EventDispatcherInterface $eventDispatcher,
         FormRequest $formRequest,
+        MailerUser $mailerUser,
         RepositorySetting $repositorySetting,
         RepositoryToken $repositoryToken,
         RepositoryUser $repositoryUser,
         ServerRequestInterface $serverRequest,
-        ServiceMailer $serviceMailer,
+        ServiceFlashMessage $serviceFlashMessage,
         ServiceUrl $serviceUrl,
         Token $token,
         TranslatorInterface $translator,
@@ -42,7 +42,6 @@ final class Request
         /** @var array $body */
         $body = $serverRequest->getParsedBody();
 
-        /** @var string $method */
         $method = $serverRequest->getMethod();
 
         if ($method === 'POST' && $formRequest->load($body) && $formRequest->validate()) {
@@ -52,11 +51,11 @@ final class Request
             $user = $repositoryUser->findUserByUsernameOrEmail($email);
 
             if ($user === null) {
-                $formRequest->addError('email', 'Email not registered.');
+                $formRequest->addError('email', 'Email not registered');
             }
 
             if ($user !== null && !$user->isConfirmed()) {
-                $formRequest->addError('email', 'Inactive user.');
+                $formRequest->addError('email', 'Inactive user');
             }
 
             if ($user !== null && $user->isConfirmed()) {
@@ -67,15 +66,22 @@ final class Request
                 /** @var Token $token */
                 $token = $repositoryToken->findTokenById($user->getId());
 
-                $this->sentEmail(
-                    $aliases,
-                    $repositorySetting,
-                    $serviceMailer,
-                    $token,
-                    $translator,
-                    $urlGenerator,
-                    $user,
-                );
+                $email = $user->getEmail();
+                $params = [
+                    'username' => $user->getUsername(),
+                    'url' => $urlGenerator->generateAbsolute(
+                        $token->toUrl(),
+                        ['id' => $token->getAttribute('user_id'), 'code' => $token->getAttribute('code')]
+                    )
+                ];
+
+                if ($mailerUser->sendRecoveryMessage($email, $params)) {
+                    $serviceFlashMessage->run(
+                        'success',
+                        $translator->translate($repositorySetting->getMessageHeader()),
+                        $translator->translate('Please check your email to change your password'),
+                    );
+                }
 
                 $eventDispatcher->dispatch($afterRequest);
 
@@ -90,34 +96,5 @@ final class Request
         }
 
         return $viewRenderer->withViewPath('@user-view-views')->render('site/404');
-    }
-
-    private function sentEmail(
-        Aliases $aliases,
-        RepositorySetting $repositorySetting,
-        ServiceMailer $serviceMailer,
-        Token $token,
-        TranslatorInterface $translator,
-        UrlGeneratorInterface $urlGenerator,
-        User $user
-    ): void {
-        $serviceMailer
-            ->typeFlashMessageSent('info')
-            ->headerFlashMessage($translator->translate($repositorySetting->getMessageHeader()))
-            ->bodyFlashMessage($translator->translate('Please check your email to change your password'))
-            ->run(
-                $repositorySetting->getEmailFrom(),
-                $user->getEmail(),
-                $repositorySetting->getSubjectRecovery(),
-                $aliases->get('@user-view-mail'),
-                ['html' => 'recovery', 'text' => 'text/recovery'],
-                [
-                    'username' => $user->getUsername(),
-                    'url' => $urlGenerator->generateAbsolute(
-                        $token->toUrl(),
-                        ['id' => $token->getAttribute('user_id'), 'code' => $token->getAttribute('code')]
-                    )
-                ]
-            );
     }
 }

@@ -40,9 +40,9 @@ final class RegisterAcceptanceCest
         $I->click('Register', '#form-registration-register');
 
         $I->expectTo('see registration register validation.');
-        $I->see('Value cannot be blank.');
-        $I->see('Value cannot be blank.');
-        $I->see('Value cannot be blank.');
+        $I->see('Value cannot be blank');
+        $I->see('Value cannot be blank');
+        $I->see('Value cannot be blank');
         $I->see('Register', '#form-registration-register');
     }
 
@@ -58,7 +58,7 @@ final class RegisterAcceptanceCest
         $I->click('Register', '#form-registration-register');
 
         $I->expectTo('see registration register validation.');
-        $I->see('This value is not a valid email address.');
+        $I->see('This value is not a valid email address');
         $I->see('Register', '#form-registration-register');
     }
 
@@ -74,7 +74,7 @@ final class RegisterAcceptanceCest
         $I->click('Register', '#form-registration-register');
 
         $I->expectTo('see registration register validation.');
-        $I->see('Email already registered.');
+        $I->see('Email already registered');
         $I->see('Register', '#form-registration-register');
     }
 
@@ -90,7 +90,7 @@ final class RegisterAcceptanceCest
         $I->click('Register', '#form-registration-register');
 
         $I->expectTo('see registration register validation.');
-        $I->see('Value is invalid.');
+        $I->see('Value is invalid');
 
         $I->amOnPage('/register');
 
@@ -101,7 +101,7 @@ final class RegisterAcceptanceCest
         $I->click('Register', '#form-registration-register');
 
         $I->expectTo('see registration register validation.');
-        $I->see('Username should contain at least 3 characters.');
+        $I->see('Username should contain at least 3 characters');
         $I->see('Register', '#form-registration-register');
     }
 
@@ -117,7 +117,7 @@ final class RegisterAcceptanceCest
         $I->click('Register', '#form-registration-register');
 
         $I->expectTo('see registration register validation.');
-        $I->see('Username already registered.');
+        $I->see('Username already registered');
         $I->see('Register', '#form-registration-register');
     }
 
@@ -133,7 +133,7 @@ final class RegisterAcceptanceCest
         $I->click('Register', '#form-registration-register');
 
         $I->expectTo('see registration register validation.');
-        $I->see('Password should contain at least 6 characters.');
+        $I->see('Password should contain at least 6 characters');
         $I->see('Register', '#form-registration-register');
     }
 }

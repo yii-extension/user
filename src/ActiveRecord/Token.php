@@ -42,15 +42,14 @@ final class Token extends ActiveRecord
         return $this->getAttribute('code');
     }
 
-
-    public function getId(): string
-    {
-        return $this->getAttribute('id');
-    }
-
     public function getType(): int
     {
         return $this->getAttribute('type');
+    }
+
+    public function getUserId(): ?string
+    {
+        return $this->getAttribute('user_id') === null ? null : (string)$this->getAttribute('user_id');
     }
 
     public function toUrl(): string

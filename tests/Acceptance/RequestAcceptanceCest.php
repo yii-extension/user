@@ -27,7 +27,7 @@ final class RequestAcceptanceCest
         $I->click('Continue', '#form-recovery-request');
 
         $I->expectTo('see validations errors.');
-        $I->see('Value cannot be blank.');
+        $I->see('Value cannot be blank');
     }
 
     public function testRequestSubmitFormWrongData(AcceptanceTester $I): void
@@ -40,14 +40,14 @@ final class RequestAcceptanceCest
         $I->click('Continue', '#form-recovery-request');
 
         $I->expectTo('see validations errors.');
-        $I->see('This value is not a valid email address.');
+        $I->see('This value is not a valid email address');
 
         $I->fillField('#request-email', 'noexist@mail.com');
 
         $I->click('Continue', '#form-recovery-request');
 
         $I->expectTo('see validations errors.');
-        $I->see('Email not registered.');
+        $I->see('Email not registered');
     }
 
     public function testRequestSubmitFormSuccessData(AcceptanceTester $I): void

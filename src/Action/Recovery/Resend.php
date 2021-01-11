@@ -7,7 +7,7 @@ namespace Yii\Extension\User\Action\Recovery;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Yii\Extension\Service\ServiceMailer;
+use Yii\Extension\Service\ServiceFlashMessage;
 use Yii\Extension\Service\ServiceUrl;
 use Yii\Extension\User\ActiveRecord\Token;
 use Yii\Extension\User\ActiveRecord\User;
@@ -15,8 +15,8 @@ use Yii\Extension\User\Event\AfterResend;
 use Yii\Extension\User\Form\FormResend;
 use Yii\Extension\User\Repository\RepositoryToken;
 use Yii\Extension\User\Repository\RepositoryUser;
+use Yii\Extension\User\Service\MailerUser;
 use Yii\Extension\User\Settings\RepositorySetting;
-use Yiisoft\Aliases\Aliases;
 use Yiisoft\Router\UrlGeneratorInterface;
 use Yiisoft\Translator\TranslatorInterface;
 use Yiisoft\Yii\View\ViewRenderer;
@@ -25,14 +25,14 @@ final class Resend
 {
     public function run(
         AfterResend $afterResend,
-        Aliases $aliases,
         EventDispatcherInterface $eventDispatcher,
         FormResend $formResend,
+        MailerUser $mailerUser,
         RepositorySetting $repositorySetting,
         RepositoryToken $repositoryToken,
         RepositoryUser $repositoryUser,
         ServerRequestInterface $serverRequest,
-        ServiceMailer $serviceMailer,
+        ServiceFlashMessage $serviceFlashMessage,
         ServiceUrl $serviceUrl,
         TranslatorInterface $translator,
         UrlGeneratorInterface $urlGenerator,
@@ -41,7 +41,6 @@ final class Resend
         /** @var array $body */
         $body = $serverRequest->getParsedBody();
 
-        /** @var string $method */
         $method = $serverRequest->getMethod();
 
         if ($method === 'POST' && $formResend->load($body) && $formResend->validate()) {
@@ -53,7 +52,7 @@ final class Resend
             if ($user === null) {
                 $formResend->addError(
                     'email',
-                    'Thank you. If said email is registered, you will get a password reset' . '.',
+                    $translator->translate('Thank you. If said email is registered, you will get a password reset'),
                 );
             }
 
@@ -65,15 +64,22 @@ final class Resend
                 /** @var Token $token */
                 $token = $repositoryToken->findTokenById($user->getId());
 
-                $this->sentEmail(
-                    $aliases,
-                    $repositorySetting,
-                    $serviceMailer,
-                    $token,
-                    $translator,
-                    $urlGenerator,
-                    $user
-                );
+                $email = $user->getEmail();
+                $params = [
+                    'username' => $user->getUsername(),
+                    'url' => $urlGenerator->generateAbsolute(
+                        $token->toUrl(),
+                        ['id' => $token->getUserId(), 'code' => $token->getCode()]
+                    )
+                ];
+
+                if ($mailerUser->sendConfirmationMessage($email, $params)) {
+                    $serviceFlashMessage->run(
+                        'success',
+                        $translator->translate($repositorySetting->getMessageHeader()),
+                        $translator->translate('Please check your email to activate your username'),
+                    );
+                }
 
                 $eventDispatcher->dispatch($afterResend);
 
@@ -88,34 +94,5 @@ final class Resend
         }
 
         return $viewRenderer->withViewPath('@user-view-views')->render('site/404');
-    }
-
-    private function sentEmail(
-        Aliases $aliases,
-        RepositorySetting $repositorySetting,
-        ServiceMailer $serviceMailer,
-        Token $token,
-        TranslatorInterface $translator,
-        UrlGeneratorInterface $urlGenerator,
-        User $user
-    ): void {
-        $serviceMailer
-            ->typeFlashMessageSent('warning')
-            ->headerFlashMessage($translator->translate($repositorySetting->getMessageHeader()))
-            ->bodyFlashMessage($translator->translate('Please check your email to activate your username'))
-            ->run(
-                $repositorySetting->getEmailFrom(),
-                $user->getEmail(),
-                $repositorySetting->getSubjectConfirm(),
-                $aliases->get('@user-view-mail'),
-                ['html' => 'confirmation', 'text' => 'text/confirmation'],
-                [
-                    'username' => $user->getUsername(),
-                    'url' => $urlGenerator->generateAbsolute(
-                        $token->toUrl(),
-                        ['id' => $token->getAttribute('user_id'), 'code' => $token->getAttribute('code')]
-                    )
-                ]
-            );
     }
 }

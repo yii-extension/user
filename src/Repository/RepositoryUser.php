@@ -132,25 +132,18 @@ final class RepositoryUser implements IdentityRepositoryInterface
             throw new RuntimeException('Calling "' . __CLASS__ . '::' . __METHOD__ . '" on existing user');
         }
 
-        if ($this->findUserByUsernameOrEmail($formRegister->getEmail())) {
-            $formRegister->addError('email', 'Email already registered.');
-            return false;
-        }
-
-        if ($this->findUserByUsernameOrEmail($formRegister->getUsername())) {
-            $formRegister->addError('username', 'Username already registered.');
-            return false;
-        }
-
         $db = $this->activeRecordFactory->getConnection();
 
         /** @psalm-suppress UndefinedInterfaceMethod */
         $transaction = $db->beginTransaction();
 
         try {
-            $password = $isGeneratingPassword
-                ? $this->generate(8)
-                : $formRegister->getPassword();
+            $password = $formRegister->getPassword();
+
+            if ($isGeneratingPassword) {
+                $password = $this->generate(8);
+                $formRegister->password($password);
+            }
 
             $this->user->username($formRegister->getUsername());
             $this->user->email($formRegister->getEmail());
