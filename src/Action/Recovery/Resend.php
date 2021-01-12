@@ -44,47 +44,32 @@ final class Resend
         $method = $serverRequest->getMethod();
 
         if ($method === 'POST' && $formResend->load($body) && $formResend->validate()) {
-            $email = $formResend->getEmail();
-
             /** @var User|null $user */
-            $user = $repositoryUser->findUserByUsernameOrEmail($email);
+            $user = $repositoryUser->findUserByUsernameOrEmail($formResend->getEmail());
 
-            if ($user === null) {
-                $formResend->addError(
-                    'email',
-                    $translator->translate('Thank you. If said email is registered, you will get a password reset'),
+            /** @var Token $token */
+            $token = $repositoryToken->findTokenById($user->getId());
+
+            $email = $user->getEmail();
+            $params = [
+                'username' => $user->getUsername(),
+                'url' => $urlGenerator->generateAbsolute(
+                    $token->toUrl(),
+                    ['id' => $token->getUserId(), 'code' => $token->getCode()]
+                )
+            ];
+
+            if ($mailerUser->sendConfirmationMessage($email, $params)) {
+                $serviceFlashMessage->run(
+                    'success',
+                    $translator->translate($repositorySetting->getMessageHeader()),
+                    $translator->translate('Please check your email to activate your username'),
                 );
             }
 
-            if ($user !== null && $user->isConfirmed()) {
-                $formResend->addError('email', 'User is active.');
-            }
+            $eventDispatcher->dispatch($afterResend);
 
-            if ($user !== null && !$user->isConfirmed()) {
-                /** @var Token $token */
-                $token = $repositoryToken->findTokenById($user->getId());
-
-                $email = $user->getEmail();
-                $params = [
-                    'username' => $user->getUsername(),
-                    'url' => $urlGenerator->generateAbsolute(
-                        $token->toUrl(),
-                        ['id' => $token->getUserId(), 'code' => $token->getCode()]
-                    )
-                ];
-
-                if ($mailerUser->sendConfirmationMessage($email, $params)) {
-                    $serviceFlashMessage->run(
-                        'success',
-                        $translator->translate($repositorySetting->getMessageHeader()),
-                        $translator->translate('Please check your email to activate your username'),
-                    );
-                }
-
-                $eventDispatcher->dispatch($afterResend);
-
-                return $serviceUrl->run('login');
-            }
+            return $serviceUrl->run('login');
         }
 
         if ($repositorySetting->isConfirmation()) {

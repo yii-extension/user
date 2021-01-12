@@ -71,11 +71,14 @@ final class FormLogin extends FormModel
 
     public function rules(): array
     {
+        $boolean = new Boolean();
+        $required = new Required();
+
         return [
-            'login' => [(new Required())->message($this->translator->translate('Value cannot be blank'))],
+            'login' => [$required->message($this->translator->translate('Value cannot be blank'))],
             'password' => $this->passwordRules(),
             'remember' => [
-                (new Boolean())->message($this->translator->translate('The value must be either "1" or "0"')),
+                $boolean->message($this->translator->translate('The value must be either "1" or "0"'))
             ],
         ];
     }
@@ -83,9 +86,11 @@ final class FormLogin extends FormModel
     private function passwordRules(): array
     {
         $passwordHasher = new PasswordHasher();
+        $required = new Required();
 
         return [
-            new Required(),
+            $required->message($this->translator->translate('Value cannot be blank')),
+
             function () use ($passwordHasher): Result {
                 if (!$this->repositorySetting->getUserNameCaseSensitive()) {
                     $this->login = strtolower($this->login);

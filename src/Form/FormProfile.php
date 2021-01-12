@@ -105,20 +105,23 @@ final class FormProfile extends FormModel
 
     public function rules(): array
     {
+        $email = new Email();
+        $inRange = new InRange(DateTimeZone::listIdentifiers());
+        $url = new Url();
+
         return [
             'publicEmail' => [
-                (new Email())
+                $email
                     ->message($this->translator->translate('This value is not a valid email address'))
                     ->skipOnEmpty(true)
             ],
             'website' => [
-                (new Url())
+                $url
                     ->message($this->translator->translate('This value is not a valid URL'))
                     ->skipOnEmpty(true)
             ],
             'timezone' => [
-                (new InRange(DateTimeZone::listIdentifiers()))
-                    ->message($this->translator->translate('This value is invalid'))
+                $inRange->message($this->translator->translate('This value is invalid'))
             ],
         ];
     }

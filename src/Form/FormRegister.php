@@ -94,9 +94,13 @@ final class FormRegister extends FormModel
 
     private function emailRules(): array
     {
+        $email = new email();
+        $required = new Required();
+
         return [
-            (new Required())->message($this->translator->translate('Value cannot be blank')),
-            (new Email())->message($this->translator->translate('This value is not a valid email address')),
+            $required->message($this->translator->translate('Value cannot be blank')),
+            $email->message($this->translator->translate('This value is not a valid email address')),
+
             function (): Result {
                 $result = new Result();
 
@@ -111,12 +115,17 @@ final class FormRegister extends FormModel
 
     private function usernameRules(): array
     {
+        $hasLength = new HasLength();
+        $required = new Required();
+        $matchRegularExpression = new MatchRegularExpression($this->repositorySetting->getUsernameRegExp());
+
         return [
-            (new Required())->message($this->translator->translate('Value cannot be blank')),
-            (new HasLength())->min(3)->max(255)->tooShortMessage(
+            $required->message($this->translator->translate('Value cannot be blank')),
+            $hasLength->min(3)->max(255)->tooShortMessage(
                 $this->translator->translate('Username should contain at least 3 characters'),
             ),
-            (new MatchRegularExpression($this->repositorySetting->getUsernameRegExp()))->message('Value is invalid'),
+            $matchRegularExpression->message('Value is invalid'),
+
             function (): Result {
                 $result = new Result();
 
@@ -131,12 +140,14 @@ final class FormRegister extends FormModel
 
     private function passwordRules(): array
     {
+        $hasLength = new HasLength();
+        $required = new Required();
         $result = [];
 
         if ($this->repositorySetting->isGeneratingPassword() === false) {
             $result = [
-                (new Required())->message($this->translator->translate('Value cannot be blank')),
-                (new HasLength())->min(6)->max(72)->tooShortMessage('Password should contain at least 6 characters'),
+                $required->message($this->translator->translate('Value cannot be blank')),
+                $hasLength->min(6)->max(72)->tooShortMessage('Password should contain at least 6 characters'),
             ];
         }
 

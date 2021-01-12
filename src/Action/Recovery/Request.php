@@ -45,48 +45,36 @@ final class Request
         $method = $serverRequest->getMethod();
 
         if ($method === 'POST' && $formRequest->load($body) && $formRequest->validate()) {
-            $email = $formRequest->getEmail();
-
             /** @var User|null $user */
-            $user = $repositoryUser->findUserByUsernameOrEmail($email);
+            $user = $repositoryUser->findUserByUsernameOrEmail($formRequest->getEmail());
 
-            if ($user === null) {
-                $formRequest->addError('email', 'Email not registered');
+            $token->deleteAll(['user_id' => $user->getId(), 'type' => Token::TYPE_RECOVERY]);
+
+            $repositoryToken->register($user->getId(), Token::TYPE_RECOVERY);
+
+            /** @var Token $token */
+            $token = $repositoryToken->findTokenById($user->getId());
+
+            $email = $user->getEmail();
+            $params = [
+                'username' => $user->getUsername(),
+                'url' => $urlGenerator->generateAbsolute(
+                    $token->toUrl(),
+                    ['id' => $token->getAttribute('user_id'), 'code' => $token->getAttribute('code')]
+                )
+            ];
+
+            if ($mailerUser->sendRecoveryMessage($email, $params)) {
+                $serviceFlashMessage->run(
+                    'success',
+                    $translator->translate($repositorySetting->getMessageHeader()),
+                    $translator->translate('Please check your email to change your password'),
+                );
             }
 
-            if ($user !== null && !$user->isConfirmed()) {
-                $formRequest->addError('email', 'Inactive user');
-            }
+            $eventDispatcher->dispatch($afterRequest);
 
-            if ($user !== null && $user->isConfirmed()) {
-                $token->deleteAll(['user_id' => $user->getId(), 'type' => Token::TYPE_RECOVERY]);
-
-                $repositoryToken->register($user->getId(), Token::TYPE_RECOVERY);
-
-                /** @var Token $token */
-                $token = $repositoryToken->findTokenById($user->getId());
-
-                $email = $user->getEmail();
-                $params = [
-                    'username' => $user->getUsername(),
-                    'url' => $urlGenerator->generateAbsolute(
-                        $token->toUrl(),
-                        ['id' => $token->getAttribute('user_id'), 'code' => $token->getAttribute('code')]
-                    )
-                ];
-
-                if ($mailerUser->sendRecoveryMessage($email, $params)) {
-                    $serviceFlashMessage->run(
-                        'success',
-                        $translator->translate($repositorySetting->getMessageHeader()),
-                        $translator->translate('Please check your email to change your password'),
-                    );
-                }
-
-                $eventDispatcher->dispatch($afterRequest);
-
-                return $serviceUrl->run('login');
-            }
+            return $serviceUrl->run('login');
         }
 
         if ($repositorySetting->isPasswordRecovery()) {
