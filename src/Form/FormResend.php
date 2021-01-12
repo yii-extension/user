@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Yii\Extension\User\Form;
 
+use Yii\Extension\User\ActiveRecord\User;
 use Yii\Extension\User\Repository\RepositoryUser;
 use Yiisoft\Form\FormModel;
 use Yiisoft\Validator\Result;
