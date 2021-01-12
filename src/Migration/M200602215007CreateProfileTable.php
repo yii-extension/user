@@ -4,36 +4,37 @@ declare(strict_types=1);
 
 namespace Yii\Extension\User\Migration;
 
-use Yiisoft\Yii\Db\Migration\Migration;
+use Yiisoft\Yii\Db\Migration\MigrationBuilder;
 use Yiisoft\Yii\Db\Migration\RevertibleMigrationInterface;
 
 /**
- * Handles the creation of table `profile`.
+ * class M200602215007CreateProfileTable
  */
-final class M200602215007CreateProfileTable extends Migration implements RevertibleMigrationInterface
+final class M200602215007CreateProfileTable implements RevertibleMigrationInterface
 {
-    public function up(): void
+    public function up(MigrationBuilder $b): void
     {
         $tableOptions = null;
-        if ($this->db->getDriverName() === 'mysql') {
-            $tableOptions = 'CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE=InnoDB';
+
+        if ($b->getDb()->getDriverName() === 'mysql') {
+            $tableOptions = 'CHARACTER SET utf8mb4 COLLATE utf8mb4_bin ENGINE=InnoDB';
         }
 
-        $this->createTable(
+        $b->createTable(
             '{{%profile}}',
             [
-                'user_id' => $this->primaryKey(),
-                'name' => $this->string(255),
-                'public_email' => $this->string(255),
-                'location' => $this->string(255),
-                'website' => $this->string(255),
-                'bio' => $this->text(),
-                'timezone' => $this->string(40)
+                'user_id' => $b->primaryKey(),
+                'name' => $b->string(255),
+                'public_email' => $b->string(255),
+                'location' => $b->string(255),
+                'website' => $b->string(255),
+                'bio' => $b->text(),
+                'timezone' => $b->string(40)
             ],
             $tableOptions
         );
 
-        $this->addForeignKey(
+        $b->addForeignKey(
             'fk_user_profile',
             '{{%profile}}',
             ['user_id'],
@@ -44,8 +45,8 @@ final class M200602215007CreateProfileTable extends Migration implements Reverti
         );
     }
 
-    public function down(): void
+    public function down(MigrationBuilder $b): void
     {
-        $this->dropTable('{{%profile}}');
+        $b->dropTable('{{%profile}}');
     }
 }

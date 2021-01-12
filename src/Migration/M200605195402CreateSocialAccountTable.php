@@ -4,41 +4,42 @@ declare(strict_types=1);
 
 namespace Yii\Extension\User\Migration;
 
-use Yiisoft\Yii\Db\Migration\Migration;
+use Yiisoft\Yii\Db\Migration\MigrationBuilder;
 use Yiisoft\Yii\Db\Migration\RevertibleMigrationInterface;
 
 /**
- * Handles the creation of table `social_account`.
+ * class M200605195402CreateSocialAccountTable
  */
-final class M200605195402CreateSocialAccountTable extends Migration implements RevertibleMigrationInterface
+final class M200605195402CreateSocialAccountTable implements RevertibleMigrationInterface
 {
-    public function up(): void
+    public function up(MigrationBuilder $b): void
     {
         $tableOptions = null;
-        if ($this->db->getDriverName() === 'mysql') {
-            $tableOptions = 'CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE=InnoDB';
+
+        if ($b->getDb()->getDriverName() === 'mysql') {
+            $tableOptions = 'CHARACTER SET utf8mb4 COLLATE utf8mb4_bin ENGINE=InnoDB';
         }
 
-        $this->createTable(
+        $b->createTable(
             '{{%social_account}}',
             [
-                'id' => $this->primaryKey(),
-                'user_id' => $this->integer(),
-                'provider' => $this->string(255),
-                'client_id' => $this->string(255),
-                'data' => $this->text(),
-                'code' => $this->string(32),
-                'created_at' => $this->integer(),
-                'email' => $this->string(255),
-                'username' => $this->string(255),
+                'id' => $b->primaryKey(),
+                'user_id' => $b->integer(),
+                'provider' => $b->string(255),
+                'client_id' => $b->string(255),
+                'data' => $b->text(),
+                'code' => $b->string(32),
+                'created_at' => $b->integer(),
+                'email' => $b->string(255),
+                'username' => $b->string(255),
             ],
             $tableOptions
         );
 
-        $this->createIndex('account_unique', '{{%social_account}}', ['provider', 'client_id'], true);
-        $this->createIndex('account_unique_code', '{{%social_account}}', ['code'], true);
+        $b->createIndex('account_unique', '{{%social_account}}', ['provider', 'client_id'], true);
+        $b->createIndex('account_unique_code', '{{%social_account}}', ['code'], true);
 
-        $this->addForeignKey(
+        $b->addForeignKey(
             'fk_user_account',
             '{{%social_account}}',
             ['user_id'],
@@ -49,8 +50,8 @@ final class M200605195402CreateSocialAccountTable extends Migration implements R
         );
     }
 
-    public function down(): void
+    public function down(MigrationBuilder $b): void
     {
-        $this->dropTable('{{%social_account}}');
+        $b->dropTable('{{%social_account}}');
     }
 }

@@ -4,35 +4,36 @@ declare(strict_types=1);
 
 namespace Yii\Extension\User\Migration;
 
-use Yiisoft\Yii\Db\Migration\Migration;
+use Yiisoft\Yii\Db\Migration\MigrationBuilder;
 use Yiisoft\Yii\Db\Migration\RevertibleMigrationInterface;
 
 /**
- * Handles the creation of table `token`.
+ * class M200605195559CreateTokenTable
  */
-final class M200605195559CreateTokenTable extends Migration implements RevertibleMigrationInterface
+final class M200605195559CreateTokenTable implements RevertibleMigrationInterface
 {
-    public function up(): void
+    public function up(MigrationBuilder $b): void
     {
         $tableOptions = null;
-        if ($this->db->getDriverName() === 'mysql') {
-            $tableOptions = 'CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE=InnoDB';
+
+        if ($b->getDb()->getDriverName() === 'mysql') {
+            $tableOptions = 'CHARACTER SET utf8mb4 COLLATE utf8mb4_bin ENGINE=InnoDB';
         }
 
-        $this->createTable(
+        $b->createTable(
             '{{%token}}',
             [
-                'user_id' => $this->primaryKey(),
-                'code' => $this->string(32),
-                'created_at' => $this->integer(),
-                'type' => $this->smallInteger(),
+                'user_id' => $b->primaryKey(),
+                'code' => $b->string(32),
+                'created_at' => $b->integer(),
+                'type' => $b->smallInteger(),
             ],
             $tableOptions
         );
 
-        $this->createIndex('token_unique', '{{%token}}', ['user_id', 'code', 'type'], true);
+        $b->createIndex('token_unique', '{{%token}}', ['user_id', 'code', 'type'], true);
 
-        $this->addForeignKey(
+        $b->addForeignKey(
             'fk_user_token',
             '{{%token}}',
             ['user_id'],
@@ -43,8 +44,8 @@ final class M200605195559CreateTokenTable extends Migration implements Revertibl
         );
     }
 
-    public function down(): void
+    public function down(MigrationBuilder $b): void
     {
-        $this->dropTable('{{%token}}');
+        $b->dropTable('{{%token}}');
     }
 }

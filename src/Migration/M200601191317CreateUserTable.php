@@ -4,50 +4,50 @@ declare(strict_types=1);
 
 namespace Yii\Extension\User\Migration;
 
-use Yiisoft\Yii\Db\Migration\Migration;
+use Yiisoft\Yii\Db\Migration\MigrationBuilder;
 use Yiisoft\Yii\Db\Migration\RevertibleMigrationInterface;
 
 /**
- * Handles the creation of table `user`.
+ * Class M200601191317CreateUserTable
  */
-final class M200601191317CreateUserTable extends Migration implements RevertibleMigrationInterface
+final class M200601191317CreateUserTable implements RevertibleMigrationInterface
 {
-    public function up(): void
+    public function up(MigrationBuilder $b): void
     {
         $tableOptions = null;
 
-        if ($this->db->getDriverName() === 'mysql') {
-            $tableOptions = 'CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE=InnoDB';
+        if ($b->getDb()->getDriverName() === 'mysql') {
+            $tableOptions = 'CHARACTER SET utf8mb4 COLLATE utf8mb4_bin ENGINE=InnoDB';
         }
 
-        $this->createTable(
+        $b->createTable(
             '{{%user}}',
             [
-                'id' => $this->primaryKey(),
-                'username' => $this->string(255),
-                'email' => $this->string(255),
-                'password_hash' => $this->string(100),
-                'auth_key' => $this->string(32),
-                'confirmed_at' => $this->integer(),
-                'unconfirmed_email' => $this->string(255),
-                'blocked_at' => $this->integer(),
-                'registration_ip' => $this->string(45),
-                'created_at' => $this->integer(),
-                'updated_at' => $this->integer(),
-                'flags' => $this->integer(),
-                'ip_last_login' => $this->string(45),
-                'last_login_at' => $this->integer(),
-                'last_logout_at' => $this->integer(),
+                'id' => $b->primaryKey(),
+                'username' => $b->string(255),
+                'email' => $b->string(255),
+                'password_hash' => $b->string(100),
+                'auth_key' => $b->string(32),
+                'confirmed_at' => $b->integer(),
+                'unconfirmed_email' => $b->string(255),
+                'blocked_at' => $b->integer(),
+                'registration_ip' => $b->string(45),
+                'created_at' => $b->integer(),
+                'updated_at' => $b->integer(),
+                'flags' => $b->integer(),
+                'ip_last_login' => $b->string(45),
+                'last_login_at' => $b->integer(),
+                'last_logout_at' => $b->integer(),
             ],
             $tableOptions
         );
 
-        $this->createIndex('user_unique_email', '{{%user}}', ['email'], true);
-        $this->createIndex('user_unique_username', '{{%user}}', ['username'], true);
+        $b->createIndex('user_unique_email', '{{%user}}', ['email'], true);
+        $b->createIndex('user_unique_username', '{{%user}}', ['username'], true);
     }
 
-    public function down(): void
+    public function down(MigrationBuilder $b): void
     {
-        $this->dropTable('{{%user}}');
+        $b->dropTable('{{%user}}');
     }
 }
