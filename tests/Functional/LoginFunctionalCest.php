@@ -61,7 +61,7 @@ final class LoginFunctionalCest
         ]);
 
         $I->expectTo('see error login form.');
-        $I->see('Unregistered user/Invalid password');
+        $I->see('Invalid login or password');
 
         $I->expectTo('see login form case sensitive.');
         $I->submitForm('#form-auth-login', [
@@ -121,7 +121,7 @@ final class LoginFunctionalCest
         ]);
 
         $I->expectTo('see validations errors.');
-        $I->see('Unregistered user/Invalid password');
+        $I->see('Invalid login or password');
         $I->see('Login', '#form-auth-login');
     }
 
@@ -137,7 +137,7 @@ final class LoginFunctionalCest
         ]);
 
         $I->expectTo('see validations errors.');
-        $I->see('Unregistered user/Invalid password');
+        $I->see('Invalid login or password');
         $I->see('Login', '#form-auth-login');
     }
 

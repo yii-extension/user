@@ -41,7 +41,7 @@ final class LoginAcceptanceCest
         $I->click('Login', '#form-auth-login');
 
         $I->expectTo('see validations errors.');
-        $I->see('Unregistered user/Invalid password');
+        $I->see('Invalid login or password');
         $I->see('Login', '#form-auth-login');
     }
 
@@ -56,7 +56,7 @@ final class LoginAcceptanceCest
         $I->click('Login', '#form-auth-login');
 
         $I->expectTo('see validations errors.');
-        $I->see('Unregistered user/Invalid password');
+        $I->see('Invalid login or password');
         $I->see('Login', '#form-auth-login');
     }
 

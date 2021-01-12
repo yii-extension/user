@@ -102,7 +102,7 @@ final class FormLogin extends FormModel
                 $result = new Result();
 
                 if ($user === null) {
-                    $result->addError($this->translator->translate('Unregistered user/Invalid password'));
+                    $result->addError($this->translator->translate('Invalid login or password'));
                 }
 
                 if ($user !== null && $user->isBlocked()) {
@@ -118,7 +118,7 @@ final class FormLogin extends FormModel
                 }
 
                 if ($user !== null && !$passwordHasher->validate($this->password, $user->getPasswordHash())) {
-                    $result->addError($this->translator->translate('Unregistered user/Invalid password'));
+                    $result->addError($this->translator->translate('Invalid login or password'));
                 }
 
                 if ($result->isValid()) {
