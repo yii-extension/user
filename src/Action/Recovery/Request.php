@@ -7,6 +7,7 @@ namespace Yii\Extension\User\Action\Recovery;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 use Yii\Extension\Service\ServiceFlashMessage;
 use Yii\Extension\Service\ServiceUrl;
 use Yii\Extension\User\ActiveRecord\Token;
@@ -26,6 +27,7 @@ final class Request
         EventDispatcherInterface $eventDispatcher,
         FormRequest $formRequest,
         MailerUser $mailerUser,
+        RequestHandlerInterface $requestHandler,
         RepositorySetting $repositorySetting,
         RepositoryToken $repositoryToken,
         ServerRequestInterface $serverRequest,
@@ -37,7 +39,6 @@ final class Request
     ): ResponseInterface {
         /** @var array $body */
         $body = $serverRequest->getParsedBody();
-
         $method = $serverRequest->getMethod();
 
         if ($method === 'POST' && $formRequest->load($body) && $formRequest->validate()) {
@@ -77,6 +78,6 @@ final class Request
                 ->render('/recovery/request', ['body' => $body, 'data' => $formRequest]);
         }
 
-        return $viewRenderer->withViewPath('@user-view-error')->render('site/404');
+        return $requestHandler->handle($serverRequest);
     }
 }

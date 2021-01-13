@@ -6,6 +6,7 @@ namespace Yii\Extension\User\Action\Registration;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 use Yii\Extension\Service\ServiceFlashMessage;
 use Yii\Extension\Service\ServiceUrl;
 use Yii\Extension\User\ActiveRecord\Token;
@@ -15,20 +16,19 @@ use Yii\Extension\User\Repository\RepositoryUser;
 use Yii\Extension\User\Settings\RepositorySetting;
 use Yiisoft\Translator\TranslatorInterface;
 use Yiisoft\User\User as Identity;
-use Yiisoft\Yii\View\ViewRenderer;
 
 final class Confirm
 {
     public function run(
         Identity $identity,
         ServerRequestInterface $serverRequest,
+        RequestHandlerInterface $requestHandler,
         RepositorySetting $repositorySetting,
         RepositoryToken $repositoryToken,
         RepositoryUser $repositoryUser,
         ServiceFlashMessage $serviceFlashMessage,
         ServiceUrl $serviceUrl,
-        TranslatorInterface $translator,
-        ViewRenderer $viewRenderer
+        TranslatorInterface $translator
     ): ResponseInterface {
         /** @var string|null $id */
         $id = $serverRequest->getAttribute('id');
@@ -40,7 +40,7 @@ final class Confirm
         $ip = $serverRequest->getServerParams()['REMOTE_ADDR'];
 
         if ($id === null || ($user = $repositoryUser->findUserById($id)) === null || $code === null) {
-            return $viewRenderer->withViewPath('@user-view-error')->render('site/404');
+            return $requestHandler->handle($serverRequest);
         }
 
         /**
@@ -54,7 +54,7 @@ final class Confirm
         );
 
         if ($token === null || $token->isExpired($repositorySetting->getTokenConfirmWithin())) {
-            return $viewRenderer->withViewPath('@user-view-error')->render('site/404');
+            return $requestHandler->handle($serverRequest);
         }
 
         if (!$token->isExpired($repositorySetting->getTokenConfirmWithin())) {

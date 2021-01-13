@@ -7,6 +7,7 @@ namespace Yii\Extension\User\Action\Registration;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 use Yii\Extension\Service\ServiceFlashMessage;
 use Yii\Extension\Service\ServiceUrl;
 use Yii\Extension\User\Event\AfterRegister;
@@ -25,6 +26,7 @@ final class Register
         EventDispatcherInterface $eventDispatcher,
         FormRegister $formRegister,
         MailerUser $mailerUser,
+        RequestHandlerInterface $requestHandler,
         RepositorySetting $repositorySetting,
         RepositoryUser $repositoryUser,
         ServerRequestInterface $serverRequest,
@@ -36,8 +38,6 @@ final class Register
     ): ResponseInterface {
         /** @var array $body */
         $body = $serverRequest->getParsedBody();
-
-        /** @var string $method */
         $method = $serverRequest->getMethod();
 
         $formRegister->ip($serverRequest->getServerParams()['REMOTE_ADDR']);
@@ -88,6 +88,6 @@ final class Register
                 ->render('/registration/register', ['body' => $body, 'data' => $formRegister]);
         }
 
-        return $viewRenderer->withViewPath('@user-view-error')->render('site/404');
+        return $requestHandler->handle($serverRequest);
     }
 }

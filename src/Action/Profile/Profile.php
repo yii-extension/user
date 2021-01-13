@@ -24,6 +24,7 @@ final class Profile
         User $user,
         ViewRenderer $viewRenderer
     ): ResponseInterface {
+        /** @var array $body */
         $body = $serverRequest->getParsedBody();
         $method = $serverRequest->getMethod();
 

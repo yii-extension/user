@@ -30,7 +30,6 @@ return [
             '@views' => InstalledVersions::isInstalled('yii-extension/user-view-bulma')
                 ? '@resources/views/bulma' : '@resources/views/bootstrap5',
             '@message' => '@root/resources/message',
-            'user-view-error' => '@views',
         ],
     ],
 

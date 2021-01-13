@@ -82,8 +82,8 @@ final class LoginAcceptanceCest
         $I->amOnPage('/login');
 
         $I->expectTo('no see page log in');
-        $I->see('404');
-        $I->see('The page /login was not found.');
+        $I->see('Hello!');
+        $I->see('Let\'s start something great with Yii3!');
 
         $I->click('#logout');
 
@@ -113,8 +113,8 @@ final class LoginAcceptanceCest
         $I->amOnPage('/login');
 
         $I->expectTo('no see page log in');
-        $I->see('404');
-        $I->see('The page /login was not found.');
+        $I->see('Hello!');
+        $I->see('Let\'s start something great with Yii3!');
 
         $I->click('#logout');
 

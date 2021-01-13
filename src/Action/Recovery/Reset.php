@@ -6,6 +6,7 @@ namespace Yii\Extension\User\Action\Recovery;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 use Yii\Extension\Service\ServiceFlashMessage;
 use Yii\Extension\Service\ServiceUrl;
 use Yii\Extension\User\ActiveRecord\Token;
@@ -22,6 +23,7 @@ final class Reset
     public function run(
         ServerRequestInterface $serverRequest,
         FormReset $formReset,
+        RequestHandlerInterface $requestHandler,
         RepositorySetting $repositorySetting,
         RepositoryToken $repositoryToken,
         RepositoryUser $repositoryUser,
@@ -41,7 +43,7 @@ final class Reset
         $code = $serverRequest->getAttribute('code');
 
         if ($id === null || ($user = $repositoryUser->findUserById($id)) === null || $code === null) {
-            return $viewRenderer->withViewPath('@user-view-error')->render('site/404');
+            return $requestHandler->handle($serverRequest);
         }
 
         /**
@@ -55,7 +57,7 @@ final class Reset
         );
 
         if ($token === null || $token->isExpired(0, $repositorySetting->getTokenRecoverWithin())) {
-            return $viewRenderer->withViewPath('@user-view-error')->render('site/404');
+            return $requestHandler->handle($serverRequest);
         }
 
         if (
