@@ -34,12 +34,12 @@ final class FormProfile extends FormModel
     public function attributeLabels(): array
     {
         return [
-            'name' => $this->translator->translate('Name'),
-            'publicEmail' => $this->translator->translate('Public email'),
-            'location' => $this->translator->translate('Location'),
-            'website' => $this->translator->translate('Website'),
-            'bio' => $this->translator->translate('Bio'),
-            'timezone' => $this->translator->translate('Time zone'),
+            'name' => $this->translator->translate('Name', [], 'user'),
+            'publicEmail' => $this->translator->translate('Public email', [], 'user'),
+            'location' => $this->translator->translate('Location', [], 'user'),
+            'website' => $this->translator->translate('Website', [], 'user'),
+            'bio' => $this->translator->translate('Bio', [], 'user'),
+            'timezone' => $this->translator->translate('Time zone', [], 'user'),
         ];
     }
 
@@ -112,16 +112,16 @@ final class FormProfile extends FormModel
         return [
             'publicEmail' => [
                 $email
-                    ->message($this->translator->translate('This value is not a valid email address'))
+                    ->message($this->translator->translate('This value is not a valid email address', [], 'user'))
                     ->skipOnEmpty(true)
             ],
             'website' => [
                 $url
-                    ->message($this->translator->translate('This value is not a valid URL'))
+                    ->message($this->translator->translate('This value is not a valid URL', [], 'user'))
                     ->skipOnEmpty(true)
             ],
             'timezone' => [
-                $inRange->message($this->translator->translate('This value is invalid'))
+                $inRange->message($this->translator->translate('This value is invalid', [], 'user'))
             ],
         ];
     }

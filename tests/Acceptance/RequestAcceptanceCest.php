@@ -10,16 +10,16 @@ final class RequestAcceptanceCest
 {
     public function testRequestPage(AcceptanceTester $I): void
     {
-        $I->amGoingTo('go to the resend page');
+        $I->amGoingTo('go to the request page');
         $I->amOnPage('/request');
 
-        $I->expectTo('see login page.');
-        $I->seeInTitle('Reset password');
+        $I->expectTo('see request page.');
+        $I->seeInTitle('Request your password');
     }
 
     public function testRequestEmptyDataTest(AcceptanceTester $I): void
     {
-        $I->amGoingTo('go to the resend page');
+        $I->amGoingTo('go to the request page');
         $I->amOnPage('/request');
 
         $I->fillField('#request-email', '');
@@ -32,7 +32,7 @@ final class RequestAcceptanceCest
 
     public function testRequestSubmitFormWrongData(AcceptanceTester $I): void
     {
-        $I->amGoingTo('go to the login page');
+        $I->amGoingTo('go to the request page');
         $I->amOnPage('/request');
 
         $I->fillField('#request-email', 'noExist');
@@ -47,19 +47,19 @@ final class RequestAcceptanceCest
         $I->click('Continue', '#form-recovery-request');
 
         $I->expectTo('see validations errors.');
-        $I->see('Email not registered');
+        $I->see('Thank you. If said email is registered, you will get a password reset');
     }
 
     public function testRequestSubmitFormSuccessData(AcceptanceTester $I): void
     {
-        $I->amGoingTo('go to the login page');
+        $I->amGoingTo('go to the request page');
         $I->amOnPage('/request');
 
         $I->fillField('#request-email', 'administrator@example.com');
 
         $I->click('Continue', '#form-recovery-request');
 
-        $I->expectTo('see registration register validation.');
+        $I->expectTo('see validations errors.');
         $I->dontSeeLink('Request Password', '#form-recovery-request');
     }
 }

@@ -43,9 +43,9 @@ final class FormRegister extends FormModel
     public function attributeLabels(): array
     {
         return [
-            'email' => $this->translator->translate('Email'),
-            'username' => $this->translator->translate('Username'),
-            'password' => $this->translator->translate('Password'),
+            'email' => $this->translator->translate('Email', [], 'user'),
+            'username' => $this->translator->translate('Username', [], 'user'),
+            'password' => $this->translator->translate('Password', [], 'user'),
         ];
     }
 
@@ -98,14 +98,14 @@ final class FormRegister extends FormModel
         $required = new Required();
 
         return [
-            $required->message($this->translator->translate('Value cannot be blank')),
-            $email->message($this->translator->translate('This value is not a valid email address')),
+            $required->message($this->translator->translate('Value cannot be blank', [], 'user')),
+            $email->message($this->translator->translate('This value is not a valid email address', [], 'user')),
 
             function (): Result {
                 $result = new Result();
 
                 if ($this->repositoryUser->findUserByUsernameOrEmail($this->email)) {
-                    $result->addError($this->translator->translate('Email already registered'));
+                    $result->addError($this->translator->translate('Email already registered', [], 'user'));
                 }
 
                 return $result;
@@ -120,17 +120,17 @@ final class FormRegister extends FormModel
         $matchRegularExpression = new MatchRegularExpression($this->repositorySetting->getUsernameRegExp());
 
         return [
-            $required->message($this->translator->translate('Value cannot be blank')),
+            $required->message($this->translator->translate('Value cannot be blank', [], 'user')),
             $hasLength->min(3)->max(255)->tooShortMessage(
-                $this->translator->translate('Username should contain at least 3 characters'),
+                $this->translator->translate('Username should contain at least 3 characters', [], 'user'),
             ),
-            $matchRegularExpression->message('Value is invalid'),
+            $matchRegularExpression->message($this->translator->translate('This value is invalid', [], 'user')),
 
             function (): Result {
                 $result = new Result();
 
                 if ($this->repositoryUser->findUserByUsernameOrEmail($this->username)) {
-                    $result->addError($this->translator->translate('Username already registered'));
+                    $result->addError($this->translator->translate('Username already registered', [], 'user'));
                 }
 
                 return $result;
@@ -146,8 +146,14 @@ final class FormRegister extends FormModel
 
         if ($this->repositorySetting->isGeneratingPassword() === false) {
             $result = [
-                $required->message($this->translator->translate('Value cannot be blank')),
-                $hasLength->min(6)->max(72)->tooShortMessage('Password should contain at least 6 characters'),
+                $required->message($this->translator->translate('Value cannot be blank', [], 'user')),
+                $hasLength->min(6)->max(72)->tooShortMessage(
+                    $this->translator->translate(
+                        'Password should contain at least 6 characters',
+                        [],
+                        'user'
+                    )
+                ),
             ];
         }
 

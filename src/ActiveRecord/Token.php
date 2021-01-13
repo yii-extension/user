@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Yii\Extension\User\ActiveRecord;
 
 use RuntimeException;
-use Yiisoft\ActiveRecord\ActiveRecord;
 use Yiisoft\ActiveRecord\ActiveQuery;
+use Yiisoft\ActiveRecord\ActiveRecord;
 
 /**
  * Token Active Record - Module AR User.

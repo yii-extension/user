@@ -25,12 +25,12 @@ final class ProfileAcceptanceCest
         $I->amGoingTo('go to the profile page');
         $I->amOnPage('/profile');
 
-        $I->amGoingTo('see login page');
-        $I->see('Login');
+        $I->amGoingTo('see log in page');
+        $I->see('Log in');
         $I->fillField('#login-login', 'admin');
         $I->fillField('#login-password', '123456');
 
-        $I->click('Login', '#form-auth-login');
+        $I->click('Log in', '#form-auth-login');
 
         $I->expectTo('see logged index page.');
         $I->see('Hello!');
@@ -52,12 +52,12 @@ final class ProfileAcceptanceCest
         $I->amGoingTo('go to the profile page');
         $I->amOnPage('/profile');
 
-        $I->amGoingTo('see login page');
-        $I->see('Login');
+        $I->amGoingTo('see log in page');
+        $I->see('Log in');
         $I->fillField('#login-login', 'admin');
         $I->fillField('#login-password', '123456');
 
-        $I->click('Login', '#form-auth-login');
+        $I->click('Log in', '#form-auth-login');
 
         $I->expectTo('see logged index page.');
         $I->see('Hello!');

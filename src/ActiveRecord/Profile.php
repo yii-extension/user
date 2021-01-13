@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Yii\Extension\User\ActiveRecord;
 
-use Yiisoft\ActiveRecord\ActiveRecord;
 use Yiisoft\ActiveRecord\ActiveQuery;
+use Yiisoft\ActiveRecord\ActiveRecord;
 
 /**
  * ProfileAR Active Record - Module AR User.

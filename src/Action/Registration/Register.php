@@ -14,7 +14,6 @@ use Yii\Extension\User\Form\FormRegister;
 use Yii\Extension\User\Repository\RepositoryUser;
 use Yii\Extension\User\Service\MailerUser;
 use Yii\Extension\User\Settings\RepositorySetting;
-use Yiisoft\Aliases\Aliases;
 use Yiisoft\Router\UrlGeneratorInterface;
 use Yiisoft\Translator\TranslatorInterface;
 use Yiisoft\Yii\View\ViewRenderer;
@@ -23,7 +22,6 @@ final class Register
 {
     public function run(
         AfterRegister $afterRegister,
-        Aliases $aliases,
         EventDispatcherInterface $eventDispatcher,
         FormRegister $formRegister,
         MailerUser $mailerUser,
@@ -66,12 +64,12 @@ final class Register
 
             if ($mailerUser->sendWelcomeMessage($email, $params)) {
                 $bodyMessage = $repositorySetting->isConfirmation()
-                    ? $translator->translate('Please check your email to activate your username')
-                    : $translator->translate('Your account has been created');
+                    ? $translator->translate('Please check your email to activate your username', [], 'user')
+                    : $translator->translate('Your account has been created', [], 'user');
 
                 $serviceFlashMessage->run(
                     'success',
-                    $translator->translate($repositorySetting->getMessageHeader()),
+                    $translator->translate('System Notification', [], 'user'),
                     $bodyMessage,
                 );
             }

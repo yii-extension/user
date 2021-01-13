@@ -75,8 +75,8 @@ final class ResetFunctionalCest
 
         $I->submitForm('#form-recovery-reset', ['Reset[password]' => 'newpass']);
 
-        $I->expectTo('see login page.');
-        $I->seeInTitle('Login');
+        $I->expectTo('see log in page.');
+        $I->seeInTitle('Log in');
     }
 
     private function resetUser(FunctionalTester $I): void

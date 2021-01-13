@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Yii\Extension\User\ActiveRecord;
 
-use Yiisoft\Auth\IdentityInterface;
-use Yiisoft\ActiveRecord\ActiveRecord;
 use Yiisoft\ActiveRecord\ActiveQuery;
+use Yiisoft\ActiveRecord\ActiveRecord;
+use Yiisoft\Auth\IdentityInterface;
 use Yiisoft\Security\PasswordHasher;
 use Yiisoft\Security\Random;
 

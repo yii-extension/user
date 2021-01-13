@@ -48,9 +48,9 @@ final class FormLogin extends FormModel
     public function attributeLabels(): array
     {
         return [
-            'login' => $this->translator->translate('Username'),
-            'password' => $this->translator->translate('Password'),
-            'remember' => $this->translator->translate('Remember me'),
+            'login' => $this->translator->translate('Username', [], 'user'),
+            'password' => $this->translator->translate('Password', [], 'user'),
+            'remember' => $this->translator->translate('Remember me', [], 'user'),
         ];
     }
 
@@ -75,10 +75,10 @@ final class FormLogin extends FormModel
         $required = new Required();
 
         return [
-            'login' => [$required->message($this->translator->translate('Value cannot be blank'))],
+            'login' => [$required->message($this->translator->translate('Value cannot be blank', [], 'user'))],
             'password' => $this->passwordRules(),
             'remember' => [
-                $boolean->message($this->translator->translate('The value must be either "1" or "0"'))
+                $boolean->message($this->translator->translate('The value must be either "1" or "0"', [], 'user'))
             ],
         ];
     }
@@ -89,7 +89,7 @@ final class FormLogin extends FormModel
         $required = new Required();
 
         return [
-            $required->message($this->translator->translate('Value cannot be blank')),
+            $required->message($this->translator->translate('Value cannot be blank', [], 'user')),
 
             function () use ($passwordHasher): Result {
                 if (!$this->repositorySetting->getUserNameCaseSensitive()) {
@@ -102,23 +102,23 @@ final class FormLogin extends FormModel
                 $result = new Result();
 
                 if ($user === null) {
-                    $result->addError($this->translator->translate('Invalid login or password'));
+                    $result->addError($this->translator->translate('Invalid login or password', [], 'user'));
                 }
 
                 if ($user !== null && $user->isBlocked()) {
                     $result->addError(
-                        $this->translator->translate('Your user has been blocked, contact an administrator')
+                        $this->translator->translate('Your user has been blocked, contact an administrator', [], 'user')
                     );
                 }
 
                 if ($user !== null && !$user->isConfirmed()) {
                     $result->addError(
-                        $this->translator->translate('Please check your email to activate your account')
+                        $this->translator->translate('Please check your email to activate your account', [], 'user')
                     );
                 }
 
                 if ($user !== null && !$passwordHasher->validate($this->password, $user->getPasswordHash())) {
-                    $result->addError($this->translator->translate('Invalid login or password'));
+                    $result->addError($this->translator->translate('Invalid login or password', [], 'user'));
                 }
 
                 if ($result->isValid()) {

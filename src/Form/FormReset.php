@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Yii\Extension\User\Form;
 
 use Yiisoft\Form\FormModel;
+use Yiisoft\Translator\TranslatorInterface;
 use Yiisoft\Validator\Rule\HasLength;
 use Yiisoft\Validator\Rule\Required;
-use Yiisoft\Translator\TranslatorInterface;
 use Yiisoft\Validator\ValidatorFactoryInterface;
 
 final class FormReset extends FormModel
@@ -27,7 +27,7 @@ final class FormReset extends FormModel
     public function attributeLabels(): array
     {
         return [
-            'password' => $this->translator->translate('Password'),
+            'password' => $this->translator->translate('Password', [], 'user'),
         ];
     }
 
@@ -48,8 +48,10 @@ final class FormReset extends FormModel
 
         return [
             'password' => [
-                $required->message($this->translator->translate('Value cannot be blank')),
-                $hasLength->min(6)->max(72)->tooShortMessage('Password should contain at least 6 characters')
+                $required->message($this->translator->translate('Value cannot be blank', [], 'user')),
+                $hasLength->min(6)->max(72)->tooShortMessage(
+                    $this->translator->translate('Password should contain at least 6 characters', [], 'user'),
+                ),
             ],
         ];
     }

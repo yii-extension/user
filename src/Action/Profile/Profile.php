@@ -9,7 +9,6 @@ use Psr\Http\Message\ServerRequestInterface;
 use Yii\Extension\Service\ServiceFlashMessage;
 use Yii\Extension\User\Form\FormProfile;
 use Yii\Extension\User\Repository\RepositoryProfile;
-use Yii\Extension\User\Settings\RepositorySetting;
 use Yiisoft\Translator\TranslatorInterface;
 use Yiisoft\User\User;
 use Yiisoft\Yii\View\ViewRenderer;
@@ -19,7 +18,6 @@ final class Profile
     public function run(
         FormProfile $formProfile,
         RepositoryProfile $repositoryProfile,
-        RepositorySetting $repositorySetting,
         ServerRequestInterface $serverRequest,
         ServiceFlashMessage $serviceFlashMessage,
         TranslatorInterface $translator,
@@ -39,8 +37,8 @@ final class Profile
         ) {
             $serviceFlashMessage->run(
                 'success',
-                $translator->translate($repositorySetting->getMessageHeader()),
-                $translator->translate('Your data has been saved'),
+                $translator->translate('System Notification', [], 'user'),
+                $translator->translate('Your data has been saved', [], 'user'),
             );
         }
 

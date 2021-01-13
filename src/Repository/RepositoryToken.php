@@ -63,11 +63,12 @@ final class RepositoryToken
 
             if (!$token->save()) {
                 $transaction->rollBack();
-            } else {
-                $transaction->commit();
-
-                $result = true;
+                return false;
             }
+
+            $transaction->commit();
+
+            $result = true;
         } catch (Exception $e) {
             $transaction->rollBack();
             $this->logger->log(LogLevel::WARNING, $e->getMessage());

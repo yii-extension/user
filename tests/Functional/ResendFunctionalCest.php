@@ -56,7 +56,7 @@ final class ResendFormCest
         $I->submitForm('#form-recovery-resend', ['Resend[email]' => 'noExist@example.com']);
 
         $I->expectTo('see validations errors.');
-        $I->see('Thank you. If said email is registered, you will get a password reset');
+        $I->see('Thank you. If said email is registered, you will get a resend confirmation message');
 
         $I->amGoingTo('update settings confirmation false');
         $I->updateInDatabase('settings', ['confirmation' => false], ['id' => 1]);
@@ -92,8 +92,8 @@ final class ResendFormCest
 
         $I->submitForm('#form-recovery-resend', ['Resend[email]' => 'administrator1@example.com']);
 
-        $I->expectTo('see to page login');
-        $I->see('Login');
+        $I->expectTo('see to page log in');
+        $I->see('Log in');
         $I->dontSeeLink('Continue', '#form-recovery-register');
 
         $I->amGoingTo('update settings confirmation false');

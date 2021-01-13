@@ -6,15 +6,14 @@ namespace Yii\Extension\User\Action\Recovery;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Yii\Extension\User\ActiveRecord\User;
-use Yii\Extension\User\ActiveRecord\Token;
-use Yii\Extension\User\Form\FormReset;
 use Yii\Extension\Service\ServiceFlashMessage;
-use Yii\Extension\User\Settings\RepositorySetting;
+use Yii\Extension\Service\ServiceUrl;
+use Yii\Extension\User\ActiveRecord\Token;
+use Yii\Extension\User\ActiveRecord\User;
+use Yii\Extension\User\Form\FormReset;
 use Yii\Extension\User\Repository\RepositoryToken;
 use Yii\Extension\User\Repository\RepositoryUser;
-use Yii\Extension\Service\ServiceUrl;
-use Yiisoft\Router\UrlGeneratorInterface;
+use Yii\Extension\User\Settings\RepositorySetting;
 use Yiisoft\Translator\TranslatorInterface;
 use Yiisoft\Yii\View\ViewRenderer;
 
@@ -24,8 +23,6 @@ final class Reset
         ServerRequestInterface $serverRequest,
         FormReset $formReset,
         RepositorySetting $repositorySetting,
-        RepositoryToken $RepositoryToken,
-        UrlGeneratorInterface $urlGenerator,
         RepositoryToken $repositoryToken,
         RepositoryUser $repositoryUser,
         ServiceFlashMessage $serviceFlashMessage,
@@ -35,8 +32,6 @@ final class Reset
     ): ResponseInterface {
         /** @var array $body */
         $body = $serverRequest->getParsedBody();
-
-        /** @var string $method */
         $method = $serverRequest->getMethod();
 
         /** @var string|null $id */
@@ -76,8 +71,8 @@ final class Reset
 
             $serviceFlashMessage->run(
                 'success',
-                $translator->translate($repositorySetting->getMessageHeader()),
-                $translator->translate('Your password has been changed'),
+                $translator->translate('System Notification', [], 'user'),
+                $translator->translate('Your password has been changed', [], 'user'),
             );
 
             return $serviceUrl->run('login');

@@ -13,7 +13,7 @@ final class LoginFunctionalCest
         $I->amGoingTo('update settings password recovery false');
         $I->updateInDatabase('settings', ['passwordRecovery' => false], ['id' => 1]);
 
-        $I->amGoingTo('go to the login page');
+        $I->amGoingTo('go to the log in page');
         $I->amOnPage('/login');
 
         $I->expectTo('dont see link forgot password');
@@ -28,7 +28,7 @@ final class LoginFunctionalCest
         $I->amGoingTo('update settings register false');
         $I->updateInDatabase('settings', ['register' => false], ['id' => 1]);
 
-        $I->amGoingTo('go to the login page');
+        $I->amGoingTo('go to the log in page');
         $I->amOnPage('/login');
 
         $I->expectTo('dont see link register');
@@ -51,25 +51,25 @@ final class LoginFunctionalCest
 
         ]);
 
-        $I->amGoingTo('go to the login page');
+        $I->amGoingTo('go to the log in page');
         $I->amOnPage('/login');
 
-        $I->expectTo('see login form.');
+        $I->expectTo('see log in form.');
         $I->submitForm('#form-auth-login', [
             'Login[login]' => 'testme',
             'Login[password]' => '123456',
         ]);
 
-        $I->expectTo('see error login form.');
+        $I->expectTo('see error log in form.');
         $I->see('Invalid login or password');
 
-        $I->expectTo('see login form case sensitive.');
+        $I->expectTo('see log in form case sensitive.');
         $I->submitForm('#form-auth-login', [
             'Login[login]' => 'TestMe',
             'Login[password]' => '123456',
         ]);
 
-        $I->expectTo('see login sucess.');
+        $I->expectTo('see log in sucess.');
         $I->see('Hello!');
         $I->see("Let's start something great with Yii3!");
         $I->see('Logout (TestMe)');
@@ -91,16 +91,16 @@ final class LoginFunctionalCest
 
         ]);
 
-        $I->amGoingTo('go to the login page');
+        $I->amGoingTo('go to the log in page');
         $I->amOnPage('/login');
 
-        $I->expectTo('see login form.');
+        $I->expectTo('see log in form.');
         $I->submitForm('#form-auth-login', [
             'Login[login]' => 'testme1',
             'Login[password]' => '123456',
         ]);
 
-        $I->expectTo('see login sucess.');
+        $I->expectTo('see log in sucess.');
         $I->see('Hello!');
         $I->see("Let's start something great with Yii3!");
         $I->see('Logout (testme1)');
@@ -122,15 +122,15 @@ final class LoginFunctionalCest
 
         $I->expectTo('see validations errors.');
         $I->see('Invalid login or password');
-        $I->see('Login', '#form-auth-login');
+        $I->see('Log in', '#form-auth-login');
     }
 
     public function testLoginSubmitFormWrongDataPassword(FunctionalTester $I): void
     {
-        $I->amGoingTo('go to the login page');
+        $I->amGoingTo('go to the log in page');
         $I->amOnPage('/login');
 
-        $I->expectTo('see login form.');
+        $I->expectTo('see log in form.');
         $I->submitForm('#form-auth-login', [
             'Login[login]' => 'admin',
             'Login[password]' => '1',
@@ -138,7 +138,7 @@ final class LoginFunctionalCest
 
         $I->expectTo('see validations errors.');
         $I->see('Invalid login or password');
-        $I->see('Login', '#form-auth-login');
+        $I->see('Log in', '#form-auth-login');
     }
 
     public function testLoginUserIsBlocked(FunctionalTester $I): void
@@ -148,16 +148,16 @@ final class LoginFunctionalCest
         $I->amGoingTo('block user test');
         $I->updateInDatabase('user', ['blocked_at' => time()], ['id' => 100]);
 
-        $I->amGoingTo('go to the login page');
+        $I->amGoingTo('go to the log in page');
         $I->amOnPage('/login');
 
-        $I->expectTo('see login form.');
+        $I->expectTo('see log in form.');
         $I->submitForm('#form-auth-login', [
             'Login[login]' => 'alex@example.com',
             'Login[password]' => '123456',
         ]);
 
-        $I->expectTo('see login validation.');
+        $I->expectTo('see log in validation.');
         $I->see('Your user has been blocked, contact an administrator');
 
         $I->amGoingTo('unblock user test');

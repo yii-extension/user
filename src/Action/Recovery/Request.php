@@ -10,11 +10,9 @@ use Psr\Http\Message\ServerRequestInterface;
 use Yii\Extension\Service\ServiceFlashMessage;
 use Yii\Extension\Service\ServiceUrl;
 use Yii\Extension\User\ActiveRecord\Token;
-use Yii\Extension\User\ActiveRecord\User;
 use Yii\Extension\User\Event\AfterRequest;
 use Yii\Extension\User\Form\FormRequest;
 use Yii\Extension\User\Repository\RepositoryToken;
-use Yii\Extension\User\Repository\RepositoryUser;
 use Yii\Extension\User\Service\MailerUser;
 use Yii\Extension\User\Settings\RepositorySetting;
 use Yiisoft\Router\UrlGeneratorInterface;
@@ -30,11 +28,9 @@ final class Request
         MailerUser $mailerUser,
         RepositorySetting $repositorySetting,
         RepositoryToken $repositoryToken,
-        RepositoryUser $repositoryUser,
         ServerRequestInterface $serverRequest,
         ServiceFlashMessage $serviceFlashMessage,
         ServiceUrl $serviceUrl,
-        Token $token,
         TranslatorInterface $translator,
         UrlGeneratorInterface $urlGenerator,
         ViewRenderer $viewRenderer
@@ -45,30 +41,28 @@ final class Request
         $method = $serverRequest->getMethod();
 
         if ($method === 'POST' && $formRequest->load($body) && $formRequest->validate()) {
-            /** @var User|null $user */
-            $user = $repositoryUser->findUserByUsernameOrEmail($formRequest->getEmail());
+            $email = $formRequest->getEmail();
+            $userId = $formRequest->getUserId();
+            $username = $formRequest->getUsername();
 
-            $token->deleteAll(['user_id' => $user->getId(), 'type' => Token::TYPE_RECOVERY]);
-
-            $repositoryToken->register($user->getId(), Token::TYPE_RECOVERY);
+            $repositoryToken->register($userId, Token::TYPE_RECOVERY);
 
             /** @var Token $token */
-            $token = $repositoryToken->findTokenById($user->getId());
+            $token = $repositoryToken->findTokenByCondition(['user_id' => $userId, 'type' => Token::TYPE_RECOVERY]);
 
-            $email = $user->getEmail();
             $params = [
-                'username' => $user->getUsername(),
+                'username' => $username,
                 'url' => $urlGenerator->generateAbsolute(
                     $token->toUrl(),
-                    ['id' => $token->getAttribute('user_id'), 'code' => $token->getAttribute('code')]
+                    ['id' => $token->getUserId(), 'code' => $token->getCode()]
                 )
             ];
 
             if ($mailerUser->sendRecoveryMessage($email, $params)) {
                 $serviceFlashMessage->run(
                     'success',
-                    $translator->translate($repositorySetting->getMessageHeader()),
-                    $translator->translate('Please check your email to change your password'),
+                    $translator->translate('System Notification', [], 'user'),
+                    $translator->translate('Please check your email to change your password', [], 'user'),
                 );
             }
 

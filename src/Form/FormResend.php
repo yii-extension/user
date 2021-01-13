@@ -7,10 +7,10 @@ namespace Yii\Extension\User\Form;
 use Yii\Extension\User\ActiveRecord\User;
 use Yii\Extension\User\Repository\RepositoryUser;
 use Yiisoft\Form\FormModel;
+use Yiisoft\Translator\TranslatorInterface;
 use Yiisoft\Validator\Result;
 use Yiisoft\Validator\Rule\Email;
 use Yiisoft\Validator\Rule\Required;
-use Yiisoft\Translator\TranslatorInterface;
 use Yiisoft\Validator\ValidatorFactoryInterface;
 
 use function strtolower;
@@ -18,6 +18,8 @@ use function strtolower;
 final class FormResend extends FormModel
 {
     private string $email = '';
+    private ?string $userId = '';
+    private string $username = '';
     private RepositoryUser $repositoryUser;
     private TranslatorInterface $translator;
 
@@ -35,7 +37,7 @@ final class FormResend extends FormModel
     public function attributeLabels(): array
     {
         return [
-            'email' => $this->translator->translate('Email'),
+            'email' => $this->translator->translate('Email', [], 'user'),
         ];
     }
 
@@ -49,11 +51,18 @@ final class FormResend extends FormModel
         return strtolower($this->email);
     }
 
+    public function getUserId(): string
+    {
+        return $this->userId;
+    }
+
+    public function getUsername(): string
+    {
+        return $this->username;
+    }
+
     public function rules(): array
     {
-        $email = new email();
-        $required = new Required();
-
         return [
             'email' => $this->emailRules(),
         ];
@@ -65,8 +74,8 @@ final class FormResend extends FormModel
         $required = new Required();
 
         return [
-            $required->message($this->translator->translate('Value cannot be blank')),
-            $email->message($this->translator->translate('This value is not a valid email address')),
+            $required->message($this->translator->translate('Value cannot be blank', [], 'user')),
+            $email->message($this->translator->translate('This value is not a valid email address', [], 'user')),
 
             function (): Result {
 
@@ -77,12 +86,21 @@ final class FormResend extends FormModel
 
                 if ($user === null) {
                     $result->addError(
-                        $this->translator->translate('Thank you. If said email is registered, you will get a password reset')
+                        $this->translator->translate(
+                            'Thank you. If said email is registered, you will get a resend confirmation message',
+                            [],
+                            'user',
+                        )
                     );
                 }
 
                 if ($user !== null && $user->isConfirmed()) {
-                    $result->addError($this->translator->translate('User is active'));
+                    $result->addError($this->translator->translate('User is active', [], 'user'));
+                }
+
+                if ($result->isValid()) {
+                    $this->userId = $user->getId();
+                    $this->username = $user->getUsername();
                 }
 
                 return $result;

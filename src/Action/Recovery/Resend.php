@@ -10,11 +10,9 @@ use Psr\Http\Message\ServerRequestInterface;
 use Yii\Extension\Service\ServiceFlashMessage;
 use Yii\Extension\Service\ServiceUrl;
 use Yii\Extension\User\ActiveRecord\Token;
-use Yii\Extension\User\ActiveRecord\User;
 use Yii\Extension\User\Event\AfterResend;
 use Yii\Extension\User\Form\FormResend;
 use Yii\Extension\User\Repository\RepositoryToken;
-use Yii\Extension\User\Repository\RepositoryUser;
 use Yii\Extension\User\Service\MailerUser;
 use Yii\Extension\User\Settings\RepositorySetting;
 use Yiisoft\Router\UrlGeneratorInterface;
@@ -30,7 +28,6 @@ final class Resend
         MailerUser $mailerUser,
         RepositorySetting $repositorySetting,
         RepositoryToken $repositoryToken,
-        RepositoryUser $repositoryUser,
         ServerRequestInterface $serverRequest,
         ServiceFlashMessage $serviceFlashMessage,
         ServiceUrl $serviceUrl,
@@ -44,15 +41,15 @@ final class Resend
         $method = $serverRequest->getMethod();
 
         if ($method === 'POST' && $formResend->load($body) && $formResend->validate()) {
-            /** @var User|null $user */
-            $user = $repositoryUser->findUserByUsernameOrEmail($formResend->getEmail());
+            $email = $formResend->getEmail();
+            $userId = $formResend->getUserId();
+            $username = $formResend->getUsername();
 
             /** @var Token $token */
-            $token = $repositoryToken->findTokenById($user->getId());
+            $token = $repositoryToken->findTokenById($userId);
 
-            $email = $user->getEmail();
             $params = [
-                'username' => $user->getUsername(),
+                'username' => $username,
                 'url' => $urlGenerator->generateAbsolute(
                     $token->toUrl(),
                     ['id' => $token->getUserId(), 'code' => $token->getCode()]
@@ -62,8 +59,8 @@ final class Resend
             if ($mailerUser->sendConfirmationMessage($email, $params)) {
                 $serviceFlashMessage->run(
                     'success',
-                    $translator->translate($repositorySetting->getMessageHeader()),
-                    $translator->translate('Please check your email to activate your username'),
+                    $translator->translate('System Notification', [], 'user'),
+                    $translator->translate('Please check your email to activate your username', [], 'user'),
                 );
             }
 

@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Yii\Extension\User\Action\Auth;
 
 use Psr\Http\Message\ResponseInterface;
-use Yii\Extension\User\ActiveRecord\User;
 use Yii\Extension\Service\ServiceUrl;
+use Yii\Extension\User\ActiveRecord\User;
 use Yii\Extension\User\Repository\RepositoryUser;
 use Yiisoft\User\User as Identity;
 
@@ -15,8 +15,7 @@ final class Logout
     public function run(
         Identity $identity,
         RepositoryUser $repositoryUser,
-        ServiceUrl $serviceUrl,
-        User $user
+        ServiceUrl $serviceUrl
     ): ResponseInterface {
         /** @var User $user */
         $user = $repositoryUser->findUserById($identity->getId());

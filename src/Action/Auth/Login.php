@@ -11,9 +11,6 @@ use Yii\Extension\Service\ServiceFlashMessage;
 use Yii\Extension\Service\ServiceUrl;
 use Yii\Extension\User\Event\AfterLogin;
 use Yii\Extension\User\Form\FormLogin;
-use Yii\Extension\User\Repository\RepositoryUser;
-use Yii\Extension\User\Settings\RepositorySetting;
-use Yiisoft\Auth\IdentityInterface;
 use Yiisoft\Translator\TranslatorInterface;
 use Yiisoft\Yii\View\ViewRenderer;
 
@@ -23,8 +20,6 @@ final class Login
         AfterLogin $afterLogin,
         EventDispatcherInterface $eventDispatcher,
         FormLogin $formLogin,
-        RepositorySetting $repositorySetting,
-        RepositoryUser $repositoryUser,
         ServerRequestInterface $serverRequest,
         ServiceFlashMessage $serviceFlashMessage,
         ServiceUrl $serviceUrl,
@@ -33,25 +28,25 @@ final class Login
     ): ResponseInterface {
         /** @var array $body */
         $body = $serverRequest->getParsedBody();
-
-        /** @var string $method */
         $method = $serverRequest->getMethod();
-
         $formLogin->ip($serverRequest->getServerParams()['REMOTE_ADDR']);
 
         if ($method === 'POST' && $formLogin->load($body) && $formLogin->validate()) {
             $eventDispatcher->dispatch($afterLogin);
 
-            $bodyMessage = $translator->translate('Sign in successful - you are welcome');
+            $bodyMessage = $translator->translate('Sign in successful - you are welcome', [], 'user-flash-message');
 
             if ($formLogin->getLastLogout() > 0) {
-                $bodyMessage = $translator->translate('Sign in successful') . ' - ' .
-                    date('Y-m-d G:i:s', $formLogin->getLastLogout());
+                $bodyMessage = $translator->translate(
+                    'Sign in successful - {date}',
+                    ['date' =>  date('Y-m-d G:i:s', $formLogin->getLastLogout())],
+                    'user-flash-message',
+                );
             }
 
             $serviceFlashMessage->run(
                 'success',
-                $translator->translate($repositorySetting->getMessageHeader()),
+                $translator->translate('System Notification', [], 'user-flash-message'),
                 $bodyMessage,
             );
 

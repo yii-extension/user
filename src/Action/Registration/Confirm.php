@@ -71,8 +71,8 @@ final class Confirm
 
             $serviceFlashMessage->run(
                 'success',
-                $translator->translate($repositorySetting->getMessageHeader()),
-                $translator->translate('Your user has been confirmed'),
+                $translator->translate('System Notification', [], 'user'),
+                $translator->translate('Your user has been confirmed', [], 'user'),
             );
         }
 
