@@ -78,7 +78,7 @@ final class Register
 
             $redirect = !$repositorySetting->isConfirmation() && !$repositorySetting->isGeneratingPassword()
                 ? 'login'
-                : 'site/index';
+                : 'home';
             return $serviceUrl->run($redirect);
         }
 
@@ -88,6 +88,6 @@ final class Register
                 ->render('/registration/register', ['body' => $body, 'data' => $formRegister]);
         }
 
-        return $viewRenderer->withViewPath('@user-view-views')->render('site/404');
+        return $viewRenderer->withViewPath('@user-view-error')->render('site/404');
     }
 }

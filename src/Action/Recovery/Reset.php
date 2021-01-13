@@ -41,7 +41,7 @@ final class Reset
         $code = $serverRequest->getAttribute('code');
 
         if ($id === null || ($user = $repositoryUser->findUserById($id)) === null || $code === null) {
-            return $viewRenderer->withViewPath('@user-view-views')->render('site/404');
+            return $viewRenderer->withViewPath('@user-view-error')->render('site/404');
         }
 
         /**
@@ -55,7 +55,7 @@ final class Reset
         );
 
         if ($token === null || $token->isExpired(0, $repositorySetting->getTokenRecoverWithin())) {
-            return $viewRenderer->withViewPath('@user-view-views')->render('site/404');
+            return $viewRenderer->withViewPath('@user-view-error')->render('site/404');
         }
 
         if (

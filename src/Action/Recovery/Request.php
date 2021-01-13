@@ -77,6 +77,6 @@ final class Request
                 ->render('/recovery/request', ['body' => $body, 'data' => $formRequest]);
         }
 
-        return $viewRenderer->withViewPath('@user-view-views')->render('site/404');
+        return $viewRenderer->withViewPath('@user-view-error')->render('site/404');
     }
 }

@@ -62,7 +62,7 @@ final class FormRequest extends FormModel
         ];
     }
 
-    public function getUserId(): string
+    public function getUserId(): ?string
     {
         return $this->userId;
     }

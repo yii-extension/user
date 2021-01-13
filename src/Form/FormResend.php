@@ -51,7 +51,7 @@ final class FormResend extends FormModel
         return strtolower($this->email);
     }
 
-    public function getUserId(): string
+    public function getUserId(): ?string
     {
         return $this->userId;
     }

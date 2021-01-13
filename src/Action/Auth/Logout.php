@@ -24,6 +24,6 @@ final class Logout
 
         $identity->logout();
 
-        return $serviceUrl->run('site/index');
+        return $serviceUrl->run('home');
     }
 }

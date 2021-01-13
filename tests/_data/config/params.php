@@ -8,6 +8,7 @@ use Yii\Extension\User\Tests\App\ViewInjection\ContentViewInjection;
 use Yii\Extension\User\Tests\App\ViewInjection\LayoutViewInjection;
 use Yiisoft\Arrays\Modifier\ReverseBlockMerge;
 use Yiisoft\Factory\Definitions\Reference;
+use Yiisoft\Profiler\Target\FileTarget;
 use Yiisoft\Yii\View\CsrfViewInjection;
 
 return [
@@ -29,6 +30,7 @@ return [
             '@views' => InstalledVersions::isInstalled('yii-extension/user-view-bulma')
                 ? '@resources/views/bulma' : '@resources/views/bootstrap5',
             '@message' => '@root/resources/message',
+            'user-view-error' => '@views',
         ],
     ],
 
@@ -39,6 +41,14 @@ return [
         'bulma' => [
             'enabled' => InstalledVersions::isInstalled('yii-extension/user-view-bulma'),
         ]
+    ],
+
+    'yiisoft/profiler' => [
+        'targets' => [
+            FileTarget::class => [
+                'enabled' => true,
+            ],
+        ],
     ],
 
     'yiisoft/translator' => [

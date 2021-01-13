@@ -50,7 +50,7 @@ final class Login
                 $bodyMessage,
             );
 
-            return $serviceUrl->run('site/index');
+            return $serviceUrl->run('home');
         }
 
         return $viewRenderer

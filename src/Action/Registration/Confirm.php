@@ -40,7 +40,7 @@ final class Confirm
         $ip = $serverRequest->getServerParams()['REMOTE_ADDR'];
 
         if ($id === null || ($user = $repositoryUser->findUserById($id)) === null || $code === null) {
-            return $viewRenderer->withViewPath('@user-view-views')->render('site/404');
+            return $viewRenderer->withViewPath('@user-view-error')->render('site/404');
         }
 
         /**
@@ -54,7 +54,7 @@ final class Confirm
         );
 
         if ($token === null || $token->isExpired($repositorySetting->getTokenConfirmWithin())) {
-            return $viewRenderer->withViewPath('@user-view-views')->render('site/404');
+            return $viewRenderer->withViewPath('@user-view-error')->render('site/404');
         }
 
         if (!$token->isExpired($repositorySetting->getTokenConfirmWithin())) {
@@ -76,6 +76,6 @@ final class Confirm
             );
         }
 
-        return $serviceUrl->run('site/index');
+        return $serviceUrl->run('home');
     }
 }

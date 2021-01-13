@@ -27,7 +27,7 @@ final class Guest implements MiddlewareInterface
     {
         if ($this->user->isGuest() === false) {
             return $this->viewRenderer
-                ->withViewPath('@user-view-views')
+                ->withViewPath('@user-view-error')
                 ->render('site/404')
                 ->withStatus(Status::NOT_FOUND);
         }

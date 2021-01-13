@@ -75,6 +75,6 @@ final class Resend
                 ->render('/recovery/resend', ['body' => $body, 'data' => $formResend]);
         }
 
-        return $viewRenderer->withViewPath('@user-view-views')->render('site/404');
+        return $viewRenderer->withViewPath('@user-view-error')->render('site/404');
     }
 }

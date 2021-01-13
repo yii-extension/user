@@ -1,33 +1,52 @@
 <?php
 
 use Yiisoft\Html\Html;
+use Yiisoft\Router\UrlGeneratorInterface;
+use Yiisoft\Router\UrlMatcherInterface;
+use Yiisoft\Translator\Translator;
 
-/** @var Yiisoft\View\WebView $this */
-/** @var Yiisoft\Router\UrlGeneratorInterface $urlGenerator */
-/** @var Yiisoft\Router\UrlMatcherInterface $urlMatcher */
+/**
+ * @var UrlGeneratorInterface $urlGenerator
+ * @var UrlMatcherInterface $urlMatcher
+ * @var Translator $translator
+ */
 
-$this->setTitle('404');
+$title = Html::encode('404');
+
+/** @psalm-suppress InvalidScope */
+$this->setTitle($title);
 ?>
 
 <div class="has-text-centered">
     <h1 class="is-size-1">
-        <b>404</b>
+        <b><?= $title ?></b>
     </h1>
 
     <p class="has-text-danger">
-        The page
-        <strong><?= Html::encode($urlMatcher->getCurrentUri()->getPath()) ?></strong>
-        not found.
+        <?= $translator->translate(
+            'The page {url} was not found',
+            ['url' => Html::tag('strong', Html::encode($urlMatcher->getCurrentUri()->getPath()))],
+            'user-view',
+        ); ?>.
     </p>
 
     <p class="has-text-grey">
-        The above error occurred while the Web server was processing your request.<br/>
-        Please contact us if you think this is a server error. Thank you.
+        <?= Html::encode(
+            $translator->translate(
+                'The above error occurred while the Web server was processing your request',
+                [],
+                'user-view',
+            )
+        ) ?>.
+        <br/>
+        <?= Html::encode(
+            $translator->translate('Please contact us if you think this is a server error. Thank you', [], 'user-view')
+        ) ?>.
     </p>
 
     <hr class="mb-2">
 
-    <a class ="button is-danger mt-5" href="<?= $urlGenerator->generate('site/index') ?>">
-        Go Back Home
+    <a class ="button is-danger mt-5" href="<?= $urlGenerator->generate('home') ?>">
+        <?= Html::encode($translator->translate('Go Back Home', [], 'user-view')) ?>
     </a>
 </div>
