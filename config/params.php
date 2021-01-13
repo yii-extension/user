@@ -13,6 +13,7 @@ return [
         'aliases' => [
             '@avatars' => '@assets/images/avatar',
             '@user' => dirname(__DIR__),
+            '@user-view-error' => 'views',
         ],
     ],
 
