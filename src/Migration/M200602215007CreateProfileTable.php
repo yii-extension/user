@@ -17,7 +17,7 @@ final class M200602215007CreateProfileTable implements RevertibleMigrationInterf
         $tableOptions = null;
 
         if ($b->getDb()->getDriverName() === 'mysql') {
-            $tableOptions = 'CHARACTER SET utf8mb4 COLLATE utf8mb4_bin ENGINE=InnoDB';
+            $tableOptions = 'CHARACTER SET utf8mb4 ENGINE=InnoDB';
         }
 
         $b->createTable(
