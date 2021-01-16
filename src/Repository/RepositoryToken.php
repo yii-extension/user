@@ -12,6 +12,7 @@ use Yiisoft\ActiveRecord\ActiveQueryInterface;
 use Yiisoft\ActiveRecord\ActiveRecordFactory;
 use Yiisoft\ActiveRecord\ActiveRecordInterface;
 use Yiisoft\Db\Exception\Exception;
+use Yiisoft\Db\Query\QueryInterface;
 use Yiisoft\Security\Random;
 
 final class RepositoryToken
@@ -23,6 +24,11 @@ final class RepositoryToken
     {
         $this->activeRecordFactory = $activeRecordFactory;
         $this->logger = $logger;
+    }
+
+    public function findToken(array $condition): QueryInterface
+    {
+        return $this->tokenQuery()->where($condition);
     }
 
     public function findTokenByCondition(array $condition): ?ActiveRecordInterface
@@ -45,6 +51,8 @@ final class RepositoryToken
         $result = false;
 
         $token = $this->activeRecordFactory->createAR(Token::class);
+
+        $token->deleteAll(['user_id' => $id]);
 
         if ($token->getIsNewRecord() === false) {
             throw new RuntimeException('Calling "' . __CLASS__ . '::' . __METHOD__ . '" on existing user');

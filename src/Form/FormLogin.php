@@ -23,9 +23,9 @@ final class FormLogin extends FormModel
     private string $login = '';
     private string $password = '';
     private bool $remember = false;
-    private Identity $identity;
     private string $ip = '';
     private int $lastLogout;
+    private Identity $identity;
     private RepositoryUser $repositoryUser;
     private RepositorySetting $repositorySetting;
     private TranslatorInterface $translator;
@@ -121,7 +121,7 @@ final class FormLogin extends FormModel
                     $result->addError($this->translator->translate('Invalid login or password', [], 'user'));
                 }
 
-                if ($result->isValid()) {
+                if ($result->isValid() && $user !== null) {
                     $this->lastLogout = $user->getLastLogout();
                     $user->updateAttributes(['ip_last_login' => $this->ip, 'last_login_at' => time()]);
                     $this->identity->login($user);

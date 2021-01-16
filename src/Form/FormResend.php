@@ -98,7 +98,7 @@ final class FormResend extends FormModel
                     $result->addError($this->translator->translate('User is active', [], 'user'));
                 }
 
-                if ($result->isValid()) {
+                if ($result->isValid() && $user !== null) {
                     $this->userId = $user->getId();
                     $this->username = $user->getUsername();
                 }

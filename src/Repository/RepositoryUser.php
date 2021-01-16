@@ -19,6 +19,7 @@ use Yiisoft\Aliases\Aliases;
 use Yiisoft\Auth\IdentityInterface;
 use Yiisoft\Auth\IdentityRepositoryInterface;
 use Yiisoft\Db\Exception\Exception;
+use Yiisoft\Db\Query\QueryInterface;
 use Yiisoft\Files\FileHelper;
 use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Router\UrlGeneratorInterface;
@@ -67,17 +68,9 @@ final class RepositoryUser implements IdentityRepositoryInterface
         return $this->findUserByCondition(['id' => $id]);
     }
 
-    /**
-     * @param string $token
-     * @param string|null $type
-     *
-     * @return IdentityInterface|null
-     *
-     * @psalm-suppress InvalidReturnType, InvalidReturnStatement
-     */
-    public function findIdentityByToken(string $token, ?string $type = null): ?IdentityInterface
+    public function findUser(array $condition): QueryInterface
     {
-        return $this->findUserByCondition(['auth_key' => $token]);
+        return $this->userQuery()->where($condition);
     }
 
     public function findUserByCondition(array $condition): ?ActiveRecordInterface
@@ -117,8 +110,8 @@ final class RepositoryUser implements IdentityRepositoryInterface
             $urlToken = $url->generateAbsolute(
                 $this->token->toUrl(),
                 [
-                    'id' => $this->token->getAttribute('user_id'),
-                    'code' => $this->token->getAttribute('code')
+                    'id' => $this->token->getUserId(),
+                    'code' => $this->token->getCode(),
                 ]
             );
         }
@@ -151,7 +144,7 @@ final class RepositoryUser implements IdentityRepositoryInterface
             $this->user->password($password);
             $this->user->passwordHash($password);
             $this->user->authKey();
-            $this->user->registrationIp($formRegister->getAttributeValue('ip'));
+            $this->user->registrationIp($formRegister->getIp());
 
             if ($isConfirmation === false) {
                 $this->user->confirmedAt();
@@ -222,7 +215,7 @@ final class RepositoryUser implements IdentityRepositoryInterface
 
     private function generateAvatar(): void
     {
-        $avatar = $this->avatar->name($this->user->getAttribute('username'))
+        $avatar = $this->avatar->name($this->user->getUsername())
             ->length(2)
             ->fontSize(0.5)
             ->size(28)
@@ -234,20 +227,14 @@ final class RepositoryUser implements IdentityRepositoryInterface
 
         FileHelper::createDirectory($this->aliases->get('@avatars'));
 
-        file_put_contents($this->aliases->get('@avatars') . '/' . $this->user->getAttribute('id') . '.svg', $avatar);
+        file_put_contents($this->aliases->get('@avatars') . '/' . $this->user->getId() . '.svg', $avatar);
     }
 
     private function insertToken(): void
     {
+        $this->token->deleteAll(['user_id' => $this->token->getUserId()]);
+
         $this->token->setAttribute('type', Token::TYPE_CONFIRMATION);
-
-        $this->token->deleteAll(
-            [
-                'user_id' => $this->token->getAttribute('user_id'),
-                'type' => $this->token->getAttribute('type')
-            ]
-        );
-
         $this->token->setAttribute('created_at', time());
         $this->token->setAttribute('code', Random::string());
 

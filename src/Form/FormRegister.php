@@ -59,6 +59,11 @@ final class FormRegister extends FormModel
         return strtolower($this->email);
     }
 
+    public function getIp(): string
+    {
+        return $this->ip;
+    }
+
     public function getPassword(): string
     {
         return $this->password;

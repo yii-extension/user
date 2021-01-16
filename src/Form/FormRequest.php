@@ -19,7 +19,7 @@ use function strtolower;
 final class FormRequest extends FormModel
 {
     private string $email = '';
-    private ?string $userId = '';
+    private string $userId = '';
     private string $username = '';
     private RepositoryUser $repositoryUser;
     private TranslatorInterface $translator;
@@ -62,7 +62,7 @@ final class FormRequest extends FormModel
         ];
     }
 
-    public function getUserId(): ?string
+    public function getUserId(): string
     {
         return $this->userId;
     }
@@ -102,11 +102,9 @@ final class FormRequest extends FormModel
                     $result->addError($this->translator->translate('Inactive user', [], 'user'));
                 }
 
-                if ($result->isValid()) {
+                if ($result->isValid() && $user !== null) {
                     $this->userId = $user->getId();
                     $this->username = $user->getUsername();
-
-                    $this->token->deleteAll(['user_id' => $this->userId, 'type' => Token::TYPE_RECOVERY]);
                 }
 
                 return $result;
