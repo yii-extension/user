@@ -34,19 +34,19 @@ final class Login
         if ($method === 'POST' && $formLogin->load($body) && $formLogin->validate()) {
             $eventDispatcher->dispatch($afterLogin);
 
-            $bodyMessage = $translator->translate('Sign in successful - you are welcome', [], 'user-flash-message');
+            $lastLogin = $formLogin->getLastLogout() > 0
+                ? date('Y-m-d G:i:s', $formLogin->getLastLogout())
+                : $translator->translate('This is your first login - Welcome', [], 'user');
 
-            if ($formLogin->getLastLogout() > 0) {
-                $bodyMessage = $translator->translate(
-                    'Sign in successful - {date}',
-                    ['date' =>  date('Y-m-d G:i:s', $formLogin->getLastLogout())],
-                    'user-flash-message',
-                );
-            }
+            $bodyMessage = $translator->translate(
+                'Sign in successful - {lastLogin}',
+                ['lastLogin' => $lastLogin],
+                'user',
+            );
 
             $serviceFlashMessage->run(
                 'success',
-                $translator->translate('System Notification', [], 'user-flash-message'),
+                $translator->translate('System Notification', [], 'user'),
                 $bodyMessage,
             );
 
