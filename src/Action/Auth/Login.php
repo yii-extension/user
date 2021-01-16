@@ -34,7 +34,7 @@ final class Login
         if ($method === 'POST' && $formLogin->load($body) && $formLogin->validate()) {
             $eventDispatcher->dispatch($afterLogin);
 
-            $bodyMessage = $translator->translate('Sign in successful - you are welcome', [], 'user');
+            $bodyMessage = $translator->translate('Sign in successful - Welcome', [], 'user');
 
             if ($formLogin->getLastLogout() > 0) {
                 $bodyMessage = $translator->translate(
