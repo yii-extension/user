@@ -29,7 +29,7 @@ final class ServiceInsecureEmailChange
             $this->serviceFlashMessage->run(
                 'success',
                 $this->translator->translate('System Notification', [], 'user'),
-                $this->translator->translate('Your email has been changed', [], 'user'),
+                $this->translator->translate('Your email address has been changed', [], 'user'),
             );
         }
     }
