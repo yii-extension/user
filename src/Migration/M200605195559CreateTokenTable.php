@@ -36,9 +36,9 @@ final class M200605195559CreateTokenTable implements RevertibleMigrationInterfac
         $b->addForeignKey(
             'fk_user_token',
             '{{%token}}',
-            'user_id',
+            ['user_id'],
             '{{%user}}',
-            'id',
+            ['id'],
             'CASCADE',
             'RESTRICT',
         );

@@ -27,6 +27,11 @@ $menuItems = [
         'visible' => $user->isGuest(),
     ],
     [
+        'label' => 'Account',
+        'url' => $urlGenerator->generate('account'),
+        'visible' => !$user->isGuest(),
+    ],
+    [
         'label' => 'Profile',
         'url' => $urlGenerator->generate('profile'),
         'visible' => !$user->isGuest(),
