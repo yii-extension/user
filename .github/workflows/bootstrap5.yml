@@ -63,9 +63,14 @@ jobs:
         run: composer require yii-extension/user-view-bootstrap5:@dev --dev --ansi
 
       - name: Run tests with codeception
+        continue-error: true
         run: |
           php -S 127.0.0.1:8080 -t tests/_data/public > tests/_output/runtime/yii.log 2>&1 &
           vendor/bin/codecept run Unit,Acceptance,Functional --coverage-xml
+
+      - name: View error
+        if: matrix.os == 'ubuntu-latest'
+        run: cat /home/runner/work/user/user/tests/_output/Yii.Extension.User.Tests.Acceptance.RegisterAcceptanceCest.testRegisterSuccessDataDefaultAccountConfirmationFalse.fail.html
 
       - name: Upload coverage to codecov
         if: matrix.os == 'ubuntu-latest' && matrix.php == '7.4'
