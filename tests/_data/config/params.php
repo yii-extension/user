@@ -51,7 +51,7 @@ return [
     ],
 
     'yiisoft/translator' => [
-        'locale' => 'en_US.UTF-8',
+        'locale' => DIRECTORY_SEPARATOR === '\\' ? 'en-US.UTF-8' : 'en_US.UTF-8',
     ],
 
     'yiisoft/view' => [
