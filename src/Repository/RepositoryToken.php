@@ -52,7 +52,7 @@ final class RepositoryToken
 
         $token = $this->activeRecordFactory->createAR(Token::class);
 
-        $token->deleteAll(['user_id' => $id]);
+        $token->deleteAll(['user_id' => $id, 'type' => $typeToken]);
 
         if ($token->getIsNewRecord() === false) {
             throw new RuntimeException('Calling "' . __CLASS__ . '::' . __METHOD__ . '" on existing user');

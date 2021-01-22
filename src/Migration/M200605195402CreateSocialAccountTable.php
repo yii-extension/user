@@ -46,7 +46,7 @@ final class M200605195402CreateSocialAccountTable implements RevertibleMigration
             '{{%user}}',
             ['id'],
             'CASCADE',
-            'RESTRICT'
+            'RESTRICT',
         );
     }
 

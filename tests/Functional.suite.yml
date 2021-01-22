@@ -15,6 +15,6 @@ modules:
             user: ''
             password: ''
             cleanup: true
-        # add a framework module here
+        - Asserts
         - \Yii\Extension\User\Tests\Helper\Functional
     step_decorators: ~

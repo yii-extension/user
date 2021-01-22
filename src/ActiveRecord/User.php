@@ -41,6 +41,19 @@ use Yiisoft\Security\Random;
  **/
 final class User extends ActiveRecord implements IdentityInterface
 {
+    /** Email is changed right after user enter's new email address. */
+    public const STRATEGY_INSECURE = 0;
+
+    /** Email is changed after user clicks confirmation link sent to his new email address. */
+    public const STRATEGY_DEFAULT = 1;
+
+    /** Email is changed after user clicks both confirmation links sent to his old and new email addresses. */
+    public const STRATEGY_SECURE = 2;
+
+    /** Following constants are used on secured email changing process */
+    public const NEW_EMAIL_CONFIRMED = 0b10;
+    public const OLD_EMAIL_CONFIRMED = 0b1;
+
     private string $password;
 
     public function tableName(): string
@@ -58,19 +71,14 @@ final class User extends ActiveRecord implements IdentityInterface
         return $this->getAttribute('confirmed_at') !== null;
     }
 
-    public function getId(): ?string
+    public function getId(): string
     {
-        return $this->getAttribute('id') === null ? null : (string)$this->getAttribute('id');
+        return (string) $this->getAttribute('id');
     }
 
     public function getEmail(): string
     {
         return $this->getAttribute('email');
-    }
-
-    public function getFlags(): int
-    {
-        return $this->flags;
     }
 
     public function getLastLogout(): int
@@ -88,7 +96,7 @@ final class User extends ActiveRecord implements IdentityInterface
         return $this->password;
     }
 
-    public function getPasswordHash(): ?string
+    public function getPasswordHash(): string
     {
         return $this->getAttribute('password_hash');
     }
@@ -98,9 +106,9 @@ final class User extends ActiveRecord implements IdentityInterface
         return $this->hasOne(Profile::class, ['user_id' => 'id']);
     }
 
-    public function getUnconfirmedEmail(): ?string
+    public function getUnconfirmedEmail(): string
     {
-        return $this->getAttribute('unconfirmed_email');
+        return $this->getAttribute('unconfirmed_email') ?? '';
     }
 
     public function username(string $value): void

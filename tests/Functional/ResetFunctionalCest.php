@@ -13,9 +13,8 @@ final class ResetFunctionalCest
         $I->amGoingTo('go to the reset page');
         $I->amOnPage('/reset');
 
-        $I->expectTo('no see reset page');
-        $I->see('404');
-        $I->see('The page /reset was not found.');
+        $I->expectTo('error 404 response');
+        $I->seeResponseCodeIs(404);
     }
 
     public function testResetPasswordWrongId(FunctionalTester $I): void
@@ -26,9 +25,8 @@ final class ResetFunctionalCest
         $I->amGoingTo('page recovery reset.');
         $I->amOnPage('/reset' . '/' . $id . '/' . $code);
 
-        $I->amGoingTo('see reset validation message.');
-        $I->see('404');
-        $I->see('The page /reset/' . $id . '/' . $code . ' was not found.');
+        $I->expectTo('error 404 response');
+        $I->seeResponseCodeIs(404);
     }
 
     public function testResetPasswordWrongCode(FunctionalTester $I): void
@@ -39,9 +37,8 @@ final class ResetFunctionalCest
         $I->amGoingTo('page recovery reset.');
         $I->amOnPage('/reset' . '/' . $id . '/' . $code);
 
-        $I->amGoingTo('see reset validation message.');
-        $I->see('404');
-        $I->see('The page /reset/' . $id . '/' . $code . ' was not found.');
+        $I->expectTo('error 404 response');
+        $I->seeResponseCodeIs(404);
     }
 
     public function testResetPasswordWithTokenExpired(FunctionalTester $I): void
@@ -56,9 +53,8 @@ final class ResetFunctionalCest
         $I->amGoingTo('page recovery reset.');
         $I->amOnPage('/reset' . '/' . $id[0] . '/' . $token[0]);
 
-        $I->amGoingTo('see reset validation message.');
-        $I->see('404');
-        $I->see('The page /reset/' . $id[0] . '/' . $token[0] . ' was not found.');
+        $I->expectTo('error 404 response');
+        $I->seeResponseCodeIs(404);
     }
 
     public function testResetPasswordSuccessData(FunctionalTester $I): void

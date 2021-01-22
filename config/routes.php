@@ -10,6 +10,8 @@ use Yii\Extension\User\Action\Recovery\Resend;
 use Yii\Extension\User\Action\Recovery\Reset;
 use Yii\Extension\User\Action\Registration\Confirm;
 use Yii\Extension\User\Action\Registration\Register;
+use Yii\Extension\User\Action\Setting\Account;
+use Yii\Extension\User\Action\Setting\AttemptEmailChange;
 use Yiisoft\Auth\Middleware\Authentication;
 use Yiisoft\Composer\Config\Builder;
 use Yii\Extension\User\Middleware\Guest;
@@ -22,9 +24,14 @@ return [
     Group::create(
         $params['user']['router']['prefix'],
         [
+            Route::methods(['GET', 'POST'], '/account', [Account::class, 'run'])
+                ->name('account')
+                ->addMiddleware(Authentication::class),
             Route::get('/confirm[/{id}/{code}]', [Confirm::class, 'run'])
                 ->name('confirm')
                 ->addMiddleware(Guest::class),
+            Route::get('/attempt/email[/{id}/{code}]', [AttemptEmailChange::class, 'run'])
+                ->name('attempt/email'),
             Route::methods(['GET', 'POST'], '/login', [Login::class, 'run'])
                 ->name('login')
                 ->addMiddleware(Guest::class),

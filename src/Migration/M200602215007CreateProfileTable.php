@@ -41,7 +41,7 @@ final class M200602215007CreateProfileTable implements RevertibleMigrationInterf
             '{{%user}}',
             ['id'],
             'CASCADE',
-            'RESTRICT'
+            'RESTRICT',
         );
     }
 

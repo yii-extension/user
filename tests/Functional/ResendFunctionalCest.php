@@ -70,7 +70,7 @@ final class ResendFormCest
         $I->amGoingTo('go to the resend page');
         $I->amOnPage('/resend');
 
-        $I->submitForm('#form-recovery-resend', ['Resend[email]' => 'administrator@example.com']);
+        $I->submitForm('#form-recovery-resend', ['Resend[email]' => 'administrator100@example.com']);
 
         $I->expectTo('see validations errors.');
         $I->see('User is active');

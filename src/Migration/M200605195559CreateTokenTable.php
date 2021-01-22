@@ -23,10 +23,10 @@ final class M200605195559CreateTokenTable implements RevertibleMigrationInterfac
         $b->createTable(
             '{{%token}}',
             [
-                'user_id' => $b->primaryKey(),
-                'code' => $b->string(32),
-                'created_at' => $b->integer(),
-                'type' => $b->smallInteger(),
+                'user_id' => $b->integer()->notNull(),
+                'code' => $b->string(32)->notNull(),
+                'created_at' => $b->integer()->notNull(),
+                'type' => $b->smallInteger()->notNull(),
             ],
             $tableOptions
         );
@@ -36,11 +36,11 @@ final class M200605195559CreateTokenTable implements RevertibleMigrationInterfac
         $b->addForeignKey(
             'fk_user_token',
             '{{%token}}',
-            ['user_id'],
+            'user_id',
             '{{%user}}',
-            ['id'],
+            'id',
             'CASCADE',
-            'RESTRICT'
+            'RESTRICT',
         );
     }
 

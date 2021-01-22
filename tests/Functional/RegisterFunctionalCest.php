@@ -60,7 +60,6 @@ final class RegisterFunctionalCest
         $I->submitForm('#form-registration-register', [
             'Register[email]' => 'admin2@example.com',
             'Register[username]' => 'admin2',
-
         ]);
 
         $I->amGoingTo('go to the login page');

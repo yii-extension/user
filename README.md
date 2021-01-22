@@ -31,6 +31,7 @@ Yii demo application for active record with db-sqlite is best for rapidly creati
           Middleware      contains class middleware
           Migration       contains migration classes
           Repository      contains repository classes
+          Service         contains service classes
 
 ## Project
 
@@ -102,7 +103,9 @@ http://localhost:8080
     - [x] /register - Displays registration form.
     - [x] /request - Displays recovery request form.
     - [x] /resend - Displays resend form.
-    - [x] /reset[/{id}/{code}] - Displays password reset form (requires id and token query params).
+    - [x] /reset[/{id}/{token}] - Displays password reset form (requires id and token query params).
+    - [x] /account - Displays email change form.
+    - [x] /attempt/email[/{id}/{token}] - Confirms a uemail change (requires id and token query params).
 
 Note: check the directory `/runtime/mail`, the emails are stored in it.
 

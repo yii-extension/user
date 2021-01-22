@@ -13,9 +13,8 @@ final class ConfirmFunctionalCest
         $I->amGoingTo('go to the page confirm.');
         $I->amOnPage('/confirm');
 
-        $I->amGoingTo('no see the page confirm.');
-        $I->see('404');
-        $I->see('The page /confirm was not found.');
+        $I->expectTo('error 404 response');
+        $I->seeResponseCodeIs(404);
     }
 
     public function testRegistationConfirmAccountConfirmationTrue(FunctionalTester $I): void
@@ -34,6 +33,11 @@ final class ConfirmFunctionalCest
         $I->see('Hello!');
         $I->see("Let's start something great with Yii3!");
         $I->see('Logout (joe)');
+
+        $id = $I->grabColumnFromDatabase('token', 'user_id', ['user_id' => 100]);
+
+        $I->expectTo('not finding the registered token in the database.');
+        $I->assertEmpty($id);
     }
 
     public function testRegistationConfirmAccountWrongId(FunctionalTester $I): void
@@ -46,9 +50,8 @@ final class ConfirmFunctionalCest
         $I->amGoingTo('page recovery confirm.');
         $I->amOnPage('/confirm' . '/' . $id . '/' . $code);
 
-        $I->expectTo('see confirm validation message.');
-        $I->see('404');
-        $I->see('The page /confirm/' . $id . '/' . $code . ' was not found.');
+        $I->expectTo('error 404 response');
+        $I->seeResponseCodeIs(404);
     }
 
     public function testRegistationConfirmAccountWrongCode(FunctionalTester $I): void
@@ -61,9 +64,8 @@ final class ConfirmFunctionalCest
         $I->amGoingTo('page recovery confirm.');
         $I->amOnPage('/confirm' . '/' . $id . '/' . $code);
 
-        $I->expectTo('see confirm validation message.');
-        $I->see('404');
-        $I->see('The page /confirm/' . $id . '/' . $code . ' was not found.');
+        $I->expectTo('error 404 response');
+        $I->seeResponseCodeIs(404);
     }
 
     public function testRegistationConfirmAccountWithTokenExpired(FunctionalTester $I): void
@@ -78,9 +80,8 @@ final class ConfirmFunctionalCest
         $I->amGoingTo('page recovery confirm.');
         $I->amOnPage('/confirm' . '/' . $id[0] . '/' . $token[0]);
 
-        $I->expectTo('see registration confirm validation message.');
-        $I->see('404');
-        $I->see('The page /confirm/101/qxYa315rqRgCOjYGk82GFHMEAV3T82AX was not found.');
+        $I->expectTo('error 404 response');
+        $I->seeResponseCodeIs(404);
     }
 
     private function unconfirmedUser(FunctionalTester $I): void
