@@ -14,7 +14,7 @@ use Yiisoft\Yii\View\CsrfViewInjection;
 return [
     'app' => [
         'charset' => 'UTF-8',
-        'locale' => 'en',
+        'locale' => 'en-US',
         'name' => 'My Project',
     ],
 
@@ -51,7 +51,7 @@ return [
     ],
 
     'yiisoft/translator' => [
-        'locale' => 'en',
+        'locale' => 'en_US.UTF-8',
     ],
 
     'yiisoft/view' => [
