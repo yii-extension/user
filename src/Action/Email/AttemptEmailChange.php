@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Yii\Extension\User\Action\Setting;
+namespace Yii\Extension\User\Action\Email;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -36,7 +36,7 @@ final class AttemptEmailChange
             return $requestHandler->handle($serverRequest);
         }
 
-        $identity->isGuest() ? $url = 'home' : $url = 'account';
+        $identity->isGuest() ? $url = 'home' : $url = 'email/change';
 
         return $serviceUrl->run($url);
     }

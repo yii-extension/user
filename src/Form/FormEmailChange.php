@@ -17,7 +17,7 @@ use Yiisoft\Validator\Rule\MatchRegularExpression;
 use Yiisoft\Validator\Rule\Required;
 use Yiisoft\Validator\ValidatorFactoryInterface;
 
-final class FormAccount extends FormModel
+final class FormEmailChange extends FormModel
 {
     private string $email = '';
     private string $oldEmail = '';
@@ -51,17 +51,12 @@ final class FormAccount extends FormModel
 
     public function formName(): string
     {
-        return 'Account';
+        return 'EmailChange';
     }
 
     public function getEmail(): string
     {
         return $this->email;
-    }
-
-    public function getOldEmail(): string
-    {
-        return $this->oldEmail;
     }
 
     public function rules(): array

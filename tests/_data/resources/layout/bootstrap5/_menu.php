@@ -27,8 +27,8 @@ $menuItems = [
         'visible' => $user->isGuest(),
     ],
     [
-        'label' => 'Account',
-        'url' => $urlGenerator->generate('account'),
+        'label' => 'Email Change',
+        'url' => $urlGenerator->generate('email/change'),
         'visible' => !$user->isGuest(),
     ],
     [

@@ -10,10 +10,10 @@ final class ResetFunctionalCest
 {
     public function testResetPasswordWithEmptyQueryParams(FunctionalTester $I): void
     {
-        $I->amGoingTo('go to the reset page');
+        $I->amGoingTo('go to the reset page.');
         $I->amOnPage('/reset');
 
-        $I->expectTo('error 404 response');
+        $I->expectTo('error 404 response.');
         $I->seeResponseCodeIs(404);
     }
 
@@ -25,7 +25,7 @@ final class ResetFunctionalCest
         $I->amGoingTo('page recovery reset.');
         $I->amOnPage('/reset' . '/' . $id . '/' . $code);
 
-        $I->expectTo('error 404 response');
+        $I->expectTo('error 404 response.');
         $I->seeResponseCodeIs(404);
     }
 
@@ -37,7 +37,7 @@ final class ResetFunctionalCest
         $I->amGoingTo('page recovery reset.');
         $I->amOnPage('/reset' . '/' . $id . '/' . $code);
 
-        $I->expectTo('error 404 response');
+        $I->expectTo('error 404 response.');
         $I->seeResponseCodeIs(404);
     }
 
@@ -53,7 +53,7 @@ final class ResetFunctionalCest
         $I->amGoingTo('page recovery reset.');
         $I->amOnPage('/reset' . '/' . $id[0] . '/' . $token[0]);
 
-        $I->expectTo('error 404 response');
+        $I->expectTo('error 404 response.');
         $I->seeResponseCodeIs(404);
     }
 

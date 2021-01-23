@@ -10,10 +10,10 @@ final class ResendAcceptanceCest
 {
     public function testResendDefaultAccountConfirmationFalse(AcceptanceTester $I): void
     {
-        $I->amGoingTo('go to the resend page');
+        $I->amGoingTo('go to the resend page.');
         $I->amOnPage('/resend');
 
-        $I->expectTo('error 404 response');
+        $I->expectTo('error 404 response.');
         $I->seeResponseCodeIs(404);
     }
 }

@@ -10,7 +10,7 @@ final class LoginAcceptanceCest
 {
     public function testLoginPage(AcceptanceTester $I): void
     {
-        $I->amGoingTo('go to the log in page');
+        $I->amGoingTo('go to the log in page.');
         $I->amOnPage('/login');
 
         $I->expectTo('see log in page.');
@@ -19,7 +19,7 @@ final class LoginAcceptanceCest
 
     public function testLoginEmptyDataTest(AcceptanceTester $I): void
     {
-        $I->amGoingTo('go to the log in page');
+        $I->amGoingTo('go to the log in page.');
         $I->amOnPage('/login');
 
         $I->click('Log in', '#form-auth-login');
@@ -32,7 +32,7 @@ final class LoginAcceptanceCest
 
     public function testLoginSubmitFormWrongDataUsername(AcceptanceTester $I): void
     {
-        $I->amGoingTo('go to the log in page');
+        $I->amGoingTo('go to the log in page.');
         $I->amOnPage('/login');
 
         $I->fillField('#login-login', 'admin1');
@@ -47,7 +47,7 @@ final class LoginAcceptanceCest
 
     public function testLoginSubmitFormWrongDataPassword(AcceptanceTester $I): void
     {
-        $I->amGoingTo('go to the login page');
+        $I->amGoingTo('go to the login page.');
         $I->amOnPage('/login');
 
         $I->fillField('#login-login', 'admin');
@@ -65,7 +65,7 @@ final class LoginAcceptanceCest
      */
     public function testLoginUsernameSubmitFormSuccessData(AcceptanceTester $I): void
     {
-        $I->amGoingTo('go to the log in page');
+        $I->amGoingTo('go to the log in page.');
         $I->amOnPage('/login');
 
         $I->fillField('#login-login', 'admin');
@@ -78,16 +78,16 @@ final class LoginAcceptanceCest
         $I->see("Let's start something great with Yii3!");
         $I->see('Logout (admin)');
 
-        $I->amGoingTo('go to the log in page');
+        $I->amGoingTo('go to the log in page.');
         $I->amOnPage('/login');
 
-        $I->expectTo('no see page log in');
+        $I->expectTo('no see page log in.');
         $I->see('Hello!');
         $I->see('Let\'s start something great with Yii3!');
 
         $I->click('#logout');
 
-        $I->expectTo('no see link logout');
+        $I->expectTo('no see link logout.');
         $I->dontSeeLink('logout');
     }
 
@@ -96,7 +96,7 @@ final class LoginAcceptanceCest
      */
     public function testLoginEmailSubmitFormSuccessData(AcceptanceTester $I): void
     {
-        $I->amGoingTo('go to the login page');
+        $I->amGoingTo('go to the login page.');
         $I->amOnPage('/login');
 
         $I->fillField('#login-login', 'administrator@example.com');
@@ -109,34 +109,34 @@ final class LoginAcceptanceCest
         $I->see("Let's start something great with Yii3!");
         $I->see('Logout (admin)');
 
-        $I->amGoingTo('go to the log in page');
+        $I->amGoingTo('go to the log in page.');
         $I->amOnPage('/login');
 
-        $I->expectTo('no see page log in');
+        $I->expectTo('no see page log in.');
         $I->see('Hello!');
         $I->see('Let\'s start something great with Yii3!');
 
         $I->click('#logout');
 
-        $I->expectTo('no see link logout');
+        $I->expectTo('no see link logout.');
         $I->dontSeeLink('logout');
     }
 
     public function testLoginSettingsPasswordRecoveryTrue(AcceptanceTester $I): void
     {
-        $I->amGoingTo('go to the log in page');
+        $I->amGoingTo('go to the log in page.');
         $I->amOnPage('/login');
 
-        $I->expectTo('see link forgot password');
+        $I->expectTo('see link forgot password.');
         $I->see('Forgot password');
     }
 
     public function testLoginSettingsRegisterTrue(AcceptanceTester $I): void
     {
-        $I->amGoingTo('go to the log in page');
+        $I->amGoingTo('go to the log in page.');
         $I->amOnPage('/login');
 
-        $I->expectTo('see link register');
+        $I->expectTo('see link register.');
         $I->see("Don't have an account - Sign up!");
     }
 }

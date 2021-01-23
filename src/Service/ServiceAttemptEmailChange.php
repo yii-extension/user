@@ -58,16 +58,6 @@ final class ServiceAttemptEmailChange
             $result = false;
         }
 
-        if ($result === true && empty($user->getUnconfirmedEmail())) {
-            $this->serviceFlashMessage->run(
-                'danger',
-                $this->translator->translate('System Notification', [], 'user'),
-                $this->translator->translate('An error occurred processing your request', [], 'user'),
-            );
-
-            $result = false;
-        }
-
         if ($result === true && $this->repositoryUser->findUserByEmail($user->getUnconfirmedEmail()) === null) {
             $token->delete();
 

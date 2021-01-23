@@ -10,7 +10,7 @@ final class ProfileAcceptanceCest
 {
     public function testProfilePage(AcceptanceTester $I): void
     {
-        $I->amGoingTo('go to the login page');
+        $I->amGoingTo('go to the login page.');
         $I->amOnPage('/profile');
 
         $I->expectTo('no see profile page.');
@@ -22,10 +22,10 @@ final class ProfileAcceptanceCest
      */
     public function testProfilePageSuccess(AcceptanceTester $I): void
     {
-        $I->amGoingTo('go to the profile page');
+        $I->amGoingTo('go to the profile page.');
         $I->amOnPage('/profile');
 
-        $I->amGoingTo('see log in page');
+        $I->amGoingTo('see log in page.');
         $I->see('Log in');
         $I->fillField('#login-login', 'admin');
         $I->fillField('#login-password', '123456');
@@ -37,10 +37,10 @@ final class ProfileAcceptanceCest
         $I->see("Let's start something great with Yii3!");
         $I->see('Logout (admin)');
 
-        $I->amGoingTo('go to the login page');
+        $I->amGoingTo('go to the login page.');
         $I->amOnPage('/profile');
 
-        $I->expectTo('see profile page');
+        $I->expectTo('see profile page.');
         $I->seeInTitle('Profile');
     }
 
@@ -49,10 +49,10 @@ final class ProfileAcceptanceCest
      */
     public function testProfilePageUpdateData(AcceptanceTester $I): void
     {
-        $I->amGoingTo('go to the profile page');
+        $I->amGoingTo('go to the profile page.');
         $I->amOnPage('/profile');
 
-        $I->amGoingTo('see log in page');
+        $I->amGoingTo('see log in page.');
         $I->see('Log in');
         $I->fillField('#login-login', 'admin');
         $I->fillField('#login-password', '123456');
@@ -64,10 +64,10 @@ final class ProfileAcceptanceCest
         $I->see("Let's start something great with Yii3!");
         $I->see('Logout (admin)');
 
-        $I->amGoingTo('go to the login page');
+        $I->amGoingTo('go to the login page.');
         $I->amOnPage('/profile');
 
-        $I->expectTo('see profile page');
+        $I->expectTo('see profile page.');
         $I->seeInTitle('Profile');
 
         $I->fillField('#formprofile-name', 'Joe Doe');
@@ -79,7 +79,7 @@ final class ProfileAcceptanceCest
 
         $I->click('Save', '#form-profile-profile');
 
-        $I->expectTo('see save data');
+        $I->expectTo('see save data.');
         $I->seeInField('FormProfile[name]', 'Joe Doe');
         $I->seeInField('FormProfile[publicEmail]', 'joedoe@example.com');
         $I->seeInField('FormProfile[website]', 'http://example.com');
@@ -89,7 +89,7 @@ final class ProfileAcceptanceCest
 
         $I->click('#logout');
 
-        $I->expectTo('no see profile page');
+        $I->expectTo('no see profile page.');
         $I->dontSee('Profile');
     }
 }

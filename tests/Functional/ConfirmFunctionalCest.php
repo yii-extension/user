@@ -13,7 +13,7 @@ final class ConfirmFunctionalCest
         $I->amGoingTo('go to the page confirm.');
         $I->amOnPage('/confirm');
 
-        $I->expectTo('error 404 response');
+        $I->expectTo('error 404 response.');
         $I->seeResponseCodeIs(404);
     }
 
@@ -50,7 +50,7 @@ final class ConfirmFunctionalCest
         $I->amGoingTo('page recovery confirm.');
         $I->amOnPage('/confirm' . '/' . $id . '/' . $code);
 
-        $I->expectTo('error 404 response');
+        $I->expectTo('error 404 response.');
         $I->seeResponseCodeIs(404);
     }
 
@@ -64,7 +64,7 @@ final class ConfirmFunctionalCest
         $I->amGoingTo('page recovery confirm.');
         $I->amOnPage('/confirm' . '/' . $id . '/' . $code);
 
-        $I->expectTo('error 404 response');
+        $I->expectTo('error 404 response.');
         $I->seeResponseCodeIs(404);
     }
 
@@ -80,7 +80,7 @@ final class ConfirmFunctionalCest
         $I->amGoingTo('page recovery confirm.');
         $I->amOnPage('/confirm' . '/' . $id[0] . '/' . $token[0]);
 
-        $I->expectTo('error 404 response');
+        $I->expectTo('error 404 response.');
         $I->seeResponseCodeIs(404);
     }
 

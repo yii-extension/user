@@ -10,37 +10,37 @@ final class LoginFunctionalCest
 {
     public function testLoginSettingsPasswordRecoveryFalse(FunctionalTester $I): void
     {
-        $I->amGoingTo('update settings password recovery false');
+        $I->amGoingTo('update settings password recovery false.');
         $I->updateInDatabase('settings', ['passwordRecovery' => false], ['id' => 1]);
 
-        $I->amGoingTo('go to the log in page');
+        $I->amGoingTo('go to the log in page.');
         $I->amOnPage('/login');
 
-        $I->expectTo('dont see link forgot password');
+        $I->expectTo('dont see link forgot password.');
         $I->dontSeeLink('Forgot Password');
 
-        $I->amGoingTo('update settings password recovery true');
+        $I->amGoingTo('update settings password recovery true.');
         $I->updateInDatabase('settings', ['passwordRecovery' => true], ['id' => 1]);
     }
 
     public function testLoginSettingsRegisterFalse(FunctionalTester $I): void
     {
-        $I->amGoingTo('update settings register false');
+        $I->amGoingTo('update settings register false.');
         $I->updateInDatabase('settings', ['register' => false], ['id' => 1]);
 
-        $I->amGoingTo('go to the log in page');
+        $I->amGoingTo('go to the log in page.');
         $I->amOnPage('/login');
 
-        $I->expectTo('dont see link register');
+        $I->expectTo('dont see link register.');
         $I->dontSeeLink("Don't have an account - Sign up!");
 
-        $I->amGoingTo('update settings register true');
+        $I->amGoingTo('update settings register true.');
         $I->updateInDatabase('settings', ['register' => true], ['id' => 1]);
     }
 
     public function testLoginSettingsUserNameCaseSensitiveDefault(FunctionalTester $I): void
     {
-        $I->amGoingTo('go to the register page');
+        $I->amGoingTo('go to the register page.');
         $I->amOnPage('/register');
 
         $I->expectTo('see registration register form.');
@@ -77,10 +77,10 @@ final class LoginFunctionalCest
 
     public function testLoginSettingsUserNameCaseSensitiveFalse(FunctionalTester $I): void
     {
-        $I->amGoingTo('update settings password recovery false');
+        $I->amGoingTo('update settings password recovery false.');
         $I->updateInDatabase('settings', ['userNameCaseSensitive' => false], ['id' => 1]);
 
-        $I->amGoingTo('go to the register page');
+        $I->amGoingTo('go to the register page.');
         $I->amOnPage('/register');
 
         $I->expectTo('see registration register form.');
@@ -91,7 +91,7 @@ final class LoginFunctionalCest
 
         ]);
 
-        $I->amGoingTo('go to the log in page');
+        $I->amGoingTo('go to the log in page.');
         $I->amOnPage('/login');
 
         $I->expectTo('see log in form.');
@@ -105,13 +105,13 @@ final class LoginFunctionalCest
         $I->see("Let's start something great with Yii3!");
         $I->see('Logout (testme1)');
 
-        $I->amGoingTo('update settings password recovery true');
+        $I->amGoingTo('update settings password recovery true.');
         $I->updateInDatabase('settings', ['userNameCaseSensitive' => true], ['id' => 1]);
     }
 
     public function testLoginSubmitFormWrongDataUsername(FunctionalTester $I): void
     {
-        $I->amGoingTo('go to the login page');
+        $I->amGoingTo('go to the login page.');
         $I->amOnPage('/login');
 
         $I->expectTo('see login form.');
@@ -127,7 +127,7 @@ final class LoginFunctionalCest
 
     public function testLoginSubmitFormWrongDataPassword(FunctionalTester $I): void
     {
-        $I->amGoingTo('go to the log in page');
+        $I->amGoingTo('go to the log in page.');
         $I->amOnPage('/login');
 
         $I->expectTo('see log in form.');
@@ -143,12 +143,13 @@ final class LoginFunctionalCest
 
     public function testLoginUserIsBlocked(FunctionalTester $I): void
     {
-        $this->loginUser($I);
+        $I->amGoingTo('load fixture user confirmed.');
+        $this->userConfirmed($I);
 
-        $I->amGoingTo('block user test');
+        $I->amGoingTo('block user test.');
         $I->updateInDatabase('user', ['blocked_at' => time()], ['id' => 100]);
 
-        $I->amGoingTo('go to the log in page');
+        $I->amGoingTo('go to the log in page.');
         $I->amOnPage('/login');
 
         $I->expectTo('see log in form.');
@@ -160,11 +161,11 @@ final class LoginFunctionalCest
         $I->expectTo('see log in validation.');
         $I->see('Your user has been blocked, contact an administrator');
 
-        $I->amGoingTo('unblock user test');
+        $I->amGoingTo('unblock user test.');
         $I->updateInDatabase('user', ['blocked_at' => null], ['id' => 100]);
     }
 
-    private function loginUser(FunctionalTester $I): void
+    private function userConfirmed(FunctionalTester $I): void
     {
         $time = time();
 

@@ -104,8 +104,8 @@ http://localhost:8080
     - [x] /request - Displays recovery request form.
     - [x] /resend - Displays resend form.
     - [x] /reset[/{id}/{token}] - Displays password reset form (requires id and token query params).
-    - [x] /account - Displays email change form.
-    - [x] /attempt/email[/{id}/{token}] - Confirms a uemail change (requires id and token query params).
+    - [x] /email/change - Displays email change form.
+    - [x] /email/attempt[/{id}/{token}] - Confirms a uemail change (requires id and token query params).
 
 Note: check the directory `/runtime/mail`, the emails are stored in it.
 

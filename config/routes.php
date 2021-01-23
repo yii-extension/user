@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 use Yii\Extension\User\Action\Auth\Login;
 use Yii\Extension\User\Action\Auth\Logout;
+use Yii\Extension\User\Action\Email\AttemptEmailChange;
+use Yii\Extension\User\Action\Email\EmailChange;
 use Yii\Extension\User\Action\Profile\Profile;
 use Yii\Extension\User\Action\Recovery\Request;
 use Yii\Extension\User\Action\Recovery\Resend;
 use Yii\Extension\User\Action\Recovery\Reset;
 use Yii\Extension\User\Action\Registration\Confirm;
 use Yii\Extension\User\Action\Registration\Register;
-use Yii\Extension\User\Action\Setting\Account;
-use Yii\Extension\User\Action\Setting\AttemptEmailChange;
+use Yii\Extension\User\Middleware\Guest;
 use Yiisoft\Auth\Middleware\Authentication;
 use Yiisoft\Composer\Config\Builder;
-use Yii\Extension\User\Middleware\Guest;
 use Yiisoft\Router\Group;
 use Yiisoft\Router\Route;
 
@@ -24,14 +24,14 @@ return [
     Group::create(
         $params['user']['router']['prefix'],
         [
-            Route::methods(['GET', 'POST'], '/account', [Account::class, 'run'])
-                ->name('account')
+            Route::get('/email/attempt[/{id}/{code}]', [AttemptEmailChange::class, 'run'])
+                ->name('email/attempt'),
+            Route::methods(['GET', 'POST'], '/email/change', [EmailChange::class, 'run'])
+                ->name('email/change')
                 ->addMiddleware(Authentication::class),
             Route::get('/confirm[/{id}/{code}]', [Confirm::class, 'run'])
                 ->name('confirm')
                 ->addMiddleware(Guest::class),
-            Route::get('/attempt/email[/{id}/{code}]', [AttemptEmailChange::class, 'run'])
-                ->name('attempt/email'),
             Route::methods(['GET', 'POST'], '/login', [Login::class, 'run'])
                 ->name('login')
                 ->addMiddleware(Guest::class),

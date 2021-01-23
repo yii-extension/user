@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Yii\Extension\User\Action\Setting;
+namespace Yii\Extension\User\Action\Email;
 
 use OutOfBoundsException;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Yii\Extension\User\ActiveRecord\User;
-use Yii\Extension\User\Form\FormAccount;
+use Yii\Extension\User\Form\FormEmailChange;
 use Yii\Extension\User\Service\ServiceDefaultEmailChange;
 use Yii\Extension\User\Service\ServiceInsecureEmailChange;
 use Yii\Extension\User\Service\ServiceSecureEmailChange;
@@ -16,10 +16,10 @@ use Yii\Extension\User\Settings\RepositorySetting;
 use Yiisoft\User\User as Identity;
 use Yiisoft\Yii\View\ViewRenderer;
 
-final class Account
+final class EmailChange
 {
     public function run(
-        FormAccount $formAccount,
+        FormEmailChange $formEmailChange,
         Identity $identity,
         RepositorySetting $repositorySetting,
         ServerRequestInterface $serverRequest,
@@ -32,10 +32,10 @@ final class Account
         $body = $serverRequest->getParsedBody();
         $method = $serverRequest->getMethod();
 
-        if ($method === 'POST' && $formAccount->load($body) && $formAccount->validate()) {
+        if ($method === 'POST' && $formEmailChange->load($body) && $formEmailChange->validate()) {
             /** @var User $user */
             $user = $identity->getIdentity();
-            $email = $formAccount->getEmail();
+            $email = $formEmailChange->getEmail();
 
             if ($email === $user->getEmail() && empty($user->getUnconfirmedEmail())) {
                 $user->unconfirmedEmail(null);
@@ -59,6 +59,6 @@ final class Account
 
         return $viewRenderer
             ->withViewPath('@user-view-views')
-            ->render('setting/account', ['body' => $body, 'data' => $formAccount]);
+            ->render('email/change', ['body' => $body, 'data' => $formEmailChange]);
     }
 }

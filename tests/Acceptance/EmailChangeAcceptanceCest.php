@@ -6,14 +6,14 @@ namespace Yii\Extension\User\Tests\Acceptance;
 
 use Yii\Extension\User\Tests\AcceptanceTester;
 
-final class AccountAcceptanceCest
+final class EmailChangeAcceptanceCest
 {
     /**
      * @depends Yii\Extension\User\Tests\Acceptance\RegisterAcceptanceCest:testRegisterSuccessDataDefaultAccountConfirmationFalse
      */
-    public function testAccountPage(AcceptanceTester $I): void
+    public function testEmailChangePage(AcceptanceTester $I): void
     {
-        $I->amGoingTo('go to the log in page');
+        $I->amGoingTo('go to the log in page.');
         $I->amOnPage('/login');
 
         $I->fillField('#login-login', 'admin');
@@ -26,14 +26,14 @@ final class AccountAcceptanceCest
         $I->see("Let's start something great with Yii3!");
         $I->see('Logout (admin)');
 
-        $I->amGoingTo('go to the account page');
-        $I->amOnPage('/account');
-        $I->see('Account setting');
+        $I->amGoingTo('go to the email change page.');
+        $I->amOnPage('/email/change');
+        $I->see('Change email address');
     }
 
-    public function testAccountEmailValidation(AcceptanceTester $I): void
+    public function testEmailChangeValidation(AcceptanceTester $I): void
     {
-        $I->amGoingTo('go to the log in page');
+        $I->amGoingTo('go to the log in page.');
         $I->amOnPage('/login');
 
         $I->fillField('#login-login', 'admin');
@@ -46,20 +46,20 @@ final class AccountAcceptanceCest
         $I->see("Let's start something great with Yii3!");
         $I->see('Logout (admin)');
 
-        $I->amGoingTo('go to the account page');
-        $I->amOnPage('/account');
-        $I->see('Account setting');
+        $I->amGoingTo('go to the email change page.');
+        $I->amOnPage('/email/change');
+        $I->see('Change email address');
 
-        $I->fillField('#account-email', '');
+        $I->fillField('#emailchange-email', '');
 
-        $I->click('Save', '#form-setting-account');
+        $I->click('Save', '#form-email-change');
 
         $I->expectTo('see register validation.');
         $I->see('Value cannot be blank');
 
-        $I->fillField('#account-email', 'noexist');
+        $I->fillField('#emailchange-email', 'noexist');
 
-        $I->click('Save', '#form-setting-account');
+        $I->click('Save', '#form-email-change');
 
         $I->expectTo('see register validation.');
         $I->see('This value is not a valid email address');

@@ -10,7 +10,7 @@ final class RequestAcceptanceCest
 {
     public function testRequestPage(AcceptanceTester $I): void
     {
-        $I->amGoingTo('go to the request page');
+        $I->amGoingTo('go to the request page.');
         $I->amOnPage('/request');
 
         $I->expectTo('see request page.');
@@ -19,7 +19,7 @@ final class RequestAcceptanceCest
 
     public function testRequestEmptyDataTest(AcceptanceTester $I): void
     {
-        $I->amGoingTo('go to the request page');
+        $I->amGoingTo('go to the request page.');
         $I->amOnPage('/request');
 
         $I->fillField('#request-email', '');
@@ -32,7 +32,7 @@ final class RequestAcceptanceCest
 
     public function testRequestSubmitFormWrongData(AcceptanceTester $I): void
     {
-        $I->amGoingTo('go to the request page');
+        $I->amGoingTo('go to the request page.');
         $I->amOnPage('/request');
 
         $I->fillField('#request-email', 'noExist');
@@ -52,7 +52,7 @@ final class RequestAcceptanceCest
 
     public function testRequestSubmitFormSuccessData(AcceptanceTester $I): void
     {
-        $I->amGoingTo('go to the request page');
+        $I->amGoingTo('go to the request page.');
         $I->amOnPage('/request');
 
         $I->fillField('#request-email', 'administrator@example.com');

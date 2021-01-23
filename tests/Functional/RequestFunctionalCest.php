@@ -10,26 +10,26 @@ final class RequestFunctionalCest
 {
     public function testRequestSettingsPasswordRecoveryFalse(FunctionalTester $I): void
     {
-        $I->amGoingTo('update settings password recovery false');
+        $I->amGoingTo('update settings password recovery false.');
         $I->updateInDatabase('settings', ['passwordRecovery' => false], ['id' => 1]);
 
-        $I->amGoingTo('go to the request page');
+        $I->amGoingTo('go to the request page.');
         $I->amOnPage('/request');
 
-        $I->expectTo('no see request page');
+        $I->expectTo('no see request page.');
         $I->see('404');
         $I->see('The page /request was not found.');
 
-        $I->amGoingTo('update settings password recovery true');
+        $I->amGoingTo('update settings password recovery true.');
         $I->updateInDatabase('settings', ['passwordRecovery' => true], ['id' => 1]);
     }
 
     public function testRequestAccountConfirmationTrue(FunctionalTester $I): void
     {
-        $I->amGoingTo('update settings confirmation true');
+        $I->amGoingTo('update settings confirmation true.');
         $I->updateInDatabase('settings', ['confirmation' => true], ['id' => 1]);
 
-        $I->amGoingTo('go to the register page');
+        $I->amGoingTo('go to the register page.');
         $I->amOnPage('/register');
 
         $I->expectTo('see registration register form.');
@@ -40,7 +40,7 @@ final class RequestFunctionalCest
 
         ]);
 
-        $I->amGoingTo('go to the request page');
+        $I->amGoingTo('go to the request page.');
         $I->amOnPage('/request');
 
         $I->expectTo('see request form.');
