@@ -24,7 +24,7 @@ final class MigrationUnitCest
     public function _before(UnitTester $I): void
     {
         $this->container = new Container(
-            require Builder::path('tests/web'),
+            require Builder::path('tests/console'),
             require Builder::path('tests/providers')
         );
     }
@@ -42,7 +42,6 @@ final class MigrationUnitCest
         ]);
 
         $consoleHelper->output()->setVerbosity(OutputInterface::VERBOSITY_QUIET);
-        $migration->compact(true);
 
         if (file_exists($file)) {
             FileHelper::unlink($file);
@@ -77,7 +76,6 @@ final class MigrationUnitCest
         ]);
 
         $consoleHelper->output()->setVerbosity(OutputInterface::VERBOSITY_QUIET);
-        $migration->compact(true);
 
         $params = require Builder::path('tests/params');
 
@@ -108,7 +106,6 @@ final class MigrationUnitCest
         ]);
 
         $consoleHelper->output()->setVerbosity(OutputInterface::VERBOSITY_QUIET);
-        $migration->compact(true);
 
         $params = require Builder::path('tests/params');
 
