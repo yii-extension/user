@@ -13,7 +13,6 @@ use Yiisoft\Validator\Rule\Email;
 use Yiisoft\Validator\Rule\HasLength;
 use Yiisoft\Validator\Rule\MatchRegularExpression;
 use Yiisoft\Validator\Rule\Required;
-use Yiisoft\Validator\ValidatorFactoryInterface;
 
 use function strtolower;
 
@@ -30,14 +29,13 @@ final class FormRegister extends FormModel
     public function __construct(
         RepositoryUser $repositoryUser,
         RepositorySetting $repositorySetting,
-        TranslatorInterface $translator,
-        ValidatorFactoryInterface $validatorFactory
+        TranslatorInterface $translator
     ) {
         $this->repositoryUser = $repositoryUser;
         $this->repositorySetting = $repositorySetting;
         $this->translator = $translator;
 
-        parent::__construct($validatorFactory);
+        parent::__construct();
     }
 
     public function attributeLabels(): array

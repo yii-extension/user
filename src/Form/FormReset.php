@@ -8,7 +8,6 @@ use Yiisoft\Form\FormModel;
 use Yiisoft\Translator\TranslatorInterface;
 use Yiisoft\Validator\Rule\HasLength;
 use Yiisoft\Validator\Rule\Required;
-use Yiisoft\Validator\ValidatorFactoryInterface;
 
 final class FormReset extends FormModel
 {
@@ -16,12 +15,11 @@ final class FormReset extends FormModel
     private TranslatorInterface $translator;
 
     public function __construct(
-        TranslatorInterface $translator,
-        ValidatorFactoryInterface $validatorFactory
+        TranslatorInterface $translator
     ) {
         $this->translator = $translator;
 
-        parent::__construct($validatorFactory);
+        parent::__construct();
     }
 
     public function attributeLabels(): array

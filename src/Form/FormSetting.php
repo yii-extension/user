@@ -6,7 +6,6 @@ namespace Yii\Extension\User\Form;
 
 use Yiisoft\Form\FormModel;
 use Yiisoft\Translator\TranslatorInterface;
-use Yiisoft\Validator\ValidatorFactoryInterface;
 
 final class FormSetting extends FormModel
 {
@@ -29,12 +28,11 @@ final class FormSetting extends FormModel
     private TranslatorInterface $translator;
 
     public function __construct(
-        TranslatorInterface $translator,
-        ValidatorFactoryInterface $validatorFactory
+        TranslatorInterface $translator
     ) {
         $this->translator = $translator;
 
-        parent::__construct($validatorFactory);
+        parent::__construct();
     }
 
     public function formName(): string

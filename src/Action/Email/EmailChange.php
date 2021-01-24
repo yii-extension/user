@@ -14,6 +14,7 @@ use Yii\Extension\User\Service\ServiceInsecureEmailChange;
 use Yii\Extension\User\Service\ServiceSecureEmailChange;
 use Yii\Extension\User\Settings\RepositorySetting;
 use Yiisoft\User\User as Identity;
+use Yiisoft\Validator\ValidatorInterface;
 use Yiisoft\Yii\View\ViewRenderer;
 
 final class EmailChange
@@ -26,13 +27,14 @@ final class EmailChange
         ServiceDefaultEmailChange $serviceDefaultEmailChange,
         ServiceInsecureEmailChange $serviceInsecureEmailChange,
         ServiceSecureEmailChange $serviceSecureEmailChange,
+        ValidatorInterface $validator,
         ViewRenderer $viewRenderer
     ): ResponseInterface {
         /** @var array $body */
         $body = $serverRequest->getParsedBody();
         $method = $serverRequest->getMethod();
 
-        if ($method === 'POST' && $formEmailChange->load($body) && $formEmailChange->validate()) {
+        if ($method === 'POST' && $formEmailChange->load($body) && $formEmailChange->validate($validator)) {
             /** @var User $user */
             $user = $identity->getIdentity();
             $email = $formEmailChange->getEmail();

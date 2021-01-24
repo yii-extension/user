@@ -14,7 +14,6 @@ use Yiisoft\User\User as Identity;
 use Yiisoft\Validator\Result;
 use Yiisoft\Validator\Rule\Boolean;
 use Yiisoft\Validator\Rule\Required;
-use Yiisoft\Validator\ValidatorFactoryInterface;
 
 use function strtolower;
 
@@ -34,15 +33,14 @@ final class FormLogin extends FormModel
         Identity $identity,
         RepositoryUser $repositoryUser,
         RepositorySetting $repositorySetting,
-        TranslatorInterface $translator,
-        ValidatorFactoryInterface $validatorFactory
+        TranslatorInterface $translator
     ) {
         $this->identity = $identity;
         $this->repositoryUser = $repositoryUser;
         $this->repositorySetting = $repositorySetting;
         $this->translator = $translator;
 
-        parent::__construct($validatorFactory);
+        parent::__construct();
     }
 
     public function attributeLabels(): array

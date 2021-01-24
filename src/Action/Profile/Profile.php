@@ -11,6 +11,7 @@ use Yii\Extension\User\Form\FormProfile;
 use Yii\Extension\User\Repository\RepositoryProfile;
 use Yiisoft\Translator\TranslatorInterface;
 use Yiisoft\User\User;
+use Yiisoft\Validator\ValidatorInterface;
 use Yiisoft\Yii\View\ViewRenderer;
 
 final class Profile
@@ -22,6 +23,7 @@ final class Profile
         ServiceFlashMessage $serviceFlashMessage,
         TranslatorInterface $translator,
         User $user,
+        ValidatorInterface $validator,
         ViewRenderer $viewRenderer
     ): ResponseInterface {
         /** @var array $body */
@@ -33,7 +35,7 @@ final class Profile
         if (
             $method === 'POST'
             && $formProfile->load($body)
-            && $formProfile->validate()
+            && $formProfile->validate($validator)
             && $repositoryProfile->update($user->getId(), $formProfile)
         ) {
             $serviceFlashMessage->run(
