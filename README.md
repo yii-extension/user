@@ -6,7 +6,7 @@
     <br>
 </p>
 
-[![Total Downloads](https://img.shields.io/packagist/dt/yii-extension/user)](https://packagist.org/packages/yii-extension/user)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/58ee145c728f48a4867b6096537df634)](https://app.codacy.com/gh/yii-extension/user?utm_source=github.com&utm_medium=referral&utm_content=yii-extension/user&utm_campaign=Badge_Grade)
 [![bulma](https://github.com/yii-extension/user/workflows/bulma/badge.svg)](https://github.com/yii-extension/user-view-bulma)
 [![boostrap5](https://github.com/yii-extension/user/workflows/bootstrap5/badge.svg)](https://github.com/yii-extension/user-view-bootstrap5)
 [![codecov](https://codecov.io/gh/yii-extension/user/branch/main/graph/badge.svg?token=AZAF464ILD)](https://codecov.io/gh/yii-extension/user)
@@ -15,7 +15,7 @@
 
 <br/>
 
-Yii demo application for active record with db-sqlite is best for rapidly creating projects.
+Flexible user registration and authentication module for Yii3.
 
 ## Directory structure
 
@@ -96,16 +96,16 @@ http://localhost:8080
 ## Includes the following features:
 
 - [x] User module:
-    - [x] /login - Display login form.
-    - [x] /logout - Log the user out.
-    - [x] /confirm[/{id}/{token}] - Confirms a user (requires id and token query params).
-    - [x] /profile - Displays profile form.
-    - [x] /register - Displays registration form.
-    - [x] /request - Displays recovery request form.
-    - [x] /resend - Displays resend form.
-    - [x] /reset[/{id}/{token}] - Displays password reset form (requires id and token query params).
-    - [x] /email/change - Displays email change form.
-    - [x] /email/attempt[/{id}/{token}] - Confirm email change (requires id and token query params).
+  - [x] [/login] - Display login form.
+  - [x] [/logout] - Log the user out.
+  - [x] [/confirm[/{id}/{token}]] - Confirms a user (requires id and token query params).
+  - [x] [/profile] - Displays profile form.
+  - [x] [/register] - Displays registration form.
+  - [x] [/request] - Displays recovery request form.
+  - [x] [/resend] - Displays resend form.
+  - [x] [/reset[/{id}/{token}]] - Displays password reset form (requires id and token query params).
+  - [x] [/email/change] - Displays email change form.
+  - [x] [/email/attempt[/{id}/{token}]] - Confirm email change (requires id and token query params).
 
 Note: check the directory `/runtime/mail`, the emails are stored in it.
 
@@ -125,3 +125,14 @@ The code is statically analyzed with [Psalm](https://psalm.dev/docs). To run sta
 ```shell
 /vendor/bin/psalm
 ```
+
+## License
+
+The Flexible user registration and authentication module for Yii3. It is released under the terms of the BSD License.
+
+Please see [`LICENSE`](./LICENSE.md) for more information.
+
+Maintained by [Yii Extension](https://github.com/yii-extension).
+
+[![License](https://poser.pugx.org/yii-extension/user/license)](//packagist.org/packages/yii-extension/user)
+[![Total Downloads](https://img.shields.io/packagist/dt/yii-extension/user)](https://packagist.org/packages/yii-extension/user)

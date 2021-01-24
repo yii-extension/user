@@ -73,3 +73,9 @@ jobs:
         with:
           token: ${{secrets.CODECOV_TOKEN}}
           file: tests/_output/coverage.xml
+
+      - name: Run codacy-coverage-reporter
+        uses: codacy/codacy-coverage-reporter-action@master
+        with:
+          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+          coverage-reports: tests/_output/coverage.xml
