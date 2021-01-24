@@ -11,7 +11,6 @@ use Yiisoft\Translator\TranslatorInterface;
 use Yiisoft\Validator\Result;
 use Yiisoft\Validator\Rule\Email;
 use Yiisoft\Validator\Rule\Required;
-use Yiisoft\Validator\ValidatorFactoryInterface;
 
 use function strtolower;
 
@@ -25,13 +24,12 @@ final class FormResend extends FormModel
 
     public function __construct(
         RepositoryUser $repositoryUser,
-        TranslatorInterface $translator,
-        ValidatorFactoryInterface $validatorFactory
+        TranslatorInterface $translator
     ) {
         $this->repositoryUser = $repositoryUser;
         $this->translator = $translator;
 
-        parent::__construct($validatorFactory);
+        parent::__construct();
     }
 
     public function attributeLabels(): array

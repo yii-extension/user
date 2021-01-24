@@ -12,6 +12,7 @@ use Yii\Extension\Service\ServiceUrl;
 use Yii\Extension\User\Event\AfterLogin;
 use Yii\Extension\User\Form\FormLogin;
 use Yiisoft\Translator\TranslatorInterface;
+use Yiisoft\Validator\ValidatorInterface;
 use Yiisoft\Yii\View\ViewRenderer;
 
 final class Login
@@ -24,6 +25,7 @@ final class Login
         ServiceFlashMessage $serviceFlashMessage,
         ServiceUrl $serviceUrl,
         TranslatorInterface $translator,
+        ValidatorInterface $validator,
         ViewRenderer $viewRenderer
     ): ResponseInterface {
         /** @var array $body */
@@ -31,7 +33,7 @@ final class Login
         $method = $serverRequest->getMethod();
         $formLogin->ip($serverRequest->getServerParams()['REMOTE_ADDR']);
 
-        if ($method === 'POST' && $formLogin->load($body) && $formLogin->validate()) {
+        if ($method === 'POST' && $formLogin->load($body) && $formLogin->validate($validator)) {
             $eventDispatcher->dispatch($afterLogin);
 
             $lastLogin = $formLogin->getLastLogout() > 0

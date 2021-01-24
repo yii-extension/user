@@ -18,6 +18,7 @@ use Yii\Extension\User\Service\MailerUser;
 use Yii\Extension\User\Settings\RepositorySetting;
 use Yiisoft\Router\UrlGeneratorInterface;
 use Yiisoft\Translator\TranslatorInterface;
+use Yiisoft\Validator\ValidatorInterface;
 use Yiisoft\Yii\View\ViewRenderer;
 
 final class Request
@@ -35,13 +36,14 @@ final class Request
         ServiceUrl $serviceUrl,
         TranslatorInterface $translator,
         UrlGeneratorInterface $urlGenerator,
+        ValidatorInterface $validator,
         ViewRenderer $viewRenderer
     ): ResponseInterface {
         /** @var array $body */
         $body = $serverRequest->getParsedBody();
         $method = $serverRequest->getMethod();
 
-        if ($method === 'POST' && $formRequest->load($body) && $formRequest->validate()) {
+        if ($method === 'POST' && $formRequest->load($body) && $formRequest->validate($validator)) {
             $email = $formRequest->getEmail();
             $userId = $formRequest->getUserId();
             $username = $formRequest->getUsername();

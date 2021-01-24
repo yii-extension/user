@@ -16,6 +16,7 @@ use Yii\Extension\User\Repository\RepositoryToken;
 use Yii\Extension\User\Repository\RepositoryUser;
 use Yii\Extension\User\Settings\RepositorySetting;
 use Yiisoft\Translator\TranslatorInterface;
+use Yiisoft\Validator\ValidatorInterface;
 use Yiisoft\Yii\View\ViewRenderer;
 
 final class Reset
@@ -30,6 +31,7 @@ final class Reset
         ServiceFlashMessage $serviceFlashMessage,
         ServiceUrl $serviceUrl,
         TranslatorInterface $translator,
+        ValidatorInterface $validator,
         ViewRenderer $viewRenderer
     ): ResponseInterface {
         /** @var array $body */
@@ -63,7 +65,7 @@ final class Reset
         if (
             $method === 'POST'
             && $formReset->load($body)
-            && $formReset->validate()
+            && $formReset->validate($validator)
             && !$token->isExpired(0, $repositorySetting->getTokenRecoverWithin())
         ) {
             $token->delete();

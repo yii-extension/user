@@ -12,10 +12,7 @@ use Yiisoft\Translator\TranslatorInterface;
 use Yiisoft\User\User as Identity;
 use Yiisoft\Validator\Result;
 use Yiisoft\Validator\Rule\Email;
-use Yiisoft\Validator\Rule\HasLength;
-use Yiisoft\Validator\Rule\MatchRegularExpression;
 use Yiisoft\Validator\Rule\Required;
-use Yiisoft\Validator\ValidatorFactoryInterface;
 
 final class FormEmailChange extends FormModel
 {
@@ -30,8 +27,7 @@ final class FormEmailChange extends FormModel
         Identity $identity,
         RepositoryUser $repositoryUser,
         RepositorySetting $repositorySetting,
-        TranslatorInterface $translator,
-        ValidatorFactoryInterface $validatorFactory
+        TranslatorInterface $translator
     ) {
         $this->identity = $identity->getIdentity();
         $this->repositorySetting = $repositorySetting;
@@ -39,7 +35,7 @@ final class FormEmailChange extends FormModel
         $this->translator = $translator;
         $this->loadData();
 
-        parent::__construct($validatorFactory);
+        parent::__construct();
     }
 
     public function attributeLabels(): array

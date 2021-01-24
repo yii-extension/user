@@ -10,7 +10,6 @@ use Yiisoft\Translator\TranslatorInterface;
 use Yiisoft\Validator\Rule\Email;
 use Yiisoft\Validator\Rule\InRange;
 use Yiisoft\Validator\Rule\Url;
-use Yiisoft\Validator\ValidatorFactoryInterface;
 
 final class FormProfile extends FormModel
 {
@@ -23,12 +22,11 @@ final class FormProfile extends FormModel
     private TranslatorInterface $translator;
 
     public function __construct(
-        TranslatorInterface $translator,
-        ValidatorFactoryInterface $validator
+        TranslatorInterface $translator
     ) {
         $this->translator = $translator;
 
-        parent::__construct($validator);
+        parent::__construct();
     }
 
     public function attributeLabels(): array

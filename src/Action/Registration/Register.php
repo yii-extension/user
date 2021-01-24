@@ -17,6 +17,7 @@ use Yii\Extension\User\Service\MailerUser;
 use Yii\Extension\User\Settings\RepositorySetting;
 use Yiisoft\Router\UrlGeneratorInterface;
 use Yiisoft\Translator\TranslatorInterface;
+use Yiisoft\Validator\ValidatorInterface;
 use Yiisoft\Yii\View\ViewRenderer;
 
 final class Register
@@ -34,6 +35,7 @@ final class Register
         ServiceUrl $serviceUrl,
         TranslatorInterface $translator,
         UrlGeneratorInterface $urlGenerator,
+        ValidatorInterface $validator,
         ViewRenderer $viewRenderer
     ): ResponseInterface {
         /** @var array $body */
@@ -45,7 +47,7 @@ final class Register
         if (
             $method === 'POST'
             && $formRegister->load($body)
-            && $formRegister->validate()
+            && $formRegister->validate($validator)
             && $repositoryUser->register(
                 $formRegister,
                 $repositorySetting->isConfirmation(),
