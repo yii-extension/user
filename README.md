@@ -6,6 +6,7 @@
     <br>
 </p>
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/58ee145c728f48a4867b6096537df634)](https://app.codacy.com/gh/yii-extension/user?utm_source=github.com&utm_medium=referral&utm_content=yii-extension/user&utm_campaign=Badge_Grade)
 [![Total Downloads](https://img.shields.io/packagist/dt/yii-extension/user)](https://packagist.org/packages/yii-extension/user)
 [![bulma](https://github.com/yii-extension/user/workflows/bulma/badge.svg)](https://github.com/yii-extension/user-view-bulma)
 [![boostrap5](https://github.com/yii-extension/user/workflows/bootstrap5/badge.svg)](https://github.com/yii-extension/user-view-bootstrap5)
