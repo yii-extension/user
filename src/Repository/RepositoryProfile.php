@@ -29,12 +29,12 @@ final class RepositoryProfile
         /** @var Profile $profile */
         $profile = $this->findProfileByCondition(['user_id' => (int) $id]);
 
-        $formProfile->name($profile->getName() ?? '');
-        $formProfile->publicEmail($profile->getPublicEmail() ?? '');
-        $formProfile->location($profile->getLocation() ?? '');
-        $formProfile->website($profile->getWebsite() ?? '');
-        $formProfile->bio($profile->getBio() ?? '');
-        $formProfile->timezone($profile->getTimeZone() ?? '');
+        $formProfile->name($profile->getName());
+        $formProfile->publicEmail($profile->getPublicEmail());
+        $formProfile->location($profile->getLocation());
+        $formProfile->website($profile->getWebsite());
+        $formProfile->bio($profile->getBio());
+        $formProfile->timezone($profile->getTimeZone());
     }
 
     public function update(string $id, FormProfile $formProfile): bool

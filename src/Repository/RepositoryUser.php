@@ -18,6 +18,7 @@ use Yiisoft\ActiveRecord\ActiveRecordInterface;
 use Yiisoft\Aliases\Aliases;
 use Yiisoft\Auth\IdentityInterface;
 use Yiisoft\Auth\IdentityRepositoryInterface;
+use Yiisoft\Db\Connection\Connection;
 use Yiisoft\Db\Exception\Exception;
 use Yiisoft\Db\Query\QueryInterface;
 use Yiisoft\Files\FileHelper;
@@ -41,6 +42,9 @@ final class RepositoryUser implements IdentityRepositoryInterface
     private Token $token;
     private User $user;
 
+    /**
+     * @psalm-suppress PropertyTypeCoercion
+     */
     public function __construct(
         ActiveRecordFactory $activeRecordFactory,
         Aliases $aliases,
@@ -125,9 +129,8 @@ final class RepositoryUser implements IdentityRepositoryInterface
             throw new RuntimeException('Calling "' . __CLASS__ . '::' . __METHOD__ . '" on existing user');
         }
 
+        /** @var Connection $db */
         $db = $this->activeRecordFactory->getConnection();
-
-        /** @psalm-suppress UndefinedInterfaceMethod */
         $transaction = $db->beginTransaction();
 
         try {
@@ -189,6 +192,8 @@ final class RepositoryUser implements IdentityRepositoryInterface
      * @return string
      *
      * {@see https://gist.github.com/tylerhall/521810}
+     *
+     * @psalm-suppress MixedOperand, PossiblyInvalidArrayOffset
      */
     private function generate(int $length): string
     {

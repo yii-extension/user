@@ -11,6 +11,7 @@ use Yii\Extension\User\ActiveRecord\Token;
 use Yiisoft\ActiveRecord\ActiveQueryInterface;
 use Yiisoft\ActiveRecord\ActiveRecordFactory;
 use Yiisoft\ActiveRecord\ActiveRecordInterface;
+use Yiisoft\Db\Connection\Connection;
 use Yiisoft\Db\Exception\Exception;
 use Yiisoft\Db\Query\QueryInterface;
 use Yiisoft\Security\Random;
@@ -58,6 +59,7 @@ final class RepositoryToken
             throw new RuntimeException('Calling "' . __CLASS__ . '::' . __METHOD__ . '" on existing user');
         }
 
+        /** @var Connection $db */
         $db = $this->activeRecordFactory->getConnection();
 
         /** @psalm-suppress UndefinedInterfaceMethod */

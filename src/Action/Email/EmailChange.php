@@ -50,7 +50,7 @@ final class EmailChange
                         $serviceDefaultEmailChange->run($email, $user);
                         break;
                     case User::STRATEGY_SECURE:
-                        $serviceDefaultEmailChange->run($email, $user, $flash = false);
+                        $serviceDefaultEmailChange->run($email, $user, false);
                         $serviceSecureEmailChange->run($user);
                         break;
                     default:

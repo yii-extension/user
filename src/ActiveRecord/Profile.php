@@ -27,34 +27,34 @@ final class Profile extends ActiveRecord
         return '{{%profile}}';
     }
 
-    public function getBio(): ?string
+    public function getBio(): string
     {
-        return $this->getAttribute('bio');
+        return (string) $this->getAttribute('bio');
     }
 
-    public function getLocation(): ?string
+    public function getLocation(): string
     {
-        return $this->getAttribute('location');
+        return (string) $this->getAttribute('location');
     }
 
-    public function getPublicEmail(): ?string
+    public function getPublicEmail(): string
     {
-        return $this->getAttribute('public_email');
+        return (string) $this->getAttribute('public_email');
     }
 
-    public function getName(): ?string
+    public function getName(): string
     {
-        return $this->getAttribute('name');
+        return (string) $this->getAttribute('name');
     }
 
-    public function getTimezone(): ?string
+    public function getTimezone(): string
     {
-        return $this->getAttribute('timezone');
+        return (string) $this->getAttribute('timezone');
     }
 
-    public function getWebsite(): ?string
+    public function getWebsite(): string
     {
-        return $this->getAttribute('website');
+        return (string) $this->getAttribute('website');
     }
 
     public function getUser(): ActiveQuery
@@ -62,32 +62,32 @@ final class Profile extends ActiveRecord
         return $this->hasOne(User::class, ['id' => 'user_id']);
     }
 
-    public function name(?string $value): void
+    public function name(string $value): void
     {
         $this->setAttribute('name', $value);
     }
 
-    public function publicEmail(?string $value): void
+    public function publicEmail(string $value): void
     {
         $this->setAttribute('public_email', $value);
     }
 
-    public function location(?string $value): void
+    public function location(string $value): void
     {
         $this->setAttribute('location', $value);
     }
 
-    public function website(?string $value): void
+    public function website(string $value): void
     {
         $this->setAttribute('website', $value);
     }
 
-    public function bio(?string $value): void
+    public function bio(string $value): void
     {
         $this->setAttribute('bio', $value);
     }
 
-    public function timezone(?string $value): void
+    public function timezone(string $value): void
     {
         $this->setAttribute('timezone', $value);
     }

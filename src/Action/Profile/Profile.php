@@ -30,13 +30,18 @@ final class Profile
         $body = $serverRequest->getParsedBody();
         $method = $serverRequest->getMethod();
 
-        $repositoryProfile->loadData($user->getId(), $formProfile);
+        $id = $user->getId();
+
+        if ($id !== null) {
+            $repositoryProfile->loadData($id, $formProfile);
+        }
 
         if (
-            $method === 'POST'
-            && $formProfile->load($body)
-            && $formProfile->validate($validator)
-            && $repositoryProfile->update($user->getId(), $formProfile)
+            $method === 'POST' &&
+            $id !== null &&
+            $formProfile->load($body) &&
+            $formProfile->validate($validator) &&
+            $repositoryProfile->update($id, $formProfile)
         ) {
             $serviceFlashMessage->run(
                 'success',

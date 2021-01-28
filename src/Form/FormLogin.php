@@ -23,7 +23,7 @@ final class FormLogin extends FormModel
     private string $password = '';
     private bool $remember = false;
     private string $ip = '';
-    private int $lastLogout;
+    private int $lastLogout = 0;
     private Identity $identity;
     private RepositoryUser $repositoryUser;
     private RepositorySetting $repositorySetting;

@@ -17,7 +17,7 @@ use function strtolower;
 final class FormResend extends FormModel
 {
     private string $email = '';
-    private ?string $userId = '';
+    private string $userId = '';
     private string $username = '';
     private RepositoryUser $repositoryUser;
     private TranslatorInterface $translator;
@@ -49,7 +49,7 @@ final class FormResend extends FormModel
         return strtolower($this->email);
     }
 
-    public function getUserId(): ?string
+    public function getUserId(): string
     {
         return $this->userId;
     }

@@ -13,12 +13,12 @@ use Yiisoft\Validator\Rule\Url;
 
 final class FormProfile extends FormModel
 {
-    private ?string $name = '';
-    private ?string $publicEmail = '';
-    private ?string $location = '';
-    private ?string $website = '';
-    private ?string $bio = '';
-    private ?string $timezone = '';
+    private string $name = '';
+    private string $publicEmail = '';
+    private string $location = '';
+    private string $website = '';
+    private string $bio = '';
+    private string $timezone = '';
     private TranslatorInterface $translator;
 
     public function __construct(
@@ -41,7 +41,7 @@ final class FormProfile extends FormModel
         ];
     }
 
-    public function getName(): ?string
+    public function getName(): string
     {
         return $this->name;
     }
@@ -51,7 +51,7 @@ final class FormProfile extends FormModel
         $this->name = $value;
     }
 
-    public function getPublicEmail(): ?string
+    public function getPublicEmail(): string
     {
         return $this->publicEmail;
     }
@@ -61,7 +61,7 @@ final class FormProfile extends FormModel
         $this->publicEmail = $value;
     }
 
-    public function getLocation(): ?string
+    public function getLocation(): string
     {
         return $this->location;
     }
@@ -71,7 +71,7 @@ final class FormProfile extends FormModel
         $this->location = $value;
     }
 
-    public function getWebsite(): ?string
+    public function getWebsite(): string
     {
         return $this->website;
     }
@@ -81,7 +81,7 @@ final class FormProfile extends FormModel
         $this->website = $value;
     }
 
-    public function getBio(): ?string
+    public function getBio(): string
     {
         return $this->bio;
     }
@@ -91,7 +91,7 @@ final class FormProfile extends FormModel
         $this->bio = $value;
     }
 
-    public function getTimezone(): ?string
+    public function getTimezone(): string
     {
         return $this->timezone;
     }
@@ -103,8 +103,10 @@ final class FormProfile extends FormModel
 
     public function rules(): array
     {
+        $listlistIdentifiers = DateTimeZone::listIdentifiers();
+        $timeZoneIdentifiers = is_array($listlistIdentifiers) ? $listlistIdentifiers : [];
         $email = new Email();
-        $inRange = new InRange(DateTimeZone::listIdentifiers());
+        $inRange = new InRange($timeZoneIdentifiers);
         $url = new Url();
 
         return [

@@ -23,6 +23,9 @@ final class FormEmailChange extends FormModel
     private RepositoryUser $repositoryUser;
     private TranslatorInterface $translator;
 
+    /**
+     * @psalm-suppress PropertyTypeCoercion
+     */
     public function __construct(
         Identity $identity,
         RepositoryUser $repositoryUser,

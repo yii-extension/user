@@ -49,7 +49,7 @@ final class Reset
         }
 
         /**
-         * @var Token $token
+         * @var Token|null $token
          * @var User $user
          */
         $token = $repositoryToken->findTokenByParams(

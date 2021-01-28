@@ -39,7 +39,7 @@ final class ServiceSecureEmailChange
         $result = $this->repositoryToken->register($user->getId(), Token::TYPE_CONFIRM_OLD_EMAIL);
         $email = $user->getEmail();
 
-        /** @var Token $token */
+        /** @var Token|null $token */
         $token = $this->repositoryToken->findTokenByCondition(
             ['user_id' => $user->getId(), 'type' => Token::TYPE_CONFIRM_OLD_EMAIL]
         );

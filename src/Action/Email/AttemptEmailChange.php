@@ -8,6 +8,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Yii\Extension\Service\ServiceUrl;
+use Yii\Extension\User\ActiveRecord\User;
 use Yii\Extension\User\Repository\RepositoryUser;
 use Yii\Extension\User\Service\ServiceAttemptEmailChange;
 use Yiisoft\User\User as Identity;
@@ -32,6 +33,7 @@ final class AttemptEmailChange
             return $requestHandler->handle($serverRequest);
         }
 
+        /** @var User $user */
         if ($serviceAttemptEmailChange->run($id, $code, $user) === false) {
             return $requestHandler->handle($serverRequest);
         }

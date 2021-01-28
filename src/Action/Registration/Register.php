@@ -41,14 +41,15 @@ final class Register
         /** @var array $body */
         $body = $serverRequest->getParsedBody();
         $method = $serverRequest->getMethod();
+        $ip = (string) $serverRequest->getServerParams()['REMOTE_ADDR'];
 
-        $formRegister->ip($serverRequest->getServerParams()['REMOTE_ADDR']);
+        $formRegister->ip($ip);
 
         if (
-            $method === 'POST'
-            && $formRegister->load($body)
-            && $formRegister->validate($validator)
-            && $repositoryUser->register(
+            $method === 'POST' &&
+            $formRegister->load($body) &&
+            $formRegister->validate($validator) &&
+            $repositoryUser->register(
                 $formRegister,
                 $repositorySetting->isConfirmation(),
                 $repositorySetting->isGeneratingPassword()

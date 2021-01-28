@@ -13,7 +13,8 @@ final class TimeZone
     public function getAll(): array
     {
         $timeZones = [];
-        $timeZoneIdentifiers = DateTimeZone::listIdentifiers();
+        $listlistIdentifiers = DateTimeZone::listIdentifiers();
+        $timeZoneIdentifiers = is_array($listlistIdentifiers) ? $listlistIdentifiers : [];
 
         foreach ($timeZoneIdentifiers as $timeZone) {
             $name = str_replace('_', ' ', $timeZone);

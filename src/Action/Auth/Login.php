@@ -31,7 +31,9 @@ final class Login
         /** @var array $body */
         $body = $serverRequest->getParsedBody();
         $method = $serverRequest->getMethod();
-        $formLogin->ip($serverRequest->getServerParams()['REMOTE_ADDR']);
+        $ip = (string) $serverRequest->getServerParams()['REMOTE_ADDR'];
+
+        $formLogin->ip($ip);
 
         if ($method === 'POST' && $formLogin->load($body) && $formLogin->validate($validator)) {
             $eventDispatcher->dispatch($afterLogin);

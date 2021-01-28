@@ -34,7 +34,7 @@ final class ServiceDefaultEmailChange
         $this->urlGenerator = $urlGenerator;
     }
 
-    public function run(string $email, User $user, $flash = true): void
+    public function run(string $email, User $user, bool $flash = true): void
     {
         $user->unconfirmedEmail($email);
 

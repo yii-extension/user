@@ -42,7 +42,7 @@ final class ServiceAttemptEmailChange
         $tokenConfirmWithin = $this->repositorySetting->getTokenConfirmWithin();
         $tokenRecoverWithin = $this->repositorySetting->getTokenRecoverWithin();
 
-        /** @var Token $token */
+        /** @var Token|null $token */
         $token = $this->repositoryToken->findToken([
             'user_id' => $user->getId(),
             'code' => $code,
@@ -58,7 +58,7 @@ final class ServiceAttemptEmailChange
             $result = false;
         }
 
-        if ($result === true && $this->repositoryUser->findUserByEmail($user->getUnconfirmedEmail()) === null) {
+        if ($token !== null && $this->repositoryUser->findUserByEmail($user->getUnconfirmedEmail()) === null) {
             $token->delete();
 
             if ($emailChangeStrategy === User::STRATEGY_SECURE) {

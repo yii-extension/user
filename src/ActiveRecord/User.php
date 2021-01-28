@@ -54,7 +54,7 @@ final class User extends ActiveRecord implements IdentityInterface
     public const NEW_EMAIL_CONFIRMED = 0b10;
     public const OLD_EMAIL_CONFIRMED = 0b1;
 
-    private string $password;
+    private string $password = '';
 
     public function tableName(): string
     {
@@ -78,17 +78,17 @@ final class User extends ActiveRecord implements IdentityInterface
 
     public function getEmail(): string
     {
-        return $this->getAttribute('email');
+        return (string) $this->getAttribute('email');
     }
 
     public function getLastLogout(): int
     {
-        return $this->getAttribute('last_logout_at') ?? 0;
+        return (int) $this->getAttribute('last_logout_at');
     }
 
     public function getUsername(): string
     {
-        return $this->getAttribute('username');
+        return (string) $this->getAttribute('username');
     }
 
     public function getPassword(): string
@@ -98,7 +98,7 @@ final class User extends ActiveRecord implements IdentityInterface
 
     public function getPasswordHash(): string
     {
-        return $this->getAttribute('password_hash');
+        return (string) $this->getAttribute('password_hash');
     }
 
     public function getProfile(): ActiveQuery
@@ -108,7 +108,7 @@ final class User extends ActiveRecord implements IdentityInterface
 
     public function getUnconfirmedEmail(): string
     {
-        return $this->getAttribute('unconfirmed_email') ?? '';
+        return (string) $this->getAttribute('unconfirmed_email');
     }
 
     public function username(string $value): void

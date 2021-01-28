@@ -17,12 +17,14 @@ final class Logout
         RepositoryUser $repositoryUser,
         ServiceUrl $serviceUrl
     ): ResponseInterface {
-        /** @var User $user */
-        $user = $repositoryUser->findUserById($identity->getId());
+        $id = $identity->getId();
 
-        $user->updateAttributes(['last_logout_at' => time()]);
-
-        $identity->logout();
+        if ($id !== null) {
+            /** @var User $user */
+            $user = $repositoryUser->findUserById($id);
+            $user->updateAttributes(['last_logout_at' => time()]);
+            $identity->logout();
+        }
 
         return $serviceUrl->run('home');
     }
