@@ -47,8 +47,6 @@
         "phpunit/phpunit": "^9.5",
         "vimeo/psalm": "^4.3",
         "yii-extension/fontawesome": "^1.0@dev",
-        "yiisoft/cache": "^3.0@dev",
-        "yiisoft/cache-file": "^3.0@dev",
         "yiisoft/composer-config-plugin": "^1.0@dev",
         "yiisoft/db-sqlite": "^3.0@dev",
         "yiisoft/error-handler": "^3.0@dev",
