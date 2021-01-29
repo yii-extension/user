@@ -23,8 +23,6 @@
         "yiisoft/active-record": "^3.0@dev",
         "yiisoft/aliases": "^1.0",
         "yiisoft/auth": "^2.0",
-        "yiisoft/cache": "^3.0@dev",
-        "yiisoft/cache-file": "^3.0@dev",
         "yiisoft/data-response": "^3.0@dev",
         "yiisoft/files": "^3.0@dev",
         "yiisoft/form": "^1.0@dev",
@@ -49,6 +47,8 @@
         "phpunit/phpunit": "^9.5",
         "vimeo/psalm": "^4.3",
         "yii-extension/fontawesome": "^1.0@dev",
+        "yiisoft/cache": "^3.0@dev",
+        "yiisoft/cache-file": "^3.0@dev",
         "yiisoft/composer-config-plugin": "^1.0@dev",
         "yiisoft/db-sqlite": "^3.0@dev",
         "yiisoft/error-handler": "^3.0@dev",
@@ -75,9 +75,6 @@
         "config-plugin-output-dir": "tests/_output/runtime/build/config",
         "config-plugin": {
             "params": "config/params.php",
-            "common": [
-                "config/common/*.php"
-            ],
             "web": [
                 "config/web/*.php"
             ],
