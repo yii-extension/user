@@ -6,7 +6,6 @@ use Composer\InstalledVersions;
 use Yii\Extension\User\Tests\App\Command\Hello;
 use Yii\Extension\User\Tests\App\ViewInjection\ContentViewInjection;
 use Yii\Extension\User\Tests\App\ViewInjection\LayoutViewInjection;
-use Yiisoft\Arrays\Modifier\ReverseBlockMerge;
 use Yiisoft\Factory\Definitions\Reference;
 use Yiisoft\Profiler\Target\FileTarget;
 use Yiisoft\Yii\View\CsrfViewInjection;
@@ -82,6 +81,4 @@ return [
     'yiisoft/router' => [
         'enableCache' => false,
     ],
-
-    ReverseBlockMerge::class => new ReverseBlockMerge(),
 ];
