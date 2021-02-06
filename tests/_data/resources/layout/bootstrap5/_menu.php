@@ -14,9 +14,9 @@ use Yiisoft\Yii\Bootstrap5\NavBar;
  */
 
 $config = [
-    'brandLabel()' => ['My Project'],
-    'collapseOptions()' => [[]],
-    'options()' => [['class' => 'navbar-dark navbar-expand-lg bg-dark navbar-expand-lg navbar']],
+    'withBrandLabel()' => ['My Project'],
+    'withCollapseOptions()' => [[]],
+    'withOptions()' => [['class' => 'navbar-dark navbar-expand-lg bg-dark navbar-expand-lg navbar']],
 ];
 $currentUri = $urlMatcher->getCurrentUri();
 $currentUrl = '';
@@ -65,10 +65,10 @@ if (!$user->isGuest()) {
 <?= NavBar::widget($config)->begin() ?>
 
     <?= Nav::widget()
-        ->currentPath($currentUrl)
-        ->items($menuItems)
-        ->options(['class' => 'navbar-nav ms-auto flex-nowrap']) ?>
+        ->withCurrentPath($currentUrl)
+        ->withItems($menuItems)
+        ->withOptions(['class' => 'navbar-nav ms-auto flex-nowrap']) ?>
 
-    <?= Nav::widget()->items($menuItemsLogout) ?>
+    <?= Nav::widget()->withItems($menuItemsLogout) ?>
 
 <?= NavBar::end();

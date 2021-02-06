@@ -230,7 +230,7 @@ final class RepositoryUser implements IdentityRepositoryInterface
             ->generateSvg()
             ->toXMLString();
 
-        FileHelper::createDirectory($this->aliases->get('@avatars'));
+        FileHelper::ensureDirectory($this->aliases->get('@avatars'));
 
         file_put_contents($this->aliases->get('@avatars') . '/' . $this->user->getId() . '.svg', $avatar);
     }
