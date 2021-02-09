@@ -58,7 +58,7 @@ final class Request
                 'url' => $urlGenerator->generateAbsolute(
                     $token->toUrl(),
                     ['id' => $token->getUserId(), 'code' => $token->getCode()]
-                )
+                ),
             ];
 
             if ($mailerUser->sendRecoveryMessage($email, $params)) {

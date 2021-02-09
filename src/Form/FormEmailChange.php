@@ -98,7 +98,7 @@ final class FormEmailChange extends FormModel
                 }
 
                 return $result;
-            }
+            },
         ];
     }
 }

@@ -36,8 +36,7 @@ final class RequestFunctionalCest
         $I->submitForm('#form-registration-register', [
             'Register[email]' => 'request@example.com',
             'Register[username]' => 'request',
-            'Register[password]' => '123456'
-
+            'Register[password]' => '123456',
         ]);
 
         $I->amGoingTo('go to the request page.');

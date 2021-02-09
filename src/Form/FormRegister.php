@@ -112,7 +112,7 @@ final class FormRegister extends FormModel
                 }
 
                 return $result;
-            }
+            },
         ];
     }
 
@@ -137,7 +137,7 @@ final class FormRegister extends FormModel
                 }
 
                 return $result;
-            }
+            },
         ];
     }
 

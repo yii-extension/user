@@ -29,7 +29,7 @@ final class M200602215007CreateProfileTable implements RevertibleMigrationInterf
                 'location' => $b->string(255),
                 'website' => $b->string(255),
                 'bio' => $b->text(),
-                'timezone' => $b->string(40)
+                'timezone' => $b->string(40),
             ],
             $tableOptions
         );

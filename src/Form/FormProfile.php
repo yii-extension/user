@@ -113,15 +113,15 @@ final class FormProfile extends FormModel
             'publicEmail' => [
                 $email
                     ->message($this->translator->translate('This value is not a valid email address', [], 'user'))
-                    ->skipOnEmpty(true)
+                    ->skipOnEmpty(true),
             ],
             'website' => [
                 $url
                     ->message($this->translator->translate('This value is not a valid URL', [], 'user'))
-                    ->skipOnEmpty(true)
+                    ->skipOnEmpty(true),
             ],
             'timezone' => [
-                $inRange->message($this->translator->translate('This value is invalid', [], 'user'))
+                $inRange->message($this->translator->translate('This value is invalid', [], 'user')),
             ],
         ];
     }

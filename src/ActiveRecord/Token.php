@@ -13,17 +13,17 @@ use Yiisoft\ActiveRecord\ActiveRecord;
  *
  * Database fields:
  *
- * @property integer $user_id
+ * @property int $user_id
  * @property string  $code
- * @property integer $created_at
- * @property integer $type
+ * @property int $created_at
+ * @property int $type
  * @property string  $url
  * @property bool    $isExpired
  */
 final class Token extends ActiveRecord
 {
-    public const TYPE_CONFIRMATION      = 0;
-    public const TYPE_RECOVERY          = 1;
+    public const TYPE_CONFIRMATION = 0;
+    public const TYPE_RECOVERY = 1;
     public const TYPE_CONFIRM_NEW_EMAIL = 2;
     public const TYPE_CONFIRM_OLD_EMAIL = 3;
 
