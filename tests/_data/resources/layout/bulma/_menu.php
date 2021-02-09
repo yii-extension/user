@@ -14,6 +14,7 @@ use Yiisoft\Yii\Bulma\NavBar;
 $config = [
     'brandLabel()' => ['My Project'],
     'brandImage()' => ['/images/yii-logo.jpg'],
+    'brandImageOptions()' => [['encode' => false]],
     'options()' => [['class' => 'is-black']],
     'itemsOptions()' => [['class' => 'navbar-end']],
 ];
@@ -24,16 +25,19 @@ $menuItems = [
         'label' => 'Login',
         'url' => $urlGenerator->generate('login'),
         'visible' => $user->isGuest(),
+        'linkOptions' => ['encode' => false],
     ],
     [
         'label' => 'Email Change',
         'url' => $urlGenerator->generate('email/change'),
         'visible' => !$user->isGuest(),
+        'linkOptions' => ['encode' => false],
     ],
     [
         'label' => 'Profile',
         'url' => $urlGenerator->generate('profile'),
         'visible' => !$user->isGuest(),
+        'linkOptions' => ['encode' => false],
     ],
 ];
 
@@ -48,14 +52,16 @@ if (!$user->isGuest()) {
         [
             'label' => Form::widget()
                 ->action($urlGenerator->generate('logout'))
-                ->options(['csrf' => $csrf])
+                ->options(['csrf' => $csrf, 'encode' => false])
                 ->begin() .
                     Html::submitButton(
                         html::tag('strong', 'Logout (' . Html::encode($user->getIdentity()->getUsername()) . ')'),
-                        ['class' => 'button is-outlined is-rounded is-small', 'id' => 'logout'],
+                        ['class' => 'button is-outlined is-rounded is-small', 'id' => 'logout', 'encode' => false],
                     ) .
                 Form::end(),
-            'encode' => false
+            'encode' => false,
+            'linkOptions' => ['encode' => false],
+            'options' => ['encode' => false],
         ]
     ];
 }

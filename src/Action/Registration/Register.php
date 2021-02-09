@@ -62,7 +62,7 @@ final class Register
                 'url' => $repositorySetting->isConfirmation()
                     ? $repositoryUser->generateUrlToken($urlGenerator, $repositorySetting->isConfirmation())
                     : null,
-                'showPassword' => $repositorySetting->isGeneratingPassword()
+                'showPassword' => $repositorySetting->isGeneratingPassword(),
             ];
 
             if ($mailerUser->sendWelcomeMessage($email, $params)) {

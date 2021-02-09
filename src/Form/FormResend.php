@@ -76,7 +76,6 @@ final class FormResend extends FormModel
             $email->message($this->translator->translate('This value is not a valid email address', [], 'user')),
 
             function (): Result {
-
                 $result = new Result();
 
                 /** @var User|null $user */
@@ -102,7 +101,7 @@ final class FormResend extends FormModel
                 }
 
                 return $result;
-            }
+            },
         ];
     }
 }

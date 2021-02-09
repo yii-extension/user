@@ -56,7 +56,7 @@ final class Resend
                 'url' => $urlGenerator->generateAbsolute(
                     $token->toUrl(),
                     ['id' => $token->getUserId(), 'code' => $token->getCode()]
-                )
+                ),
             ];
 
             if ($mailerUser->sendConfirmationMessage($email, $params)) {

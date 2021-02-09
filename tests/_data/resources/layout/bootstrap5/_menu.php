@@ -14,9 +14,13 @@ use Yiisoft\Yii\Bootstrap5\NavBar;
  */
 
 $config = [
-    'withBrandLabel()' => ['My Project'],
-    'withCollapseOptions()' => [[]],
-    'withOptions()' => [['class' => 'navbar-dark navbar-expand-lg bg-dark navbar-expand-lg navbar']],
+    'brandLabel()' => ['My Project'],
+    'brandOptions()' => [['encode' => false]],
+    'collapseOptions()' => [['encode' => false]],
+    'options()' => [
+        ['class' => 'navbar-dark navbar-expand-lg bg-dark navbar-expand-lg navbar', 'encode' => false]
+    ],
+    'togglerOptions()' => [['encode' => false]],
 ];
 $currentUri = $urlMatcher->getCurrentUri();
 $currentUrl = '';
@@ -25,16 +29,22 @@ $menuItems = [
         'label' => 'Login',
         'url' => $urlGenerator->generate('login'),
         'visible' => $user->isGuest(),
+        'linkOptions' => ['encode' => false],
+        'options' => ['encode' => false],
     ],
     [
         'label' => 'Email Change',
         'url' => $urlGenerator->generate('email/change'),
         'visible' => !$user->isGuest(),
+        'linkOptions' => ['encode' => false],
+        'options' => ['encode' => false],
     ],
     [
         'label' => 'Profile',
         'url' => $urlGenerator->generate('profile'),
         'visible' => !$user->isGuest(),
+        'linkOptions' => ['encode' => false],
+        'options' => ['encode' => false],
     ],
 ];
 
@@ -49,14 +59,16 @@ if (!$user->isGuest()) {
         [
             'label' => Form::widget()
                 ->action($urlGenerator->generate('logout'))
-                ->options(['csrf' => $csrf])
+                ->options(['csrf' => $csrf, 'encode' => false])
                 ->begin() .
                     Html::submitButton(
                         'Logout (' . Html::encode($user->getIdentity()->getUsername()) . ')',
-                        ['class' => 'btn btn-light btn-outline-dark', 'id' => 'logout'],
+                        ['class' => 'btn btn-light btn-outline-dark', 'id' => 'logout', 'encode' => false],
                     ) .
                 Form::end(),
-            'encode' => false
+            'encode' => false,
+            'linkOptions' => ['encode' => false],
+            'options' => ['encode' => false],
         ]
     ];
 }
@@ -65,10 +77,10 @@ if (!$user->isGuest()) {
 <?= NavBar::widget($config)->begin() ?>
 
     <?= Nav::widget()
-        ->withCurrentPath($currentUrl)
-        ->withItems($menuItems)
-        ->withOptions(['class' => 'navbar-nav ms-auto flex-nowrap']) ?>
+        ->currentPath($currentUrl)
+        ->items($menuItems)
+        ->options(['class' => 'navbar-nav ms-auto flex-nowrap', 'encode' => false]) ?>
 
-    <?= Nav::widget()->withItems($menuItemsLogout) ?>
+    <?= Nav::widget()->items($menuItemsLogout)->options(['encode' => false]) ?>
 
 <?= NavBar::end();

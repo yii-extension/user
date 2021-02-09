@@ -20,7 +20,6 @@ use Yiisoft\Security\Random;
  * @property bool $isConfirmed
  *
  * Database fields:
- *
  * @property int $id
  * @property string $username
  * @property string $email
@@ -36,7 +35,6 @@ use Yiisoft\Security\Random;
  * @property int $flags
  *
  * Defined relations:
- *
  * @property Profile $profile
  **/
 final class User extends ActiveRecord implements IdentityInterface

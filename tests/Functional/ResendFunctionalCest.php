@@ -6,7 +6,7 @@ namespace Yii\Extension\User\Tests\Functional;
 
 use Yii\Extension\User\Tests\FunctionalTester;
 
-final class ResendFormCest
+final class ResendFunctionalCest
 {
     public function testResendAccountConfirmationTrue(FunctionalTester $I): void
     {

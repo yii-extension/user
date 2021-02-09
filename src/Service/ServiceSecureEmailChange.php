@@ -25,8 +25,7 @@ final class ServiceSecureEmailChange
         ServiceFlashMessage $serviceFlashMessage,
         TranslatorInterface $translator,
         UrlGeneratorInterface $urlGenerator
-    )
-    {
+    ) {
         $this->mailerUser = $mailerUser;
         $this->repositoryToken = $repositoryToken;
         $this->serviceFlashMessage = $serviceFlashMessage;
@@ -50,7 +49,7 @@ final class ServiceSecureEmailChange
                 'url' => $this->urlGenerator->generateAbsolute(
                     $token->toUrl(),
                     ['id' => $token->getUserId(), 'code' => $token->getCode()]
-                )
+                ),
             ];
 
             if ($this->mailerUser->sendReconfirmationMessage($email, $params)) {

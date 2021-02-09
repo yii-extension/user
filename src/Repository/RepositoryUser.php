@@ -22,7 +22,6 @@ use Yiisoft\Db\Connection\Connection;
 use Yiisoft\Db\Exception\Exception;
 use Yiisoft\Db\Query\QueryInterface;
 use Yiisoft\Files\FileHelper;
-use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Router\UrlGeneratorInterface;
 use Yiisoft\Security\Random;
 
@@ -189,6 +188,7 @@ final class RepositoryUser implements IdentityRepositoryInterface
      * digit. The remaining characters in the password are chosen at random from those three sets
      *
      * @param int $length
+     *
      * @return string
      *
      * {@see https://gist.github.com/tylerhall/521810}
@@ -214,8 +214,7 @@ final class RepositoryUser implements IdentityRepositoryInterface
             $password .= $all[array_rand($all)];
         }
 
-        $password = str_shuffle($password);
-        return $password;
+        return str_shuffle($password);
     }
 
     private function generateAvatar(): void
