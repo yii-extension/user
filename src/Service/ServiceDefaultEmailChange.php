@@ -25,8 +25,7 @@ final class ServiceDefaultEmailChange
         ServiceFlashMessage $serviceFlashMessage,
         TranslatorInterface $translator,
         UrlGeneratorInterface $urlGenerator
-    )
-    {
+    ) {
         $this->mailerUser = $mailerUser;
         $this->repositoryToken = $repositoryToken;
         $this->serviceFlashMessage = $serviceFlashMessage;
@@ -55,7 +54,7 @@ final class ServiceDefaultEmailChange
                 'url' => $this->urlGenerator->generateAbsolute(
                     $token->toUrl(),
                     ['id' => $token->getUserId(), 'code' => $token->getCode()]
-                )
+                ),
             ];
 
             if ($this->mailerUser->sendReconfirmationMessage($email, $params) && $flash === true) {

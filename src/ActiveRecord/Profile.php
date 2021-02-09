@@ -12,7 +12,7 @@ use Yiisoft\ActiveRecord\ActiveRecord;
  *
  * Database fields:
  *
- * @property integer $user_id
+ * @property int $user_id
  * @property string  $name
  * @property string  $public_email
  * @property string  $location

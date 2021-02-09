@@ -76,7 +76,7 @@ final class FormLogin extends FormModel
             'login' => [$required->message($this->translator->translate('Value cannot be blank', [], 'user'))],
             'password' => $this->passwordRules(),
             'remember' => [
-                $boolean->message($this->translator->translate('The value must be either "1" or "0"', [], 'user'))
+                $boolean->message($this->translator->translate('The value must be either "1" or "0"', [], 'user')),
             ],
         ];
     }

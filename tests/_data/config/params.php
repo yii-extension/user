@@ -38,7 +38,7 @@ return [
         ],
         'bulma' => [
             'enabled' => InstalledVersions::isInstalled('yii-extension/user-view-bulma'),
-        ]
+        ],
     ],
 
     'yiisoft/profiler' => [

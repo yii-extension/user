@@ -92,32 +92,32 @@ final class ConfirmFunctionalCest
             'user',
             [
                 'id' => 100,
-                'username'      => 'joe',
-                'email'         => 'joe@example.com',
+                'username' => 'joe',
+                'email' => 'joe@example.com',
                 'password_hash' => '$argon2i$v=19$m=65536,t=4,p=1$ZVlUZk1NS2wwdi45d0t6dw$pn/0BLB3EzYtNdm3NSj6Yntk9lUT1pEOFsd85xV3Ig4',
-                'auth_key'      => 'mhh1A6KfqQLmHP-MiWN0WB0M90Q2u5OE',
+                'auth_key' => 'mhh1A6KfqQLmHP-MiWN0WB0M90Q2u5OE',
                 'registration_ip' => '127.0.0.1',
-                'created_at'    => $time,
-                'updated_at'    => $time
+                'created_at' => $time,
+                'updated_at' => $time,
             ]
         );
 
         $I->haveInDatabase(
             'token',
             [
-                'user_id'    => 100,
-                'code'       => 'NO2aCmBIjFQX624xmAc3VBu7Th3NJoa6',
-                'type'       => 0,
-                'created_at' => $time
+                'user_id' => 100,
+                'code' => 'NO2aCmBIjFQX624xmAc3VBu7Th3NJoa6',
+                'type' => 0,
+                'created_at' => $time,
             ]
         );
 
         $I->haveInDatabase(
             'profile',
             [
-                'user_id'      => 100,
-                'name'         => 'Joe Dow',
-                'public_email' => 'joedow@example.com'
+                'user_id' => 100,
+                'name' => 'Joe Dow',
+                'public_email' => 'joedow@example.com',
             ]
         );
     }
@@ -130,21 +130,21 @@ final class ConfirmFunctionalCest
             'user',
             [
                 'id' => 101,
-                'username'      => 'john',
-                'email'         => 'john@example.com',
+                'username' => 'john',
+                'email' => 'john@example.com',
                 'password_hash' => '$2y$13$qY.ImaYBppt66qez6B31QO92jc5DYVRzo5NxM1ivItkW74WsSG6Ui',
-                'auth_key'      => 'h6OS9csJbZEOW59ZILmJxU6bCiqVno9A',
-                'created_at'    => $time - 90000,
-                'updated_at'    => $time - 90000
+                'auth_key' => 'h6OS9csJbZEOW59ZILmJxU6bCiqVno9A',
+                'created_at' => $time - 90000,
+                'updated_at' => $time - 90000,
             ]
         );
 
         $I->haveInDatabase(
             'token',
             [
-                'user_id'    => 101,
-                'code'       => 'qxYa315rqRgCOjYGk82GFHMEAV3T82AX',
-                'type'       => 0,
+                'user_id' => 101,
+                'code' => 'qxYa315rqRgCOjYGk82GFHMEAV3T82AX',
+                'type' => 0,
                 'created_at' => $time - 90000,
             ]
         );

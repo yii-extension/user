@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Yii\Extension\User\Tests\Helper;
 
 // here you can define custom actions
@@ -6,5 +9,4 @@ namespace Yii\Extension\User\Tests\Helper;
 
 class Functional extends \Codeception\Module
 {
-
 }
