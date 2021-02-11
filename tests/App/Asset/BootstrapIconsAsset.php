@@ -25,9 +25,9 @@ final class BootstrapIconsAsset extends AssetBundle
 
         $this->publishOptions = [
             'filter' => $pathMatcher->only(
-                'font/bootstrap-icons.css',
-                'font/fonts/*',
-                'bootstrap-icons.svg',
+                '**font/bootstrap-icons.css',
+                '**font/fonts/*',
+                '**bootstrap-icons.svg',
             ),
         ];
     }
