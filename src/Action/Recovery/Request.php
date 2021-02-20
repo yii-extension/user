@@ -43,7 +43,7 @@ final class Request
         $body = $serverRequest->getParsedBody();
         $method = $serverRequest->getMethod();
 
-        if ($method === 'POST' && $formRequest->load($body) && $formRequest->validate($validator)) {
+        if ($method === 'POST' && $formRequest->load($body) && $validator->validate($formRequest)->isValid()) {
             $email = $formRequest->getEmail();
             $userId = $formRequest->getUserId();
             $username = $formRequest->getUsername();

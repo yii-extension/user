@@ -34,7 +34,7 @@ final class EmailChange
         $body = $serverRequest->getParsedBody();
         $method = $serverRequest->getMethod();
 
-        if ($method === 'POST' && $formEmailChange->load($body) && $formEmailChange->validate($validator)) {
+        if ($method === 'POST' && $formEmailChange->load($body) && $validator->validate($formEmailChange)->isValid()) {
             /** @var User $user */
             $user = $identity->getIdentity();
             $email = $formEmailChange->getEmail();

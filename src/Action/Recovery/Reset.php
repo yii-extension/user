@@ -65,7 +65,7 @@ final class Reset
         if (
             $method === 'POST'
             && $formReset->load($body)
-            && $formReset->validate($validator)
+            && $validator->validate($formReset)->isValid()
             && !$token->isExpired(0, $repositorySetting->getTokenRecoverWithin())
         ) {
             $token->delete();

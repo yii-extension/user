@@ -48,7 +48,7 @@ final class Register
         if (
             $method === 'POST' &&
             $formRegister->load($body) &&
-            $formRegister->validate($validator) &&
+            $validator->validate($formRegister)->isValid() &&
             $repositoryUser->register(
                 $formRegister,
                 $repositorySetting->isConfirmation(),

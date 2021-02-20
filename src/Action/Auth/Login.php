@@ -35,7 +35,7 @@ final class Login
 
         $formLogin->ip($ip);
 
-        if ($method === 'POST' && $formLogin->load($body) && $formLogin->validate($validator)) {
+        if ($method === 'POST' && $formLogin->load($body) && $validator->validate($formLogin)->isValid()) {
             $eventDispatcher->dispatch($afterLogin);
 
             $lastLogin = $formLogin->getLastLogout() > 0
