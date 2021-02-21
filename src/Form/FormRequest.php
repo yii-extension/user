@@ -36,14 +36,14 @@ final class FormRequest extends FormModel
         parent::__construct();
     }
 
-    public function attributeLabels(): array
+    public function getAttributeLabels(): array
     {
         return [
             'email' => $this->translator->translate('Email', [], 'user'),
         ];
     }
 
-    public function formName(): string
+    public function getFormName(): string
     {
         return 'Request';
     }
@@ -53,7 +53,7 @@ final class FormRequest extends FormModel
         return strtolower($this->email);
     }
 
-    public function rules(): array
+    public function getRules(): array
     {
         return [
             'email' => $this->emailRules(),
@@ -72,7 +72,7 @@ final class FormRequest extends FormModel
 
     private function emailRules(): array
     {
-        $email = new email();
+        $email = new Email();
         $required = new Required();
 
         return [

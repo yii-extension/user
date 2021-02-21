@@ -41,14 +41,14 @@ final class FormEmailChange extends FormModel
         parent::__construct();
     }
 
-    public function attributeLabels(): array
+    public function getAttributeLabels(): array
     {
         return [
             'email' => $this->translator->translate('Email', [], 'user'),
         ];
     }
 
-    public function formName(): string
+    public function getFormName(): string
     {
         return 'EmailChange';
     }
@@ -58,7 +58,7 @@ final class FormEmailChange extends FormModel
         return $this->email;
     }
 
-    public function rules(): array
+    public function getRules(): array
     {
         return [
             'email' => $this->emailRules(),

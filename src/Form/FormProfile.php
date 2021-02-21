@@ -29,7 +29,7 @@ final class FormProfile extends FormModel
         parent::__construct();
     }
 
-    public function attributeLabels(): array
+    public function getAttributeLabels(): array
     {
         return [
             'name' => $this->translator->translate('Name', [], 'user'),
@@ -101,7 +101,7 @@ final class FormProfile extends FormModel
         $this->timezone = $value;
     }
 
-    public function rules(): array
+    public function getRules(): array
     {
         $listlistIdentifiers = DateTimeZone::listIdentifiers();
         $timeZoneIdentifiers = is_array($listlistIdentifiers) ? $listlistIdentifiers : [];

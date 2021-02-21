@@ -38,7 +38,7 @@ final class FormRegister extends FormModel
         parent::__construct();
     }
 
-    public function attributeLabels(): array
+    public function getAttributeLabels(): array
     {
         return [
             'email' => $this->translator->translate('Email', [], 'user'),
@@ -47,7 +47,7 @@ final class FormRegister extends FormModel
         ];
     }
 
-    public function formName(): string
+    public function getFormName(): string
     {
         return 'Register';
     }
@@ -86,7 +86,7 @@ final class FormRegister extends FormModel
         $this->password = $value;
     }
 
-    public function rules(): array
+    public function getRules(): array
     {
         return [
             'email' => $this->emailRules(),
@@ -97,7 +97,7 @@ final class FormRegister extends FormModel
 
     private function emailRules(): array
     {
-        $email = new email();
+        $email = new Email();
         $required = new Required();
 
         return [

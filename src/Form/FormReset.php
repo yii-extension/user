@@ -22,7 +22,7 @@ final class FormReset extends FormModel
         parent::__construct();
     }
 
-    public function attributeLabels(): array
+    public function getAttributeLabels(): array
     {
         return [
             'password' => $this->translator->translate('Password', [], 'user'),
@@ -34,12 +34,12 @@ final class FormReset extends FormModel
         return $this->password;
     }
 
-    public function formName(): string
+    public function getFormName(): string
     {
         return 'Reset';
     }
 
-    public function rules(): array
+    public function getRules(): array
     {
         $hasLength = new HasLength();
         $required = new Required();

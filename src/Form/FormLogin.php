@@ -43,7 +43,7 @@ final class FormLogin extends FormModel
         parent::__construct();
     }
 
-    public function attributeLabels(): array
+    public function getAttributeLabels(): array
     {
         return [
             'login' => $this->translator->translate('Username', [], 'user'),
@@ -52,7 +52,7 @@ final class FormLogin extends FormModel
         ];
     }
 
-    public function formName(): string
+    public function getFormName(): string
     {
         return 'Login';
     }
@@ -67,7 +67,7 @@ final class FormLogin extends FormModel
         return $this->lastLogout;
     }
 
-    public function rules(): array
+    public function getRules(): array
     {
         $boolean = new Boolean();
         $required = new Required();
