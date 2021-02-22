@@ -55,8 +55,11 @@ if (!$user->isGuest()) {
                 ->options(['csrf' => $csrf, 'encode' => false])
                 ->begin() .
                     Html::submitButton(
-                        html::tag('strong', 'Logout (' . Html::encode($user->getIdentity()->getUsername()) . ')'),
-                        ['class' => 'button is-outlined is-rounded is-small', 'id' => 'logout', 'encode' => false],
+                        'Logout (' . Html::encode($user->getIdentity()->getUsername()) . ')',
+                        [
+                            'class' => 'button is-outlined is-rounded is-small has-text-weight-bold', 'id' => 'logout',
+                            'encode' => false,
+                        ],
                     ) .
                 Form::end(),
             'encode' => false,
