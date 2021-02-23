@@ -19,6 +19,9 @@ Thumbs.db
 # composer vendor dir
 /vendor
 
+$ packages config
+/config/packages/
+
 # composer itself is not needed
 composer.phar
 composer.lock

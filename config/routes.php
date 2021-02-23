@@ -14,11 +14,13 @@ use Yii\Extension\User\Action\Registration\Confirm;
 use Yii\Extension\User\Action\Registration\Register;
 use Yii\Extension\User\Middleware\Guest;
 use Yiisoft\Auth\Middleware\Authentication;
-use Yiisoft\Composer\Config\Builder;
+use Yiisoft\Config\Config;
 use Yiisoft\Router\Group;
 use Yiisoft\Router\Route;
 
-$params = require Builder::path('params');
+/** @var Config $config */
+
+$params = $config->get('params');
 
 return [
     Group::create(
