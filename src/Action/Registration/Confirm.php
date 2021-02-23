@@ -15,7 +15,7 @@ use Yii\Extension\User\Repository\RepositoryToken;
 use Yii\Extension\User\Repository\RepositoryUser;
 use Yii\Extension\User\Settings\RepositorySetting;
 use Yiisoft\Translator\TranslatorInterface;
-use Yiisoft\User\User as Identity;
+use Yiisoft\User\CurrentUser as Identity;
 
 final class Confirm
 {

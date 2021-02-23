@@ -11,18 +11,18 @@ use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Yiisoft\Http\Status;
 use Yiisoft\Router\UrlGeneratorInterface;
-use Yiisoft\User\User;
+use Yiisoft\User\CurrentUser;
 
 final class Guest implements MiddlewareInterface
 {
     private ResponseFactoryInterface $responseFactory;
     private UrlGeneratorInterface $urlGenerator;
-    private User $user;
+    private CurrentUser $user;
 
     public function __construct(
         ResponseFactoryInterface $responseFactory,
         UrlGeneratorInterface $urlGenerator,
-        User $user
+        CurrentUser $user
     ) {
         $this->responseFactory = $responseFactory;
         $this->urlGenerator = $urlGenerator;

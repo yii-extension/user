@@ -4,12 +4,11 @@ declare(strict_types=1);
 
 namespace Yii\Extension\User\Form;
 
-use Yii\Extension\User\ActiveRecord\User;
 use Yii\Extension\User\Repository\RepositoryUser;
 use Yii\Extension\User\Settings\RepositorySetting;
 use Yiisoft\Form\FormModel;
 use Yiisoft\Translator\TranslatorInterface;
-use Yiisoft\User\User as Identity;
+use Yiisoft\User\CurrentUser as Identity;
 use Yiisoft\Validator\Result;
 use Yiisoft\Validator\Rule\Email;
 use Yiisoft\Validator\Rule\Required;
@@ -18,7 +17,7 @@ final class FormEmailChange extends FormModel
 {
     private string $email = '';
     private string $oldEmail = '';
-    private User $identity;
+    private Identity $identity;
     private RepositorySetting $repositorySetting;
     private RepositoryUser $repositoryUser;
     private TranslatorInterface $translator;

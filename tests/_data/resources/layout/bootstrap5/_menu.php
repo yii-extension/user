@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 use Yiisoft\Form\Widget\Form;
 use Yiisoft\Html\Html;
-use Yiisoft\User\User;
+use Yiisoft\User\CurrentUser;
 use Yiisoft\Yii\Bootstrap5\Nav;
 use Yiisoft\Yii\Bootstrap5\NavBar;
 
 /**
- * @var User $user
+ * @var CurrentUser $user
  * @var array $menuItems
  */
 

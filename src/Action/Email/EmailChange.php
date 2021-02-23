@@ -13,7 +13,7 @@ use Yii\Extension\User\Service\ServiceDefaultEmailChange;
 use Yii\Extension\User\Service\ServiceInsecureEmailChange;
 use Yii\Extension\User\Service\ServiceSecureEmailChange;
 use Yii\Extension\User\Settings\RepositorySetting;
-use Yiisoft\User\User as Identity;
+use Yiisoft\User\CurrentUser as Identity;
 use Yiisoft\Validator\ValidatorInterface;
 use Yiisoft\Yii\View\ViewRenderer;
 

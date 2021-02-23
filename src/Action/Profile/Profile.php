@@ -10,7 +10,7 @@ use Yii\Extension\Service\ServiceFlashMessage;
 use Yii\Extension\User\Form\FormProfile;
 use Yii\Extension\User\Repository\RepositoryProfile;
 use Yiisoft\Translator\TranslatorInterface;
-use Yiisoft\User\User;
+use Yiisoft\User\CurrentUser;
 use Yiisoft\Validator\ValidatorInterface;
 use Yiisoft\Yii\View\ViewRenderer;
 
@@ -22,7 +22,7 @@ final class Profile
         ServerRequestInterface $serverRequest,
         ServiceFlashMessage $serviceFlashMessage,
         TranslatorInterface $translator,
-        User $user,
+        CurrentUser $user,
         ValidatorInterface $validator,
         ViewRenderer $viewRenderer
     ): ResponseInterface {

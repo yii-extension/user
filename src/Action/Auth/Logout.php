@@ -8,7 +8,7 @@ use Psr\Http\Message\ResponseInterface;
 use Yii\Extension\Service\ServiceUrl;
 use Yii\Extension\User\ActiveRecord\User;
 use Yii\Extension\User\Repository\RepositoryUser;
-use Yiisoft\User\User as Identity;
+use Yiisoft\User\CurrentUser as Identity;
 
 final class Logout
 {

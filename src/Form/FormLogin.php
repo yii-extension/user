@@ -10,7 +10,7 @@ use Yii\Extension\User\Settings\RepositorySetting;
 use Yiisoft\Form\FormModel;
 use Yiisoft\Security\PasswordHasher;
 use Yiisoft\Translator\TranslatorInterface;
-use Yiisoft\User\User as Identity;
+use Yiisoft\User\CurrentUser as Identity;
 use Yiisoft\Validator\Result;
 use Yiisoft\Validator\Rule\Boolean;
 use Yiisoft\Validator\Rule\Required;
