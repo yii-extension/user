@@ -13,7 +13,6 @@ use Yiisoft\Yii\View\CsrfViewInjection;
 return [
     'app' => [
         'charset' => 'UTF-8',
-        'locale' => 'en-US',
         'name' => 'My Project',
     ],
 
@@ -47,10 +46,6 @@ return [
                 'enabled' => true,
             ],
         ],
-    ],
-
-    'yiisoft/translator' => [
-        'locale' => DIRECTORY_SEPARATOR === '\\' ? 'en-US.UTF-8' : 'en_US.UTF-8',
     ],
 
     'yiisoft/view' => [

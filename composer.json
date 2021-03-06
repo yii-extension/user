@@ -50,9 +50,9 @@
         "yiisoft/composer-config-plugin": "^1.0@dev",
         "yiisoft/db-sqlite": "^3.0@dev",
         "yiisoft/error-handler": "^3.0@dev",
+        "yiisoft/event-dispatcher": "^1.0",
         "yiisoft/translator-message-php": "^3.0@dev",
         "yiisoft/yii-bulma": "^1.0@dev",
-        "yiisoft/yii-event": "@dev",
         "yiisoft/yii-web": "^3.0@dev"
     },
     "autoload": {
@@ -89,7 +89,8 @@
                     "tests/_data/config/web/*.php"
                 ],
                 "console": [
-                    "$common"
+                    "$common",
+                    "tests/_data/config/console/*.php"
                 ],
                 "providers": "tests/_data/config/providers.php",
                 "providers-web": [
@@ -106,11 +107,5 @@
     },
     "config": {
         "sort-packages": true
-    },
-    "repositories": [
-        {
-            "type": "composer",
-            "url": "https://asset-packagist.org"
-        }
-    ]
+    }
 }

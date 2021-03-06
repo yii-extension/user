@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Yii\Extension\User\Action\Recovery;
 
-use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
@@ -25,7 +24,6 @@ final class Resend
 {
     public function run(
         AfterResend $afterResend,
-        EventDispatcherInterface $eventDispatcher,
         FormResend $formResend,
         MailerUser $mailerUser,
         RequestHandlerInterface $requestHandler,
@@ -66,8 +64,6 @@ final class Resend
                     $translator->translate('Please check your email to activate your username', [], 'user'),
                 );
             }
-
-            $eventDispatcher->dispatch($afterResend);
 
             return $serviceUrl->run('login');
         }

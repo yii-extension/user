@@ -27,6 +27,7 @@ if ($currentUri !== null) {
 
 $this->setCssFiles($assetManager->getCssFiles());
 $this->setJsFiles($assetManager->getJsFiles());
+
 ?>
 
 <?php $this->beginPage() ?>

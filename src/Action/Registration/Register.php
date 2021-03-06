@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Yii\Extension\User\Action\Registration;
 
-use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
@@ -24,7 +23,6 @@ final class Register
 {
     public function run(
         AfterRegister $afterRegister,
-        EventDispatcherInterface $eventDispatcher,
         FormRegister $formRegister,
         MailerUser $mailerUser,
         RequestHandlerInterface $requestHandler,
@@ -76,8 +74,6 @@ final class Register
                     $bodyMessage,
                 );
             }
-
-            $eventDispatcher->dispatch($afterRegister);
 
             $redirect = !$repositorySetting->isConfirmation() && !$repositorySetting->isGeneratingPassword()
                 ? 'login'

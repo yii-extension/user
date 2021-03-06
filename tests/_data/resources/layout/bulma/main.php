@@ -5,14 +5,12 @@ declare(strict_types=1);
 use Yii\Extension\User\Tests\App\Asset\AppAsset;
 use Yii\Extension\Widget\FlashMessage;
 use Yiisoft\Html\Html;
-use Yiisoft\I18n\Locale;
 
 /**
  * @var App\ApplicationParameters $applicationParameters
  * @var Yiisoft\Assets\AssetManager $assetManager
  * @var string $content
  * @var string|null $csrf
- * @var Locale $locale
  * @var Yiisoft\View\WebView $this
  * @var Yiisoft\Router\UrlMatcherInterface $urlMatcher
  */
@@ -31,7 +29,8 @@ $this->setJsVar($assetManager->getJsVar());
 
 <!DOCTYPE html>
 
-<html lang="<?= Html::encode($locale->language()) ?>">
+    <html class="h-100" lang="en">
+
     <?= $this->render('_head', ['applicationParameters' => $applicationParameters]) ?>
 
     <?php $this->beginBody() ?>
