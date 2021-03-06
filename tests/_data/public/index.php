@@ -7,7 +7,7 @@ ini_set('display_errors', 'On');
 
 use Psr\Container\ContainerInterface;
 use Psr\Log\NullLogger;
-use Yiisoft\Composer\Config\Builder;
+use Yiisoft\Config\Config;
 use Yiisoft\Di\Container;
 use Yiisoft\ErrorHandler\ErrorHandler;
 use Yiisoft\ErrorHandler\Renderer\HtmlRenderer;
@@ -35,8 +35,6 @@ if (PHP_SAPI === 'cli-server') {
 
 require_once dirname(__DIR__, 3) . '/vendor/autoload.php';
 
-Builder::rebuild();
-
 $startTime = microtime(true);
 
 /**
@@ -47,9 +45,14 @@ $errorHandler = new ErrorHandler(new NullLogger(), new HtmlRenderer());
 $errorHandler->debug();
 $errorHandler->register();
 
+$config = new Config(
+    dirname(__DIR__),
+    '/config/packages',
+);
+
 $container = new Container(
-    require Builder::path('tests/web'),
-    require Builder::path('tests/providers-web')
+    $config->get('tests/web'),
+    $config->get('tests/providers-web')
 );
 
 /**

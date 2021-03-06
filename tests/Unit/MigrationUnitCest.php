@@ -10,7 +10,7 @@ use Symfony\Component\Console\CommandLoader\ContainerCommandLoader;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Tester\CommandTester;
 use Yii\Extension\User\Tests\UnitTester;
-use Yiisoft\Composer\Config\Builder;
+use Yiisoft\Config\Config;
 use Yiisoft\Di\Container;
 use Yiisoft\Files\FileHelper;
 use Yiisoft\Yii\Console\ExitCode;
@@ -19,13 +19,19 @@ use Yiisoft\Yii\Db\Migration\Service\MigrationService;
 
 final class MigrationUnitCest
 {
+    private Config $config;
     private ContainerInterface $container;
 
     public function _before(UnitTester $I): void
     {
+        $this->config = new Config(
+            dirname(__DIR__),
+            '/config/packages',
+        );
+
         $this->container = new Container(
-            require Builder::path('tests/console'),
-            require Builder::path('tests/providers')
+            $this->config->get('tests/console'),
+            $this->config->get('tests/providers')
         );
     }
 
@@ -47,7 +53,7 @@ final class MigrationUnitCest
             FileHelper::unlink($file);
         }
 
-        $params = require Builder::path('tests/params');
+        $params = $this->config->get('tests/params');
 
         $application = $this->container->get(Application::class);
 
@@ -77,7 +83,7 @@ final class MigrationUnitCest
 
         $consoleHelper->output()->setVerbosity(OutputInterface::VERBOSITY_QUIET);
 
-        $params = require Builder::path('tests/params');
+        $params = $this->config->get('tests/params');
 
         $application = $this->container->get(Application::class);
 
@@ -107,7 +113,7 @@ final class MigrationUnitCest
 
         $consoleHelper->output()->setVerbosity(OutputInterface::VERBOSITY_QUIET);
 
-        $params = require Builder::path('tests/params');
+        $params = $this->config->get('tests/params');
 
         $application = $this->container->get(Application::class);
 
