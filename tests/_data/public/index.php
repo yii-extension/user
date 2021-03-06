@@ -46,7 +46,7 @@ $errorHandler->debug();
 $errorHandler->register();
 
 $config = new Config(
-    dirname(__DIR__),
+    dirname(__DIR__, 3),
     '/config/packages',
 );
 
