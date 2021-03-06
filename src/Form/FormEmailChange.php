@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Yii\Extension\User\Form;
 
+use Yii\Extension\User\ActiveRecord\User;
 use Yii\Extension\User\Repository\RepositoryUser;
 use Yii\Extension\User\Settings\RepositorySetting;
 use Yiisoft\Form\FormModel;
@@ -17,7 +18,7 @@ final class FormEmailChange extends FormModel
 {
     private string $email = '';
     private string $oldEmail = '';
-    private Identity $identity;
+    private User $identity;
     private RepositorySetting $repositorySetting;
     private RepositoryUser $repositoryUser;
     private TranslatorInterface $translator;
