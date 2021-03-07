@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Yii\Extension\User\Action\Auth;
 
-use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Yii\Extension\Service\ServiceFlashMessage;
@@ -19,7 +18,6 @@ final class Login
 {
     public function run(
         AfterLogin $afterLogin,
-        EventDispatcherInterface $eventDispatcher,
         FormLogin $formLogin,
         ServerRequestInterface $serverRequest,
         ServiceFlashMessage $serviceFlashMessage,
@@ -36,8 +34,6 @@ final class Login
         $formLogin->ip($ip);
 
         if ($method === 'POST' && $formLogin->load($body) && $validator->validate($formLogin)->isValid()) {
-            $eventDispatcher->dispatch($afterLogin);
-
             $lastLogin = $formLogin->getLastLogout() > 0
                 ? date('Y-m-d G:i:s', $formLogin->getLastLogout())
                 : $translator->translate('This is your first login - Welcome', [], 'user');

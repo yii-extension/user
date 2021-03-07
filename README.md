@@ -45,20 +45,34 @@ The minimum requirement by this project template that your Web server supports P
 
 With application template [yiisoft/app](https://github.com/yiisoft/app):
 
-Bulma css framework:
+Bulma css framework with `yiisoft/composer-config-plugin`:
 
 ```php
 composer create-project --prefer-dist --stability dev yiisoft/app app
 composer require yii-extension/user:@dev yii-extension/user-view-bulma:@dev
 ```
 
+Bulma css framework with `yiisoft/config`:
+
+```php
+composer create-project --prefer-dist --stability dev yiisoft/app app
+composer require yii-extension/user:@dev-config yii-extension/user-view-bulma:@dev
+```
+
 With application template [yii-extension/app-bootstrap5](https://github.com/yii-extension/app-bootstrap5):
 
-Bootstrap5 css framework:
+Bootstrap5 css framework with `yiisoft/composer-config-plugin`:
 
 ```php
 composer create-project --prefer-dist --stability dev yiisoft/app app
 composer require yii-extension/user:@dev yii-extension/user-view-bootstrap5:@dev
+```
+
+Bootstrap5 css framework with `yiisoft/config`:
+
+```php
+composer create-project --prefer-dist --stability dev yiisoft/app app
+composer require yii-extension/user:@dev-config yii-extension/user-view-bootstrap5:@dev
 ```
 
 ## Run command console

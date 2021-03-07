@@ -38,7 +38,7 @@
     },
     "require-dev": {
         "codeception/c3": "^2.6.0",
-        "codeception/codeception": "^4.1.14",
+        "codeception/codeception": "^5.0",
         "codeception/module-asserts": "@dev",
         "codeception/module-db": "^1.1",
         "codeception/module-phpbrowser": "@dev",
@@ -52,7 +52,6 @@
         "yiisoft/error-handler": "^3.0@dev",
         "yiisoft/translator-message-php": "^3.0@dev",
         "yiisoft/yii-bulma": "^1.0@dev",
-        "yiisoft/yii-event": "@dev",
         "yiisoft/yii-web": "^3.0@dev"
     },
     "autoload": {
