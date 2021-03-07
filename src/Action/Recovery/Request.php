@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Yii\Extension\User\Action\Recovery;
 
-use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
@@ -25,7 +24,6 @@ final class Request
 {
     public function run(
         AfterRequest $afterRequest,
-        EventDispatcherInterface $eventDispatcher,
         FormRequest $formRequest,
         MailerUser $mailerUser,
         RequestHandlerInterface $requestHandler,
@@ -68,8 +66,6 @@ final class Request
                     $translator->translate('Please check your email to change your password', [], 'user'),
                 );
             }
-
-            $eventDispatcher->dispatch($afterRequest);
 
             return $serviceUrl->run('login');
         }

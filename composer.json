@@ -52,7 +52,6 @@
         "yiisoft/error-handler": "^3.0@dev",
         "yiisoft/translator-message-php": "^3.0@dev",
         "yiisoft/yii-bulma": "^1.0@dev",
-        "yiisoft/yii-event": "@dev",
         "yiisoft/yii-web": "^3.0@dev"
     },
     "autoload": {
