@@ -6,5 +6,5 @@ use Yii\Extension\User\Tests\App\Controller\SiteController;
 use Yiisoft\Router\Route;
 
 return [
-    Route::get('/', [SiteController::class, 'index'])->name('home'),
+    Route::get('/')->action([SiteController::class, 'index'])->name('home'),
 ];
