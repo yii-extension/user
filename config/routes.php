@@ -23,37 +23,45 @@ use Yiisoft\Router\Route;
 $params = $config->get('params');
 
 return [
-    Group::create(
-        $params['user']['router']['prefix'],
-        [
-            Route::get('/email/attempt[/{id}/{code}]', [AttemptEmailChange::class, 'run'])
+    Group::create($params['user']['router']['prefix'])
+        ->routes(
+            Route::get('/email/attempt[/{id}/{code}]')
+                ->action([AttemptEmailChange::class, 'run'])
                 ->name('email/attempt'),
-            Route::methods(['GET', 'POST'], '/email/change', [EmailChange::class, 'run'])
+            Route::methods(['GET', 'POST'], '/email/change')
                 ->name('email/change')
-                ->addMiddleware(Authentication::class),
-            Route::get('/confirm[/{id}/{code}]', [Confirm::class, 'run'])
+                ->middleware(Authentication::class)
+                ->action([EmailChange::class, 'run']),
+            Route::get('/confirm[/{id}/{code}]')
                 ->name('confirm')
-                ->addMiddleware(Guest::class),
-            Route::methods(['GET', 'POST'], '/login', [Login::class, 'run'])
+                ->middleware(Guest::class)
+                ->action([Confirm::class, 'run']),
+            Route::methods(['GET', 'POST'], '/login')
                 ->name('login')
-                ->addMiddleware(Guest::class),
-            Route::post('/logout', [Logout::class, 'run'])
+                ->middleware(Guest::class)
+                ->action([Login::class, 'run']),
+            Route::post('/logout')
+                ->action([Logout::class, 'run'])
                 ->name('logout'),
-            Route::methods(['GET', 'POST'], '/profile', [Profile::class, 'run'])
+            Route::methods(['GET', 'POST'], '/profile')
                 ->name('profile')
-                ->addMiddleware(Authentication::class),
-            Route::methods(['GET', 'POST'], '/request', [Request::class, 'run'])
+                ->middleware(Authentication::class)
+                ->action([Profile::class, 'run']),
+            Route::methods(['GET', 'POST'], '/request')
                 ->name('request')
-                ->addMiddleware(Guest::class),
-            Route::methods(['GET', 'POST'], '/register', [Register::class, 'run'])
+                ->middleware(Guest::class)
+                ->action([Request::class, 'run']),
+            Route::methods(['GET', 'POST'], '/register')
                 ->name('register')
-                ->addMiddleware(Guest::class),
-            Route::methods(['GET', 'POST'], '/resend', [Resend::class, 'run'])
+                ->middleware(Guest::class)
+                ->action([Register::class, 'run']),
+            Route::methods(['GET', 'POST'], '/resend')
                 ->name('resend')
-                ->addMiddleware(Guest::class),
-            Route::methods(['GET', 'POST'], '/reset[/{id}/{code}]', [Reset::class, 'run'])
+                ->middleware(Guest::class)
+                ->action([Resend::class, 'run']),
+            Route::methods(['GET', 'POST'], '/reset[/{id}/{code}]')
                 ->name('reset')
-                ->addMiddleware(Guest::class),
-        ],
-    ),
+                ->middleware(Guest::class)
+                ->action([Reset::class, 'run']),
+        ),
 ];
