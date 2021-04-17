@@ -21,7 +21,7 @@
         "yii-extension/user-translations": "^1.0.0",
         "yii-extension/user-view-implementation": "^1.0.0",
         "yiisoft/active-record": "^3.0@dev",
-        "yiisoft/aliases": "^1.0",
+        "yiisoft/aliases": "^2.0",
         "yiisoft/auth": "^2.0|^3.0",
         "yiisoft/data-response": "^3.0@dev",
         "yiisoft/files": "^1.0",
