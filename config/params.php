@@ -17,7 +17,7 @@ return [
     ],
 
     'yiisoft/yii-db-migration' => [
-        'updateNamespace' => [
+        'updateNamespaces' => [
             'Yii\\Extension\\User\\Migration',
         ],
     ],
