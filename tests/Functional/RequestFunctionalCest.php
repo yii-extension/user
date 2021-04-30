@@ -17,8 +17,7 @@ final class RequestFunctionalCest
         $I->amOnPage('/request');
 
         $I->expectTo('no see request page.');
-        $I->see('404');
-        $I->see('The page /request was not found.');
+        $I->see('We were unable to find the page /request.');
 
         $I->amGoingTo('update settings password recovery true.');
         $I->updateInDatabase('settings', ['passwordRecovery' => true], ['id' => 1]);

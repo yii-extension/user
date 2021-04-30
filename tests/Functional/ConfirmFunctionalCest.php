@@ -30,9 +30,8 @@ final class ConfirmFunctionalCest
         $I->amOnPage('/confirm' . '/' . $id[0] . '/' . $token[0]);
 
         $I->expectTo('see logged index page.');
-        $I->see('Hello!');
-        $I->see("Let's start something great with Yii3!");
-        $I->see('Logout (joe)');
+        $I->see('Hello World');
+        $I->see("My first website with Yii 3.0!");
 
         $id = $I->grabColumnFromDatabase('token', 'user_id', ['user_id' => 100]);
 

@@ -41,16 +41,12 @@
         "codeception/module-asserts": "@dev",
         "codeception/module-db": "^1.1",
         "codeception/module-phpbrowser": "@dev",
-        "httpsoft/http-message": "^1.0.5",
-        "npm-asset/bootstrap-icons": "^1.2.1",
+        "nyholm/psr7": "^1.3.0",
         "phpunit/phpunit": "^9.5",
         "vimeo/psalm": "^4.3",
-        "yii-extension/fontawesome": "^1.0@dev",
-        "yiisoft/composer-config-plugin": "^1.0@dev",
+        "yiisoft/config": "^1.0@dev",
         "yiisoft/db-sqlite": "^3.0@dev",
         "yiisoft/error-handler": "^3.0@dev",
-        "yiisoft/translator-message-php": "^3.0@dev",
-        "yiisoft/yii-bulma": "^1.0@dev",
         "yiisoft/yii-web": "^3.0@dev"
     },
     "autoload": {
@@ -67,39 +63,13 @@
         "branch-alias": {
             "dev-master": "1.0.x-dev"
         },
-        "config-plugin-output-dir": "tests/_output/runtime/build/config",
         "config-plugin": {
             "params": "config/params.php",
-            "web": [
-                "config/web/*.php"
+            "common": [
+                "config/common/*.php"
             ],
             "events": "config/events.php",
             "routes": "config/routes.php"
-        },
-        "config-plugin-alternatives": {
-            "tests": {
-                "params": "tests/_data/config/params.php",
-                "common": [
-                    "tests/_data/config/common/*.php"
-                ],
-                "web": [
-                    "$common",
-                    "tests/_data/config/web/*.php"
-                ],
-                "console": [
-                    "$common"
-                ],
-                "providers": "tests/_data/config/providers.php",
-                "providers-web": [
-                    "$providers",
-                    "tests/_data/config/providers-web.php"
-                ],
-                "providers-console": [
-                    "$providers",
-                    "tests/_data/config/providers-console.php"
-                ],
-                "routes": "tests/_data/config/routes.php"
-            }
         }
     },
     "config": {

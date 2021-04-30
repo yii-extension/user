@@ -43,3 +43,6 @@ c3.php
 
 #runtime
 /runtime
+
+# config/packages
+/config/packages

@@ -33,9 +33,8 @@ final class ProfileAcceptanceCest
         $I->click('Log in', '#form-auth-login');
 
         $I->expectTo('see logged index page.');
-        $I->see('Hello!');
-        $I->see("Let's start something great with Yii3!");
-        $I->see('Logout (admin)');
+        $I->see('Hello World');
+        $I->see("My first website with Yii 3.0!");
 
         $I->amGoingTo('go to the login page.');
         $I->amOnPage('/profile');
@@ -60,9 +59,8 @@ final class ProfileAcceptanceCest
         $I->click('Log in', '#form-auth-login');
 
         $I->expectTo('see logged index page.');
-        $I->see('Hello!');
-        $I->see("Let's start something great with Yii3!");
-        $I->see('Logout (admin)');
+        $I->see('Hello World');
+        $I->see("My first website with Yii 3.0!");
 
         $I->amGoingTo('go to the login page.');
         $I->amOnPage('/profile');
@@ -86,10 +84,5 @@ final class ProfileAcceptanceCest
         $I->seeInField('FormProfile[location]', 'Rusia');
         $I->seeInField('FormProfile[timezone]', 'Europe/Moscow (UTC +03:00)');
         $I->seeInField('FormProfile[bio]', 'Developer Yii3.');
-
-        $I->click('#logout');
-
-        $I->expectTo('no see profile page.');
-        $I->dontSee('Profile');
     }
 }
