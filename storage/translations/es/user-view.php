@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 return [
     'Log in' => 'Log in',
     'Remember me' => 'Remember me',
