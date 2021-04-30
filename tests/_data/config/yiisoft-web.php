@@ -14,7 +14,7 @@ return [
     Application::class => [
         'class' => Application::class,
         '__construct()' => [
-            'dispatcher' => static fn(MiddlewareDispatcher $middlewareDispatcher) =>
+            'dispatcher' => static fn (MiddlewareDispatcher $middlewareDispatcher) =>
                 $middlewareDispatcher->withMiddlewares(
                     [
                         Router::class,

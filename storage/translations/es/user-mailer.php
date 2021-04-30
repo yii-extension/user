@@ -1,4 +1,6 @@
 <?php
+
+declare(strict_types=1);
 return [
     'Hello, {username},' => 'Hello, {username},',
     'Thank you for signing up on {moduleName}.' => 'Thank you for signing up on {moduleName}.',
