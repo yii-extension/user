@@ -75,14 +75,14 @@ final class LoginAcceptanceCest
 
         $I->expectTo('see logged index page.');
         $I->see('Hello World');
-        $I->see("My first website with Yii 3.0!");
+        $I->see('My first website with Yii 3.0!');
 
         $I->amGoingTo('go to the log in page.');
         $I->amOnPage('/login');
 
         $I->expectTo('no see page log in.');
         $I->see('Hello World');
-        $I->see("My first website with Yii 3.0!");
+        $I->see('My first website with Yii 3.0!');
     }
 
     /**
@@ -100,14 +100,14 @@ final class LoginAcceptanceCest
 
         $I->expectTo('see logged index page.');
         $I->see('Hello World');
-        $I->see("My first website with Yii 3.0!");
+        $I->see('My first website with Yii 3.0!');
 
         $I->amGoingTo('go to the log in page.');
         $I->amOnPage('/login');
 
         $I->expectTo('no see page log in.');
         $I->see('Hello World');
-        $I->see("My first website with Yii 3.0!");
+        $I->see('My first website with Yii 3.0!');
     }
 
     public function testLoginSettingsPasswordRecoveryTrue(AcceptanceTester $I): void

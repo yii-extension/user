@@ -31,7 +31,7 @@ final class ConfirmFunctionalCest
 
         $I->expectTo('see logged index page.');
         $I->see('Hello World');
-        $I->see("My first website with Yii 3.0!");
+        $I->see('My first website with Yii 3.0!');
 
         $id = $I->grabColumnFromDatabase('token', 'user_id', ['user_id' => 100]);
 

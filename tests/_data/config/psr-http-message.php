@@ -16,5 +16,5 @@ return [
     ResponseFactoryInterface::class => Psr17Factory::class,
     StreamFactoryInterface::class => Psr17Factory::class,
     UriFactoryInterface::class => Psr17Factory::class,
-    UploadedFileFactoryInterface::class => Psr17Factory::class
+    UploadedFileFactoryInterface::class => Psr17Factory::class,
 ];
