@@ -70,7 +70,6 @@ final class Reset
         ) {
             $token->delete();
 
-            /** @var User $user */
             $user->passwordHashUpdate($formReset->getPassword());
 
             $serviceFlashMessage->run(
