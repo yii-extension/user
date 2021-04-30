@@ -55,11 +55,11 @@ jobs:
       - name: Update composer
         run: composer self-update
 
-      - name: Install simple-view-bulma
-        run: composer require yii-extension/simple-view-bulma:@dev --dev --ansi
-
       - name: Install user-view-bulma
         run: composer require yii-extension/user-view-bulma:@dev --dev --ansi
+
+      - name: Install simple-view-bulma
+        run: composer require yii-extension/simple-view-bulma:@dev --dev --ansi
 
       - name: Run tests with codeception
         run: |
