@@ -1,6 +1,7 @@
 <?php
 
 declare(strict_types=1);
+
 return [
     'A confirmation message has been sent to your new email address {email}' => 'Se ha enviado un mensaje de confirmación a su nueva dirección de correo electrónico {email}',
     'Bio' => 'Biografía',
