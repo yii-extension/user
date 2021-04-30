@@ -27,7 +27,7 @@ final class EmailChangeFunctionalCest
 
         $I->expectTo('see logged index page.');
         $I->see('Hello World');
-        $I->see("My first website with Yii 3.0!");
+        $I->see('My first website with Yii 3.0!');
 
         $I->amGoingTo('go to the email change page.');
         $I->amOnPage('/email/change');
@@ -79,7 +79,7 @@ final class EmailChangeFunctionalCest
 
         $I->expectTo('see logged index page.');
         $I->see('Hello World');
-        $I->see("My first website with Yii 3.0!");
+        $I->see('My first website with Yii 3.0!');
 
         $I->amGoingTo('go to the email change page.');
         $I->amOnPage('/email/change');
@@ -110,7 +110,7 @@ final class EmailChangeFunctionalCest
 
         $I->expectTo('see logged index page.');
         $I->see('Hello World');
-        $I->see("My first website with Yii 3.0!");
+        $I->see('My first website with Yii 3.0!');
 
         $I->amGoingTo('go to the email change page.');
         $I->amOnPage('/email/change');
@@ -160,7 +160,7 @@ final class EmailChangeFunctionalCest
 
         $I->expectTo('see logged index page.');
         $I->see('Hello World');
-        $I->see("My first website with Yii 3.0!");
+        $I->see('My first website with Yii 3.0!');
 
         $I->amGoingTo('go to the email change page.');
         $I->amOnPage('/email/change');
