@@ -33,8 +33,8 @@ final class ProfileAcceptanceCest
         $I->click('Log in', '#form-auth-login');
 
         $I->expectTo('see logged index page.');
-        $I->see('Hello World');
-        $I->see("My first website with Yii 3.0!");
+        $I->see('Hello!');
+        $I->see("Let's start something great with Yii3!");
 
         $I->amGoingTo('go to the login page.');
         $I->amOnPage('/profile');
@@ -59,8 +59,8 @@ final class ProfileAcceptanceCest
         $I->click('Log in', '#form-auth-login');
 
         $I->expectTo('see logged index page.');
-        $I->see('Hello World');
-        $I->see("My first website with Yii 3.0!");
+        $I->see('Hello!');
+        $I->see("Let's start something great with Yii3!");
 
         $I->amGoingTo('go to the login page.');
         $I->amOnPage('/profile');

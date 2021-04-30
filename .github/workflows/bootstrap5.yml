@@ -58,10 +58,13 @@ jobs:
       - name: Install user-view-bootstrap5
         run: composer require yii-extension/user-view-bootstrap5:@dev --dev --ansi
 
+      - name: Install simple-view-bootstrap5
+        run: composer require yii-extension/simple-view-bootstrap5:@dev --dev --ansi
+
       - name: Run tests with codeception
         run: |
-          php -S 127.0.0.1:8080 -t tests/_data/public > tests/_output/runtime/yii.log 2>&1 &
-          vendor/bin/codecept run Unit,Acceptance,Functional --coverage-xml
+          php -S 127.0.0.1:8080 -t tests/_data/public > tests/_data/runtime/yii.log 2>&1 &
+          vendor/bin/codecept run Unit,Acceptance,Functional  --coverage-xml
 
       - name: Upload coverage to codecov
         if: matrix.os == 'ubuntu-latest' && matrix.php == '7.4'
