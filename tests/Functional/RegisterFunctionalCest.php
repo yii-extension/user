@@ -16,7 +16,7 @@ final class RegisterFunctionalCest
         $I->amGoingTo('go to the register page.');
         $I->amOnPage('/register');
 
-        $I->see('The page /register was not found.');
+        $I->see('We were unable to find the page /register');
 
         $I->amGoingTo('update settings register true.');
         $I->updateInDatabase('settings', ['register' => true], ['id' => 1]);

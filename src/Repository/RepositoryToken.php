@@ -49,8 +49,6 @@ final class RepositoryToken
 
     public function register(string $id, int $typeToken): bool
     {
-        $result = false;
-
         $token = $this->activeRecordFactory->createAR(Token::class);
 
         $token->deleteAll(['user_id' => $id, 'type' => $typeToken]);

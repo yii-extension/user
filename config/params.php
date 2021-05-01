@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use Yiisoft\Factory\Definition\Reference;
+
 return [
     'user' => [
         'router' => [
@@ -17,9 +19,14 @@ return [
     ],
 
     'yiisoft/yii-db-migration' => [
-        'createNamespace' => 'Yii\\Extension\\User\\Migration',
-        'updateNamespace' => [
+        'updateNamespaces' => [
             'Yii\\Extension\\User\\Migration',
+        ],
+    ],
+
+    'yiisoft/translator' => [
+        'categorySources' => [
+            Reference::to('categorySourceUser'),
         ],
     ],
 ];

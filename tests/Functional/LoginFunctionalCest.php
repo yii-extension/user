@@ -71,7 +71,6 @@ final class LoginFunctionalCest
         $I->expectTo('see log in sucess.');
         $I->see('Hello!');
         $I->see("Let's start something great with Yii3!");
-        $I->see('Logout (TestMe)');
     }
 
     public function testLoginSettingsUserNameCaseSensitiveFalse(FunctionalTester $I): void
@@ -101,7 +100,6 @@ final class LoginFunctionalCest
         $I->expectTo('see log in sucess.');
         $I->see('Hello!');
         $I->see("Let's start something great with Yii3!");
-        $I->see('Logout (testme1)');
 
         $I->amGoingTo('update settings password recovery true.');
         $I->updateInDatabase('settings', ['userNameCaseSensitive' => true], ['id' => 1]);

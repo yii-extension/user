@@ -76,19 +76,13 @@ final class LoginAcceptanceCest
         $I->expectTo('see logged index page.');
         $I->see('Hello!');
         $I->see("Let's start something great with Yii3!");
-        $I->see('Logout (admin)');
 
         $I->amGoingTo('go to the log in page.');
         $I->amOnPage('/login');
 
         $I->expectTo('no see page log in.');
         $I->see('Hello!');
-        $I->see('Let\'s start something great with Yii3!');
-
-        $I->click('#logout');
-
-        $I->expectTo('no see link logout.');
-        $I->dontSeeLink('logout');
+        $I->see("Let's start something great with Yii3!");
     }
 
     /**
@@ -107,19 +101,13 @@ final class LoginAcceptanceCest
         $I->expectTo('see logged index page.');
         $I->see('Hello!');
         $I->see("Let's start something great with Yii3!");
-        $I->see('Logout (admin)');
 
         $I->amGoingTo('go to the log in page.');
         $I->amOnPage('/login');
 
         $I->expectTo('no see page log in.');
         $I->see('Hello!');
-        $I->see('Let\'s start something great with Yii3!');
-
-        $I->click('#logout');
-
-        $I->expectTo('no see link logout.');
-        $I->dontSeeLink('logout');
+        $I->see("Let's start something great with Yii3!");
     }
 
     public function testLoginSettingsPasswordRecoveryTrue(AcceptanceTester $I): void

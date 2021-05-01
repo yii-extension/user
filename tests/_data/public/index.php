@@ -2,30 +2,18 @@
 
 declare(strict_types=1);
 
-error_reporting(E_ALL);
-ini_set('display_errors', 'On');
-
-use Psr\Container\ContainerInterface;
-use Psr\Log\NullLogger;
-use Yiisoft\Composer\Config\Builder;
-use Yiisoft\Di\Container;
-use Yiisoft\ErrorHandler\ErrorHandler;
-use Yiisoft\ErrorHandler\Renderer\HtmlRenderer;
-use Yiisoft\Http\Method;
-use Yiisoft\Yii\Web\Application;
-use Yiisoft\Yii\Web\SapiEmitter;
-use Yiisoft\Yii\Web\ServerRequestFactory;
+use Yii\Extension\User\Tests\App\Runner\ApplicationRunner;
 
 $c3 = dirname(__DIR__, 3) . '/c3.php';
 
 if (is_file($c3)) {
-    require $c3;
+    require_once $c3;
 }
 
 // PHP built-in server routing.
 if (PHP_SAPI === 'cli-server') {
     // Serve static files as is.
-    if (is_file(__DIR__ . $_SERVER['REQUEST_URI'])) {
+    if (is_file(__DIR__ . $_SERVER["REQUEST_URI"])) {
         return false;
     }
 
@@ -35,44 +23,10 @@ if (PHP_SAPI === 'cli-server') {
 
 require_once dirname(__DIR__, 3) . '/vendor/autoload.php';
 
-Builder::rebuild();
+$runner = new ApplicationRunner();
 
-$startTime = microtime(true);
-
-/**
- * Register temporary error handler to catch error while container is building.
- */
-$errorHandler = new ErrorHandler(new NullLogger(), new HtmlRenderer());
 // Development mode:
-$errorHandler->debug();
-$errorHandler->register();
+$runner->debug();
 
-$container = new Container(
-    require Builder::path('tests/web'),
-    require Builder::path('tests/providers-web')
-);
-
-/**
- * Configure error handler with real container-configured dependencies.
- */
-$errorHandler->unregister();
-$errorHandler = $container->get(ErrorHandler::class);
-// Development mode:
-$errorHandler->debug();
-$errorHandler->register();
-
-$container = $container->get(ContainerInterface::class);
-$application = $container->get(Application::class);
-
-$request = $container->get(ServerRequestFactory::class)->createFromGlobals();
-$request = $request->withAttribute('applicationStartTime', $startTime);
-
-try {
-    $application->start();
-    $response = $application->handle($request);
-    $emitter = new SapiEmitter();
-    $emitter->emit($response, $request->getMethod() === Method::HEAD);
-} finally {
-    $application->afterEmit($response ?? null);
-    $application->shutdown();
-}
+// Run application:
+$runner->run();

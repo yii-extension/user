@@ -28,7 +28,6 @@ final class EmailChangeFunctionalCest
         $I->expectTo('see logged index page.');
         $I->see('Hello!');
         $I->see("Let's start something great with Yii3!");
-        $I->see('Logout (alex)');
 
         $I->amGoingTo('go to the email change page.');
         $I->amOnPage('/email/change');
@@ -81,7 +80,6 @@ final class EmailChangeFunctionalCest
         $I->expectTo('see logged index page.');
         $I->see('Hello!');
         $I->see("Let's start something great with Yii3!");
-        $I->see('Logout (admin)');
 
         $I->amGoingTo('go to the email change page.');
         $I->amOnPage('/email/change');
@@ -113,7 +111,6 @@ final class EmailChangeFunctionalCest
         $I->expectTo('see logged index page.');
         $I->see('Hello!');
         $I->see("Let's start something great with Yii3!");
-        $I->see('Logout (admin)');
 
         $I->amGoingTo('go to the email change page.');
         $I->amOnPage('/email/change');
@@ -164,7 +161,6 @@ final class EmailChangeFunctionalCest
         $I->expectTo('see logged index page.');
         $I->see('Hello!');
         $I->see("Let's start something great with Yii3!");
-        $I->see('Logout (admin)');
 
         $I->amGoingTo('go to the email change page.');
         $I->amOnPage('/email/change');
