@@ -67,7 +67,7 @@ final class Confirm
                 'unconfirmed_email' => null,
             ]);
 
-            $identity->login($user);
+            $currentUser->login($user);
 
             $serviceFlashMessage->run(
                 'success',
