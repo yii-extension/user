@@ -27,6 +27,8 @@ return [
     'yiisoft/translator' => [
         'categorySources' => [
             Reference::to('categorySourceUser'),
+            Reference::to('categorySourceUserMailer'),
+            Reference::to('categorySourceUserView'),
         ],
     ],
 ];

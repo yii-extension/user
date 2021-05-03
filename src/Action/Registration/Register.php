@@ -9,7 +9,6 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Yii\Extension\Service\ServiceFlashMessage;
 use Yii\Extension\Service\ServiceUrl;
-use Yii\Extension\User\Event\AfterRegister;
 use Yii\Extension\User\Form\FormRegister;
 use Yii\Extension\User\Repository\RepositoryUser;
 use Yii\Extension\User\Service\MailerUser;
@@ -22,12 +21,11 @@ use Yiisoft\Yii\View\ViewRenderer;
 final class Register
 {
     public function run(
-        AfterRegister $afterRegister,
         FormRegister $formRegister,
         MailerUser $mailerUser,
-        RequestHandlerInterface $requestHandler,
         RepositorySetting $repositorySetting,
         RepositoryUser $repositoryUser,
+        RequestHandlerInterface $requestHandler,
         ServerRequestInterface $serverRequest,
         ServiceFlashMessage $serviceFlashMessage,
         ServiceUrl $serviceUrl,

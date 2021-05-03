@@ -8,22 +8,22 @@ use Psr\Http\Message\ResponseInterface;
 use Yii\Extension\Service\ServiceUrl;
 use Yii\Extension\User\ActiveRecord\User;
 use Yii\Extension\User\Repository\RepositoryUser;
-use Yiisoft\User\CurrentUser as Identity;
+use Yiisoft\User\CurrentUser;
 
 final class Logout
 {
     public function run(
-        Identity $identity,
+        CurrentUser $currentUser,
         RepositoryUser $repositoryUser,
         ServiceUrl $serviceUrl
     ): ResponseInterface {
-        $id = $identity->getId();
+        $id = $currentUser->getId();
 
         if ($id !== null) {
             /** @var User $user */
             $user = $repositoryUser->findUserById($id);
             $user->updateAttributes(['last_logout_at' => time()]);
-            $identity->logout();
+            $currentUser->logout();
         }
 
         return $serviceUrl->run('home');

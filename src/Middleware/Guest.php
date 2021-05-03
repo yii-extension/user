@@ -15,23 +15,23 @@ use Yiisoft\User\CurrentUser;
 
 final class Guest implements MiddlewareInterface
 {
+    private CurrentUser $currentUser;
     private ResponseFactoryInterface $responseFactory;
     private UrlGeneratorInterface $urlGenerator;
-    private CurrentUser $user;
 
     public function __construct(
         ResponseFactoryInterface $responseFactory,
         UrlGeneratorInterface $urlGenerator,
-        CurrentUser $user
+        CurrentUser $currentUser
     ) {
         $this->responseFactory = $responseFactory;
         $this->urlGenerator = $urlGenerator;
-        $this->user = $user;
+        $this->currentUser = $currentUser;
     }
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        if ($this->user->isGuest() === false) {
+        if ($this->currentUser->isGuest() === false) {
             return $this->responseFactory
                 ->createResponse(Status::FOUND)
                 ->withHeader('Location', $this->urlGenerator->generate('home'));

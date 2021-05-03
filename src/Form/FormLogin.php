@@ -10,7 +10,7 @@ use Yii\Extension\User\Settings\RepositorySetting;
 use Yiisoft\Form\FormModel;
 use Yiisoft\Security\PasswordHasher;
 use Yiisoft\Translator\TranslatorInterface;
-use Yiisoft\User\CurrentUser as Identity;
+use Yiisoft\User\CurrentUser;
 use Yiisoft\Validator\Result;
 use Yiisoft\Validator\Rule\Boolean;
 use Yiisoft\Validator\Rule\Required;
@@ -24,20 +24,20 @@ final class FormLogin extends FormModel
     private bool $remember = false;
     private string $ip = '';
     private int $lastLogout = 0;
-    private Identity $identity;
-    private RepositoryUser $repositoryUser;
+    private CurrentUser $currentUser;
     private RepositorySetting $repositorySetting;
+    private RepositoryUser $repositoryUser;
     private TranslatorInterface $translator;
 
     public function __construct(
-        Identity $identity,
-        RepositoryUser $repositoryUser,
+        CurrentUser $currentUser,
         RepositorySetting $repositorySetting,
+        RepositoryUser $repositoryUser,
         TranslatorInterface $translator
     ) {
-        $this->identity = $identity;
-        $this->repositoryUser = $repositoryUser;
+        $this->currentUser = $currentUser;
         $this->repositorySetting = $repositorySetting;
+        $this->repositoryUser = $repositoryUser;
         $this->translator = $translator;
 
         parent::__construct();
@@ -122,7 +122,7 @@ final class FormLogin extends FormModel
                 if ($result->isValid() && $user !== null) {
                     $this->lastLogout = $user->getLastLogout();
                     $user->updateAttributes(['ip_last_login' => $this->ip, 'last_login_at' => time()]);
-                    $this->identity->login($user);
+                    $this->currentUser->login($user);
                 }
 
                 return $result;

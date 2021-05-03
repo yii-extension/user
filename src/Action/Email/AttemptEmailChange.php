@@ -11,12 +11,12 @@ use Yii\Extension\Service\ServiceUrl;
 use Yii\Extension\User\ActiveRecord\User;
 use Yii\Extension\User\Repository\RepositoryUser;
 use Yii\Extension\User\Service\ServiceAttemptEmailChange;
-use Yiisoft\User\CurrentUser as Identity;
+use Yiisoft\User\CurrentUser;
 
 final class AttemptEmailChange
 {
     public function run(
-        Identity $identity,
+        CurrentUser $currentUser,
         RepositoryUser $repositoryUser,
         RequestHandlerInterface $requestHandler,
         ServerRequestInterface $serverRequest,
@@ -38,7 +38,7 @@ final class AttemptEmailChange
             return $requestHandler->handle($serverRequest);
         }
 
-        $identity->isGuest() ? $url = 'home' : $url = 'email/change';
+        $currentUser->isGuest() ? $url = 'home' : $url = 'email/change';
 
         return $serviceUrl->run($url);
     }

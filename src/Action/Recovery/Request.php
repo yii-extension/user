@@ -10,7 +10,6 @@ use Psr\Http\Server\RequestHandlerInterface;
 use Yii\Extension\Service\ServiceFlashMessage;
 use Yii\Extension\Service\ServiceUrl;
 use Yii\Extension\User\ActiveRecord\Token;
-use Yii\Extension\User\Event\AfterRequest;
 use Yii\Extension\User\Form\FormRequest;
 use Yii\Extension\User\Repository\RepositoryToken;
 use Yii\Extension\User\Service\MailerUser;
@@ -23,12 +22,11 @@ use Yiisoft\Yii\View\ViewRenderer;
 final class Request
 {
     public function run(
-        AfterRequest $afterRequest,
         FormRequest $formRequest,
         MailerUser $mailerUser,
-        RequestHandlerInterface $requestHandler,
         RepositorySetting $repositorySetting,
         RepositoryToken $repositoryToken,
+        RequestHandlerInterface $requestHandler,
         ServerRequestInterface $serverRequest,
         ServiceFlashMessage $serviceFlashMessage,
         ServiceUrl $serviceUrl,

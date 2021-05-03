@@ -13,15 +13,15 @@ use Yii\Extension\User\Service\ServiceDefaultEmailChange;
 use Yii\Extension\User\Service\ServiceInsecureEmailChange;
 use Yii\Extension\User\Service\ServiceSecureEmailChange;
 use Yii\Extension\User\Settings\RepositorySetting;
-use Yiisoft\User\CurrentUser as Identity;
+use Yiisoft\User\CurrentUser;
 use Yiisoft\Validator\ValidatorInterface;
 use Yiisoft\Yii\View\ViewRenderer;
 
 final class EmailChange
 {
     public function run(
+        CurrentUser $currentUser,
         FormEmailChange $formEmailChange,
-        Identity $identity,
         RepositorySetting $repositorySetting,
         ServerRequestInterface $serverRequest,
         ServiceDefaultEmailChange $serviceDefaultEmailChange,
@@ -36,7 +36,7 @@ final class EmailChange
 
         if ($method === 'POST' && $formEmailChange->load($body) && $validator->validate($formEmailChange)->isValid()) {
             /** @var User $user */
-            $user = $identity->getIdentity();
+            $user = $currentUser->getIdentity();
             $email = $formEmailChange->getEmail();
 
             if ($email === $user->getEmail() && empty($user->getUnconfirmedEmail())) {
