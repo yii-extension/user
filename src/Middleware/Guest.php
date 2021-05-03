@@ -22,7 +22,7 @@ final class Guest implements MiddlewareInterface
     public function __construct(
         ResponseFactoryInterface $responseFactory,
         UrlGeneratorInterface $urlGenerator,
-        CurrentUser $user
+        CurrentUser $currentUser
     ) {
         $this->responseFactory = $responseFactory;
         $this->urlGenerator = $urlGenerator;
