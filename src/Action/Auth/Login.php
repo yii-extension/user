@@ -8,7 +8,6 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Yii\Extension\Service\ServiceFlashMessage;
 use Yii\Extension\Service\ServiceUrl;
-use Yii\Extension\User\Event\AfterLogin;
 use Yii\Extension\User\Form\FormLogin;
 use Yiisoft\Translator\TranslatorInterface;
 use Yiisoft\Validator\ValidatorInterface;
@@ -17,7 +16,6 @@ use Yiisoft\Yii\View\ViewRenderer;
 final class Login
 {
     public function run(
-        AfterLogin $afterLogin,
         FormLogin $formLogin,
         ServerRequestInterface $serverRequest,
         ServiceFlashMessage $serviceFlashMessage,

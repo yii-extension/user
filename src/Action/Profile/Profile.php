@@ -17,12 +17,12 @@ use Yiisoft\Yii\View\ViewRenderer;
 final class Profile
 {
     public function run(
+        CurrentUser $user,
         FormProfile $formProfile,
         RepositoryProfile $repositoryProfile,
         ServerRequestInterface $serverRequest,
         ServiceFlashMessage $serviceFlashMessage,
         TranslatorInterface $translator,
-        CurrentUser $user,
         ValidatorInterface $validator,
         ViewRenderer $viewRenderer
     ): ResponseInterface {

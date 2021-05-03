@@ -9,7 +9,7 @@ use Yii\Extension\User\Repository\RepositoryUser;
 use Yii\Extension\User\Settings\RepositorySetting;
 use Yiisoft\Form\FormModel;
 use Yiisoft\Translator\TranslatorInterface;
-use Yiisoft\User\CurrentUser as Identity;
+use Yiisoft\User\CurrentUser;
 use Yiisoft\Validator\Result;
 use Yiisoft\Validator\Rule\Email;
 use Yiisoft\Validator\Rule\Required;
@@ -18,7 +18,7 @@ final class FormEmailChange extends FormModel
 {
     private string $email = '';
     private string $oldEmail = '';
-    private User $identity;
+    private CurrentUser $currentUser;
     private RepositorySetting $repositorySetting;
     private RepositoryUser $repositoryUser;
     private TranslatorInterface $translator;
@@ -27,12 +27,12 @@ final class FormEmailChange extends FormModel
      * @psalm-suppress PropertyTypeCoercion
      */
     public function __construct(
-        Identity $identity,
-        RepositoryUser $repositoryUser,
+        CurrentUser $currentUser,
         RepositorySetting $repositorySetting,
+        RepositoryUser $repositoryUser,
         TranslatorInterface $translator
     ) {
-        $this->identity = $identity->getIdentity();
+        $this->currentUser = $currentUser->getIdentity();
         $this->repositorySetting = $repositorySetting;
         $this->repositoryUser = $repositoryUser;
         $this->translator = $translator;
@@ -67,16 +67,16 @@ final class FormEmailChange extends FormModel
 
     private function loadData(): void
     {
-        $this->email = $this->identity->getEmail();
+        $this->email = $this->currentUser->getEmail();
 
-        if ($this->identity->getUnconfirmedEmail() !== '') {
-            $this->email = $this->identity->getUnconfirmedEmail();
+        if ($this->currentUser->getUnconfirmedEmail() !== '') {
+            $this->email = $this->currentUser->getUnconfirmedEmail();
             $this->addError(
                 'email',
                 $this->translator->translate('Please check your email to confirm the change', [], 'user'),
             );
         }
-        $this->oldEmail = $this->identity->getEmail();
+        $this->oldEmail = $this->currentUser->getEmail();
     }
 
     private function emailRules(): array
@@ -93,7 +93,7 @@ final class FormEmailChange extends FormModel
 
                 $user = $this->repositoryUser->findUserByUsernameOrEmail($this->email);
 
-                if ($user && $this->email !== $this->identity->getEmail()) {
+                if ($user && $this->email !== $this->currentUser->getEmail()) {
                     $result->addError($this->translator->translate('Email already registered', [], 'user'));
                 }
 

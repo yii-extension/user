@@ -15,17 +15,17 @@ use Yii\Extension\User\Repository\RepositoryToken;
 use Yii\Extension\User\Repository\RepositoryUser;
 use Yii\Extension\User\Settings\RepositorySetting;
 use Yiisoft\Translator\TranslatorInterface;
-use Yiisoft\User\CurrentUser as Identity;
+use Yiisoft\User\CurrentUser;
 
 final class Confirm
 {
     public function run(
-        Identity $identity,
-        ServerRequestInterface $serverRequest,
-        RequestHandlerInterface $requestHandler,
+        CurrentUser $currentUser,
         RepositorySetting $repositorySetting,
         RepositoryToken $repositoryToken,
         RepositoryUser $repositoryUser,
+        RequestHandlerInterface $requestHandler,
+        ServerRequestInterface $serverRequest,
         ServiceFlashMessage $serviceFlashMessage,
         ServiceUrl $serviceUrl,
         TranslatorInterface $translator

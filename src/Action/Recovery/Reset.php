@@ -22,12 +22,12 @@ use Yiisoft\Yii\View\ViewRenderer;
 final class Reset
 {
     public function run(
-        ServerRequestInterface $serverRequest,
         FormReset $formReset,
-        RequestHandlerInterface $requestHandler,
         RepositorySetting $repositorySetting,
         RepositoryToken $repositoryToken,
         RepositoryUser $repositoryUser,
+        RequestHandlerInterface $requestHandler,
+        ServerRequestInterface $serverRequest,
         ServiceFlashMessage $serviceFlashMessage,
         ServiceUrl $serviceUrl,
         TranslatorInterface $translator,

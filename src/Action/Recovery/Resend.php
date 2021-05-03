@@ -10,7 +10,6 @@ use Psr\Http\Server\RequestHandlerInterface;
 use Yii\Extension\Service\ServiceFlashMessage;
 use Yii\Extension\Service\ServiceUrl;
 use Yii\Extension\User\ActiveRecord\Token;
-use Yii\Extension\User\Event\AfterResend;
 use Yii\Extension\User\Form\FormResend;
 use Yii\Extension\User\Repository\RepositoryToken;
 use Yii\Extension\User\Service\MailerUser;
@@ -23,12 +22,11 @@ use Yiisoft\Yii\View\ViewRenderer;
 final class Resend
 {
     public function run(
-        AfterResend $afterResend,
         FormResend $formResend,
         MailerUser $mailerUser,
-        RequestHandlerInterface $requestHandler,
         RepositorySetting $repositorySetting,
         RepositoryToken $repositoryToken,
+        RequestHandlerInterface $requestHandler,
         ServerRequestInterface $serverRequest,
         ServiceFlashMessage $serviceFlashMessage,
         ServiceUrl $serviceUrl,

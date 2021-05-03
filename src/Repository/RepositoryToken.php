@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Yii\Extension\User\Repository;
 
-use Psr\Log\LogLevel;
 use Psr\Log\LoggerInterface;
+use Psr\Log\LogLevel;
 use RuntimeException;
 use Yii\Extension\User\ActiveRecord\Token;
 use Yiisoft\ActiveRecord\ActiveQueryInterface;
