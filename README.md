@@ -148,5 +148,5 @@ Please see [`LICENSE`](./LICENSE.md) for more information.
 
 Maintained by [Yii Extension](https://github.com/yii-extension).
 
-[![License](https://poser.pugx.org/yii-extension/user/license)](//packagist.org/packages/yii-extension/user)
-[![Total Downloads](https://img.shields.io/packagist/dt/yii-extension/user)](https://packagist.org/packages/yii-extension/user)
+![License](https://img.shields.io/github/license/yii-extension/user)
+[![Open Collective](https://img.shields.io/badge/Open%20Collective-sponsor-7eadf1?logo=open%20collective&logoColor=7eadf1&labelColor=555555)](https://opencollective.com/yiisoft)
