@@ -43,42 +43,28 @@ The minimum requirement by this project template that your Web server supports P
 
 ## Installation
 
-With application template [yiisoft/app](https://github.com/yiisoft/app):
-
-Bulma css framework with `yiisoft/composer-config-plugin`:
-
-```php
-composer create-project --prefer-dist --stability dev yiisoft/app app
-composer require yii-extension/user:@dev yii-extension/user-view-bulma:@dev
-```
+With application template [yii-extension/simple-app](https://github.com/yii-extension/simple-app):
 
 Bulma css framework with `yiisoft/config`:
 
 ```php
-composer create-project --prefer-dist --stability dev yiisoft/app app
-composer require yii-extension/user:@dev-config yii-extension/user-view-bulma:@dev
-```
-
-With application template [yii-extension/app-bootstrap5](https://github.com/yii-extension/app-bootstrap5):
-
-Bootstrap5 css framework with `yiisoft/composer-config-plugin`:
-
-```php
-composer create-project --prefer-dist --stability dev yiisoft/app app
-composer require yii-extension/user:@dev yii-extension/user-view-bootstrap5:@dev
+composer create-project --prefer-dist --stability dev yii-extension/simple-app <your project>
+cd <your project>
+composer require yii-extension/user:@dev yii-extension/user-view-bulma:@dev yii-extension/simple-view-bulma:@dev
 ```
 
 Bootstrap5 css framework with `yiisoft/config`:
 
 ```php
-composer create-project --prefer-dist --stability dev yiisoft/app app
-composer require yii-extension/user:@dev-config yii-extension/user-view-bootstrap5:@dev
+composer create-project --prefer-dist --stability dev yii-extension/simple-app <your project>
+cd <your project>
+composer require yii-extension/user:@dev yii-extension/user-view-bootstrap5:@dev yii-extension/simple-view-bootstrap5:@dev
 ```
 
 ## Run command console
 
 ```shell
-/vendor/bin/yii
+./yii
 ```
 
 ## Run migration
@@ -86,13 +72,7 @@ composer require yii-extension/user:@dev-config yii-extension/user-view-bootstra
 Application template:
 
 ```shel
-/vendor/bin/yii migrate/up
-```
-
-In developer mode without application template:
-
-```shel
-/vendor/bin/yii --config=tests migrate/up
+./yii migrate/up
 ```
 
 ## Using PHP built-in server
@@ -129,7 +109,7 @@ The package is tested with [Codeception](https://github.com/Codeception/Codecept
 
 ```shell
 php -S 127.0.0.1:8080 -t tests/_data/public > /dev/null 2>&1&
-vendor/bin/codecept run
+vendor/bin/codecept run Unit,Acceptance,Functional
 ```
 
 ## Static analysis
