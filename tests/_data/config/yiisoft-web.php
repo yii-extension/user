@@ -16,7 +16,7 @@ return [
         'class' => Application::class,
         '__construct()' => [
             'dispatcher' => DynamicReference::to(
-                static fn(MiddlewareDispatcher $middlewareDispatcher) =>
+                static fn (MiddlewareDispatcher $middlewareDispatcher) =>
                     $middlewareDispatcher->withMiddlewares(
                         [
                             Router::class,
