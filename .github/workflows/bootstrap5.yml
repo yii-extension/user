@@ -20,9 +20,8 @@ jobs:
           - windows-latest
 
         php:
-          - "7.4"
-          - "8.0"
-          - "8.1"
+          - 7.4
+          - 8.0
 
     steps:
       - name: Checkout
@@ -57,10 +56,10 @@ jobs:
         run: composer self-update
 
       - name: Install user-view-bootstrap5
-        run: composer require yii-extension/user-view-bootstrap5:@dev --dev --ansi --ignore-platform-reqs
+        run: composer require yii-extension/user-view-bootstrap5:@dev --dev --ansi
 
       - name: Install simple-view-bootstrap5
-        run: composer require yii-extension/simple-view-bootstrap5:@dev --dev --ansi --ignore-platform-reqs
+        run: composer require yii-extension/simple-view-bootstrap5:@dev --dev --ansi
 
       - name: Run tests with codeception
         run: |
