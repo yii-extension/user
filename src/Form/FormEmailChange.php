@@ -4,38 +4,38 @@ declare(strict_types=1);
 
 namespace Yii\Extension\User\Form;
 
+use Yii\Extension\Simple\Model\BaseModel;
 use Yii\Extension\User\ActiveRecord\User;
 use Yii\Extension\User\Repository\RepositoryUser;
-use Yii\Extension\User\Settings\RepositorySetting;
-use Yiisoft\Form\FormModel;
+use Yii\Extension\User\Settings\ModuleSettings;
 use Yiisoft\Translator\TranslatorInterface;
 use Yiisoft\User\CurrentUser;
 use Yiisoft\Validator\Result;
 use Yiisoft\Validator\Rule\Email;
 use Yiisoft\Validator\Rule\Required;
 
-final class FormEmailChange extends FormModel
+final class FormEmailChange extends BaseModel
 {
     private string $email = '';
     private string $oldEmail = '';
-    private User $user;
-    private RepositorySetting $repositorySetting;
     private RepositoryUser $repositoryUser;
+    private ModuleSettings $moduleSettings;
     private TranslatorInterface $translator;
+    private User $user;
 
     /**
      * @psalm-suppress PropertyTypeCoercion
      */
     public function __construct(
         CurrentUser $currentUser,
-        RepositorySetting $repositorySetting,
+        ModuleSettings $moduleSettings,
         RepositoryUser $repositoryUser,
         TranslatorInterface $translator
     ) {
-        $this->user = $currentUser->getIdentity();
-        $this->repositorySetting = $repositorySetting;
         $this->repositoryUser = $repositoryUser;
+        $this->moduleSettings = $moduleSettings;
         $this->translator = $translator;
+        $this->user = $currentUser->getIdentity();
         $this->loadData();
 
         parent::__construct();
@@ -81,12 +81,9 @@ final class FormEmailChange extends FormModel
 
     private function emailRules(): array
     {
-        $email = new Email();
-        $required = new Required();
-
         return [
-            $required->message($this->translator->translate('Value cannot be blank', [], 'user')),
-            $email->message($this->translator->translate('This value is not a valid email address', [], 'user')),
+            Required::rule()->message($this->translator->translate('Value cannot be blank', [], 'user')),
+            Email::rule()->message($this->translator->translate('This value is not a valid email address', [], 'user')),
 
             function (): Result {
                 $result = new Result();

@@ -8,11 +8,11 @@ use OutOfBoundsException;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Yii\Extension\User\ActiveRecord\User;
+use Yii\Extension\User\Settings\ModuleSettings;
 use Yii\Extension\User\Form\FormEmailChange;
 use Yii\Extension\User\Service\ServiceDefaultEmailChange;
 use Yii\Extension\User\Service\ServiceInsecureEmailChange;
 use Yii\Extension\User\Service\ServiceSecureEmailChange;
-use Yii\Extension\User\Settings\RepositorySetting;
 use Yiisoft\User\CurrentUser;
 use Yiisoft\Validator\ValidatorInterface;
 use Yiisoft\Yii\View\ViewRenderer;
@@ -22,7 +22,7 @@ final class EmailChange
     public function run(
         CurrentUser $currentUser,
         FormEmailChange $formEmailChange,
-        RepositorySetting $repositorySetting,
+        ModuleSettings $moduleSettings,
         ServerRequestInterface $serverRequest,
         ServiceDefaultEmailChange $serviceDefaultEmailChange,
         ServiceInsecureEmailChange $serviceInsecureEmailChange,
@@ -42,7 +42,7 @@ final class EmailChange
             if ($email === $user->getEmail() && empty($user->getUnconfirmedEmail())) {
                 $user->unconfirmedEmail(null);
             } elseif ($email !== $user->getEmail()) {
-                switch ($repositorySetting->getEmailChangeStrategy()) {
+                switch ($moduleSettings->getEmailChangeStrategy()) {
                     case User::STRATEGY_INSECURE:
                         $serviceInsecureEmailChange->run($email, $user);
                         break;

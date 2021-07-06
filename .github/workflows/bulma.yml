@@ -22,6 +22,7 @@ jobs:
         php:
           - "7.4"
           - "8.0"
+          - "8.1"
 
     steps:
       - name: Checkout
@@ -56,10 +57,10 @@ jobs:
         run: composer self-update
 
       - name: Install user-view-bulma
-        run: composer require yii-extension/user-view-bulma:@dev --dev --ansi
+        run: composer require yii-extension/user-view-bulma:@dev --dev --ansi --ignore-platform-reqs
 
       - name: Install simple-view-bulma
-        run: composer require yii-extension/simple-view-bulma:@dev --dev --ansi
+        run: composer require yii-extension/simple-view-bulma:@dev --dev --ansi --ignore-platform-reqs
 
       - name: Run tests with codeception
         run: |

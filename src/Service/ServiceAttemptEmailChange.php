@@ -4,33 +4,33 @@ declare(strict_types=1);
 
 namespace Yii\Extension\User\Service;
 
-use Yii\Extension\Service\ServiceFlashMessage;
 use Yii\Extension\User\ActiveRecord\Token;
 use Yii\Extension\User\ActiveRecord\User;
+use Yii\Extension\User\Settings\ModuleSettings;
 use Yii\Extension\User\Repository\RepositoryToken;
 use Yii\Extension\User\Repository\RepositoryUser;
-use Yii\Extension\User\Settings\RepositorySetting;
+use Yiisoft\Session\Flash\Flash;
 use Yiisoft\Translator\TranslatorInterface;
 
 final class ServiceAttemptEmailChange
 {
-    private RepositorySetting $repositorySetting;
+    private Flash $flash;
+    private ModuleSettings $moduleSettings;
     private RepositoryToken $repositoryToken;
     private RepositoryUser $repositoryUser;
-    private ServiceFlashMessage $serviceFlashMessage;
     private TranslatorInterface $translator;
 
     public function __construct(
-        RepositorySetting $repositorySetting,
+        Flash $flash,
+        ModuleSettings $moduleSettings,
         RepositoryToken $repositoryToken,
         RepositoryUser $repositoryUser,
-        ServiceFlashMessage $serviceFlashMessage,
         TranslatorInterface $translator
     ) {
-        $this->repositorySetting = $repositorySetting;
+        $this->flash = $flash;
+        $this->moduleSettings = $moduleSettings;
         $this->repositoryToken = $repositoryToken;
         $this->repositoryUser = $repositoryUser;
-        $this->serviceFlashMessage = $serviceFlashMessage;
         $this->translator = $translator;
     }
 
@@ -38,9 +38,9 @@ final class ServiceAttemptEmailChange
     {
         $result = true;
 
-        $emailChangeStrategy = $this->repositorySetting->getEmailChangeStrategy();
-        $tokenConfirmWithin = $this->repositorySetting->getTokenConfirmWithin();
-        $tokenRecoverWithin = $this->repositorySetting->getTokenRecoverWithin();
+        $emailChangeStrategy = $this->moduleSettings->getEmailChangeStrategy();
+        $tokenConfirmWithin = $this->moduleSettings->getTokenConfirmWithin();
+        $tokenRecoverWithin = $this->moduleSettings->getTokenRecoverWithin();
 
         /** @var Token|null $token */
         $token = $this->repositoryToken->findToken([
@@ -49,10 +49,12 @@ final class ServiceAttemptEmailChange
         ])->andWhere(['IN', 'type', [Token::TYPE_CONFIRM_NEW_EMAIL, Token::TYPE_CONFIRM_OLD_EMAIL]])->one();
 
         if ($token === null || $token->isExpired($tokenConfirmWithin, $tokenRecoverWithin)) {
-            $this->serviceFlashMessage->run(
+            $message = $this->translator->translate('Your confirmation token is invalid or expired', [], 'user');
+            $this->flash->add(
                 'danger',
-                $this->translator->translate('System Notification', [], 'user'),
-                $this->translator->translate('Your confirmation token is invalid or expired', [], 'user'),
+                [
+                    'message' => $this->translator->translate('System Notification', [], 'user') . PHP_EOL . $message,
+                ],
             );
 
             $result = false;
@@ -77,11 +79,13 @@ final class ServiceAttemptEmailChange
             ) {
                 $user->email($user->getUnconfirmedEmail());
                 $user->unconfirmedEmail(null);
-
-                $this->serviceFlashMessage->run(
-                    'success',
-                    $this->translator->translate('System Notification', [], 'user'),
-                    $this->translator->translate('Your email address has been changed', [], 'user'),
+                $message = $this->translator->translate('Your email address has been changed', [], 'user');
+                $this->flash->add(
+                    'danger',
+                    [
+                        'message' => $this->translator->translate('System Notification', [], 'user') . PHP_EOL .
+                            $message,
+                    ],
                 );
             }
 

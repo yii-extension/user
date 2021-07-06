@@ -7,13 +7,13 @@ namespace Yii\Extension\User\Action\Registration;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Yii\Extension\Service\ServiceFlashMessage;
 use Yii\Extension\Service\ServiceUrl;
 use Yii\Extension\User\ActiveRecord\Token;
 use Yii\Extension\User\ActiveRecord\User;
+use Yii\Extension\User\Settings\ModuleSettings;
 use Yii\Extension\User\Repository\RepositoryToken;
 use Yii\Extension\User\Repository\RepositoryUser;
-use Yii\Extension\User\Settings\RepositorySetting;
+use Yiisoft\Session\Flash\Flash;
 use Yiisoft\Translator\TranslatorInterface;
 use Yiisoft\User\CurrentUser;
 
@@ -21,12 +21,12 @@ final class Confirm
 {
     public function run(
         CurrentUser $currentUser,
-        RepositorySetting $repositorySetting,
+        Flash $flash,
+        ModuleSettings $moduleSettings,
         RepositoryToken $repositoryToken,
         RepositoryUser $repositoryUser,
         RequestHandlerInterface $requestHandler,
         ServerRequestInterface $serverRequest,
-        ServiceFlashMessage $serviceFlashMessage,
         ServiceUrl $serviceUrl,
         TranslatorInterface $translator
     ): ResponseInterface {
@@ -53,26 +53,25 @@ final class Confirm
             Token::TYPE_CONFIRMATION
         );
 
-        if ($token === null || $token->isExpired($repositorySetting->getTokenConfirmWithin())) {
+        if ($token === null || $token->isExpired($moduleSettings->getTokenConfirmWithin())) {
             return $requestHandler->handle($serverRequest);
         }
 
-        if (!$token->isExpired($repositorySetting->getTokenConfirmWithin())) {
+        if (!$token->isExpired($moduleSettings->getTokenConfirmWithin())) {
             $token->delete();
-
             $user->updateAttributes([
                 'confirmed_at' => time(),
                 'ip_last_login' => $ip,
                 'last_login_at' => time(),
                 'unconfirmed_email' => null,
             ]);
-
             $currentUser->login($user);
-
-            $serviceFlashMessage->run(
+            $message = $translator->translate('Your user has been confirmed', [], 'user');
+            $flash->add(
                 'success',
-                $translator->translate('System Notification', [], 'user'),
-                $translator->translate('Your user has been confirmed', [], 'user'),
+                [
+                    'message' => $translator->translate('System Notification', [], 'user') . PHP_EOL . $message,
+                ],
             );
         }
 

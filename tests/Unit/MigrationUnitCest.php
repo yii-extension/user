@@ -60,7 +60,7 @@ final class MigrationUnitCest
 
         $migration->updateNamespaces([
             'Yii\Extension\User\Migration',
-            'Yii\Extension\User\Settings\Migration',
+            'Yii\\Extension\\User\\Tests\\App\\Migration',
         ]);
 
         $consoleHelper->output()->setVerbosity(OutputInterface::VERBOSITY_QUIET);
@@ -92,7 +92,7 @@ final class MigrationUnitCest
 
         $migration->updateNamespaces([
             'Yii\Extension\User\Migration',
-            'Yii\Extension\User\Settings\Migration',
+            'Yii\\Extension\\User\\Tests\\App\\Migration',
         ]);
 
         $consoleHelper->output()->setVerbosity(OutputInterface::VERBOSITY_QUIET);
@@ -120,7 +120,7 @@ final class MigrationUnitCest
 
         $migration->updateNamespaces([
             'Yii\Extension\User\Migration',
-            'Yii\Extension\User\Settings\Migration',
+            'Yii\\Extension\\User\\Tests\\App\\Migration',
         ]);
 
         $consoleHelper->output()->setVerbosity(OutputInterface::VERBOSITY_QUIET);

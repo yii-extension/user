@@ -39,24 +39,34 @@ final class ApplicationRunner
     public function run(): void
     {
         $startTime = microtime(true);
-        // Register temporary error handler to catch error while container is building.
-        $errorHandler = new ErrorHandler(new NullLogger(), new HtmlRenderer());
-        $this->registerErrorHandler($errorHandler);
 
-        $config = new Config(
-            dirname(__DIR__, 3),
-            '/config/packages', // Configs path.
-        );
+        $this->debug();
+
+        // Register temporary error handler to catch error while container is building.
+        $errorHandler = $this->createErrorHandler();
+
+        $config = $this->createConfig();
 
         /** @psalm-suppress MixedArgumentTypeCoercion */
-        $container = new Container($this->buildConfig($config), $config->get('providers'));
+        $configContainer = array_merge(
+            require(dirname(__DIR__, 2) . '/_data/config/psr-http-message.php'),
+            require(dirname(__DIR__, 2) . '/_data/config/psr-log.php'),
+            require(dirname(__DIR__, 2) . '/_data/config/yiisoft-db.php'),
+            require(dirname(__DIR__, 2) . '/_data/config/yiisoft-router.php'),
+            require(dirname(__DIR__, 2) . '/_data/config/yiisoft-web.php'),
+            $config->get('common'),
+            $config->get('web'),
+            require(dirname(__DIR__, 2) . '/_data/config/user.php'),
+        );
+
+        $container = new Container($configContainer);
 
         // set aliases tests app
         $aliases = $container->get(Aliases::class);
         $aliases->set('@root', dirname(__DIR__, 3));
         $aliases->set('@assets', '@root/tests/_data/public/assets');
         $aliases->set('@assetsUrl', '/assets');
-        $aliases->set('@npm', '@root/vendor/npm-asset');
+        $aliases->set('@npm', '@root/node_modules');
         $aliases->set('@runtime', '@root/tests/_data/runtime');
         $aliases->set('@resources', '@runtime');
         $aliases->set('@translations', '@root/storage/translations');
@@ -96,18 +106,18 @@ final class ApplicationRunner
         }
     }
 
-    private function buildConfig(Config $config): array
+    private function createConfig(?string $enviroment = null): Config
     {
-        return array_merge(
-            // build config tests
-            require(dirname(__DIR__, 2) . '/_data/config/psr-http-message.php'),
-            require(dirname(__DIR__, 2) . '/_data/config/psr-log.php'),
-            require(dirname(__DIR__, 2) . '/_data/config/yiisoft-db.php'),
-            require(dirname(__DIR__, 2) . '/_data/config/yiisoft-router.php'),
-            require(dirname(__DIR__, 2) . '/_data/config/yiisoft-web.php'),
-            $config->get('common'),
-            $config->get('web'),
-        );
+        return new Config(dirname(__DIR__, 3), '/config/packages', $enviroment);
+    }
+
+    private function createErrorHandler(): ErrorHandler
+    {
+        $errorHandler = new ErrorHandler(new NullLogger(), new HtmlRenderer());
+
+        $this->registerErrorHandler($errorHandler);
+
+        return $errorHandler;
     }
 
     private function emit(RequestInterface $request, ResponseInterface $response): void

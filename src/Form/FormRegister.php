@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Yii\Extension\User\Form;
 
+use Yii\Extension\Simple\Model\BaseModel;
 use Yii\Extension\User\Repository\RepositoryUser;
-use Yii\Extension\User\Settings\RepositorySetting;
-use Yiisoft\Form\FormModel;
+use Yii\Extension\User\Settings\ModuleSettings;
 use Yiisoft\Translator\TranslatorInterface;
 use Yiisoft\Validator\Result;
 use Yiisoft\Validator\Rule\Email;
@@ -16,23 +16,23 @@ use Yiisoft\Validator\Rule\Required;
 
 use function strtolower;
 
-final class FormRegister extends FormModel
+final class FormRegister extends BaseModel
 {
     private string $email = '';
     private string $username = '';
     private string $password = '';
     private string $ip = '';
-    private RepositorySetting $repositorySetting;
+    private ModuleSettings $moduleSettings;
     private RepositoryUser $repositoryUser;
     private TranslatorInterface $translator;
 
     public function __construct(
+        ModuleSettings $moduleSettings,
         RepositoryUser $repositoryUser,
-        RepositorySetting $repositorySetting,
         TranslatorInterface $translator
     ) {
         $this->repositoryUser = $repositoryUser;
-        $this->repositorySetting = $repositorySetting;
+        $this->moduleSettings = $moduleSettings;
         $this->translator = $translator;
 
         parent::__construct();
@@ -69,7 +69,7 @@ final class FormRegister extends FormModel
 
     public function getUsername(): string
     {
-        if (!$this->repositorySetting->getUsernameCaseSensitive()) {
+        if (!$this->moduleSettings->getUsernameCaseSensitive()) {
             $this->username = strtolower($this->username);
         }
 
@@ -97,12 +97,9 @@ final class FormRegister extends FormModel
 
     private function emailRules(): array
     {
-        $email = new Email();
-        $required = new Required();
-
         return [
-            $required->message($this->translator->translate('Value cannot be blank', [], 'user')),
-            $email->message($this->translator->translate('This value is not a valid email address', [], 'user')),
+            Required::rule()->message($this->translator->translate('Value cannot be blank', [], 'user')),
+            Email::rule()->message($this->translator->translate('This value is not a valid email address', [], 'user')),
 
             function (): Result {
                 $result = new Result();
@@ -118,13 +115,11 @@ final class FormRegister extends FormModel
 
     private function usernameRules(): array
     {
-        $hasLength = new HasLength();
-        $required = new Required();
-        $matchRegularExpression = new MatchRegularExpression($this->repositorySetting->getUsernameRegExp());
+        $matchRegularExpression = MatchRegularExpression::rule($this->moduleSettings->getUsernameRegExp());
 
         return [
-            $required->message($this->translator->translate('Value cannot be blank', [], 'user')),
-            $hasLength->min(3)->max(255)->tooShortMessage(
+            Required::rule()->message($this->translator->translate('Value cannot be blank', [], 'user')),
+            HasLength::rule()->min(3)->max(255)->tooShortMessage(
                 $this->translator->translate('Username should contain at least 3 characters', [], 'user'),
             ),
             $matchRegularExpression->message($this->translator->translate('This value is invalid', [], 'user')),
@@ -143,14 +138,12 @@ final class FormRegister extends FormModel
 
     private function passwordRules(): array
     {
-        $hasLength = new HasLength();
-        $required = new Required();
         $result = [];
 
-        if ($this->repositorySetting->isGeneratingPassword() === false) {
+        if ($this->moduleSettings->isGeneratingPassword() === false) {
             $result = [
-                $required->message($this->translator->translate('Value cannot be blank', [], 'user')),
-                $hasLength->min(6)->max(72)->tooShortMessage(
+                Required::rule()->message($this->translator->translate('Value cannot be blank', [], 'user')),
+                HasLength::rule()->min(6)->max(72)->tooShortMessage(
                     $this->translator->translate(
                         'Password should contain at least 6 characters',
                         [],

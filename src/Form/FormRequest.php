@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Yii\Extension\User\Form;
 
+use Yii\Extension\Simple\Model\BaseModel;
 use Yii\Extension\User\ActiveRecord\Token;
 use Yii\Extension\User\ActiveRecord\User;
 use Yii\Extension\User\Repository\RepositoryUser;
-use Yiisoft\Form\FormModel;
 use Yiisoft\Translator\TranslatorInterface;
 use Yiisoft\Validator\Result;
 use Yiisoft\Validator\Rule\Email;
@@ -15,7 +15,7 @@ use Yiisoft\Validator\Rule\Required;
 
 use function strtolower;
 
-final class FormRequest extends FormModel
+final class FormRequest extends BaseModel
 {
     private string $email = '';
     private string $userId = '';
@@ -72,12 +72,9 @@ final class FormRequest extends FormModel
 
     private function emailRules(): array
     {
-        $email = new Email();
-        $required = new Required();
-
         return [
-            $required->message($this->translator->translate('Value cannot be blank', [], 'user')),
-            $email->message($this->translator->translate('This value is not a valid email address', [], 'user')),
+            Required::rule()->message($this->translator->translate('Value cannot be blank', [], 'user')),
+            Email::rule()->message($this->translator->translate('This value is not a valid email address', [], 'user')),
 
             function (): Result {
                 $result = new Result();
