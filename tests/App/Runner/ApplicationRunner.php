@@ -47,31 +47,12 @@ final class ApplicationRunner
 
         $config = $this->createConfig();
 
-        /** @psalm-suppress MixedArgumentTypeCoercion */
-        $configContainer = array_merge(
-            require(dirname(__DIR__, 2) . '/_data/config/psr-http-message.php'),
-            require(dirname(__DIR__, 2) . '/_data/config/psr-log.php'),
-            require(dirname(__DIR__, 2) . '/_data/config/yiisoft-db.php'),
-            require(dirname(__DIR__, 2) . '/_data/config/yiisoft-router.php'),
-            require(dirname(__DIR__, 2) . '/_data/config/yiisoft-web.php'),
-            $config->get('common'),
-            $config->get('web'),
-            require(dirname(__DIR__, 2) . '/_data/config/user.php'),
-        );
+        $configContainer = $this->environmentTest($config);
 
         $container = new Container($configContainer);
 
         // set aliases tests app
-        $aliases = $container->get(Aliases::class);
-        $aliases->set('@root', dirname(__DIR__, 3));
-        $aliases->set('@assets', '@root/tests/_data/public/assets');
-        $aliases->set('@assetsUrl', '/assets');
-        $aliases->set('@npm', '@root/node_modules');
-        $aliases->set('@runtime', '@root/tests/_data/runtime');
-        $aliases->set('@resources', '@runtime');
-        $aliases->set('@translations', '@root/storage/translations');
-        $aliases->set('@simple-view-bulma', '@vendor/yii-extension/simple-view-bulma');
-        $aliases->set('@vendor', '@root/vendor');
+        $this->setAliases($container->get(Aliases::class));
 
         // Register error handler with real container-configured dependencies.
         $this->registerErrorHandler($container->get(ErrorHandler::class), $errorHandler);
@@ -120,6 +101,20 @@ final class ApplicationRunner
         return $errorHandler;
     }
 
+    private function environmentTest(Config $config): array
+    {
+        return array_merge(
+            $config->get('common'),
+            $config->get('web'),
+            require(dirname(__DIR__, 2) . '/_data/config/psr-http-message.php'),
+            require(dirname(__DIR__, 2) . '/_data/config/psr-log.php'),
+            require(dirname(__DIR__, 2) . '/_data/config/yiisoft-db.php'),
+            require(dirname(__DIR__, 2) . '/_data/config/yiisoft-router.php'),
+            require(dirname(__DIR__, 2) . '/_data/config/yiisoft-web.php'),
+            require(dirname(__DIR__, 2) . '/_data/config/user.php'),
+        );
+    }
+
     private function emit(RequestInterface $request, ResponseInterface $response): void
     {
         (new SapiEmitter())->emit($response, $request->getMethod() === Method::HEAD);
@@ -136,5 +131,18 @@ final class ApplicationRunner
         }
 
         $registered->register();
+    }
+
+    private function setAliases(Aliases $aliases): void
+    {
+        $aliases->set('@root', dirname(__DIR__, 3));
+        $aliases->set('@assets', '@root/tests/_data/public/assets');
+        $aliases->set('@assetsUrl', '/assets');
+        $aliases->set('@npm', '@root/node_modules');
+        $aliases->set('@runtime', '@root/tests/_data/runtime');
+        $aliases->set('@resources', '@runtime');
+        $aliases->set('@translations', '@root/storage/translations');
+        $aliases->set('@simple-view-bulma', '@vendor/yii-extension/simple-view-bulma');
+        $aliases->set('@vendor', '@root/vendor');
     }
 }
