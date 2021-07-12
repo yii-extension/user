@@ -6,9 +6,9 @@ namespace Yii\Extension\User\Action\Profile;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Yii\Extension\Service\ServiceFlashMessage;
 use Yii\Extension\User\Form\FormProfile;
 use Yii\Extension\User\Repository\RepositoryProfile;
+use Yiisoft\Session\Flash\Flash;
 use Yiisoft\Translator\TranslatorInterface;
 use Yiisoft\User\CurrentUser;
 use Yiisoft\Validator\ValidatorInterface;
@@ -18,10 +18,10 @@ final class Profile
 {
     public function run(
         CurrentUser $user,
+        Flash $flash,
         FormProfile $formProfile,
         RepositoryProfile $repositoryProfile,
         ServerRequestInterface $serverRequest,
-        ServiceFlashMessage $serviceFlashMessage,
         TranslatorInterface $translator,
         ValidatorInterface $validator,
         ViewRenderer $viewRenderer
@@ -43,15 +43,17 @@ final class Profile
             $validator->validate($formProfile)->isValid() &&
             $repositoryProfile->update($id, $formProfile)
         ) {
-            $serviceFlashMessage->run(
+            $message = $translator->translate('Your data has been saved', [], 'user');
+            $flash->add(
                 'success',
-                $translator->translate('System Notification', [], 'user'),
-                $translator->translate('Your data has been saved', [], 'user'),
+                [
+                    'message' => $translator->translate('System Notification', [], 'user') . PHP_EOL . $message,
+                ],
             );
         }
 
         return $viewRenderer
             ->withViewPath('@user-view-views')
-            ->render('profile/profile', ['body' => $body, 'data' => $formProfile]);
+            ->render('profile/profile', ['body' => $body, 'model' => $formProfile]);
     }
 }

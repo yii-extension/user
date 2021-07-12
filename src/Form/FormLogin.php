@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Yii\Extension\User\Form;
 
+use Yii\Extension\Simple\Model\BaseModel;
 use Yii\Extension\User\ActiveRecord\User;
+use Yii\Extension\User\Settings\ModuleSettings;
 use Yii\Extension\User\Repository\RepositoryUser;
-use Yii\Extension\User\Settings\RepositorySetting;
-use Yiisoft\Form\FormModel;
 use Yiisoft\Security\PasswordHasher;
 use Yiisoft\Translator\TranslatorInterface;
 use Yiisoft\User\CurrentUser;
@@ -17,7 +17,7 @@ use Yiisoft\Validator\Rule\Required;
 
 use function strtolower;
 
-final class FormLogin extends FormModel
+final class FormLogin extends BaseModel
 {
     private string $login = '';
     private string $password = '';
@@ -25,18 +25,18 @@ final class FormLogin extends FormModel
     private string $ip = '';
     private int $lastLogout = 0;
     private CurrentUser $currentUser;
-    private RepositorySetting $repositorySetting;
     private RepositoryUser $repositoryUser;
+    private ModuleSettings $moduleSettings;
     private TranslatorInterface $translator;
 
     public function __construct(
         CurrentUser $currentUser,
-        RepositorySetting $repositorySetting,
+        ModuleSettings $moduleSettings,
         RepositoryUser $repositoryUser,
         TranslatorInterface $translator
     ) {
         $this->currentUser = $currentUser;
-        $this->repositorySetting = $repositorySetting;
+        $this->moduleSettings = $moduleSettings;
         $this->repositoryUser = $repositoryUser;
         $this->translator = $translator;
 
@@ -69,14 +69,12 @@ final class FormLogin extends FormModel
 
     public function getRules(): array
     {
-        $boolean = new Boolean();
-        $required = new Required();
-
         return [
-            'login' => [$required->message($this->translator->translate('Value cannot be blank', [], 'user'))],
+            'login' => [Required::rule()->message($this->translator->translate('Value cannot be blank', [], 'user'))],
             'password' => $this->passwordRules(),
             'remember' => [
-                $boolean->message($this->translator->translate('The value must be either "1" or "0"', [], 'user')),
+                Boolean::rule()
+                    ->message($this->translator->translate('The value must be either "1" or "0"', [], 'user')),
             ],
         ];
     }
@@ -84,13 +82,12 @@ final class FormLogin extends FormModel
     private function passwordRules(): array
     {
         $passwordHasher = new PasswordHasher();
-        $required = new Required();
 
         return [
-            $required->message($this->translator->translate('Value cannot be blank', [], 'user')),
+            Required::rule()->message($this->translator->translate('Value cannot be blank', [], 'user')),
 
             function () use ($passwordHasher): Result {
-                if (!$this->repositorySetting->getUserNameCaseSensitive()) {
+                if (!$this->moduleSettings->getUserNameCaseSensitive()) {
                     $this->login = strtolower($this->login);
                 }
 

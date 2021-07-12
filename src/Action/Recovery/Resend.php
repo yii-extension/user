@@ -7,14 +7,14 @@ namespace Yii\Extension\User\Action\Recovery;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Yii\Extension\Service\ServiceFlashMessage;
 use Yii\Extension\Service\ServiceUrl;
 use Yii\Extension\User\ActiveRecord\Token;
+use Yii\Extension\User\Settings\ModuleSettings;
 use Yii\Extension\User\Form\FormResend;
 use Yii\Extension\User\Repository\RepositoryToken;
 use Yii\Extension\User\Service\MailerUser;
-use Yii\Extension\User\Settings\RepositorySetting;
 use Yiisoft\Router\UrlGeneratorInterface;
+use Yiisoft\Session\Flash\Flash;
 use Yiisoft\Translator\TranslatorInterface;
 use Yiisoft\Validator\ValidatorInterface;
 use Yiisoft\Yii\View\ViewRenderer;
@@ -22,14 +22,14 @@ use Yiisoft\Yii\View\ViewRenderer;
 final class Resend
 {
     public function run(
+        Flash $flash,
         FormResend $formResend,
         MailerUser $mailerUser,
-        RepositorySetting $repositorySetting,
         RepositoryToken $repositoryToken,
         RequestHandlerInterface $requestHandler,
         ServerRequestInterface $serverRequest,
-        ServiceFlashMessage $serviceFlashMessage,
         ServiceUrl $serviceUrl,
+        ModuleSettings $moduleSettings,
         TranslatorInterface $translator,
         UrlGeneratorInterface $urlGenerator,
         ValidatorInterface $validator,
@@ -46,7 +46,6 @@ final class Resend
 
             /** @var Token $token */
             $token = $repositoryToken->findTokenById($userId);
-
             $params = [
                 'username' => $username,
                 'url' => $urlGenerator->generateAbsolute(
@@ -56,20 +55,22 @@ final class Resend
             ];
 
             if ($mailerUser->sendConfirmationMessage($email, $params)) {
-                $serviceFlashMessage->run(
+                $message = $translator->translate('Please check your email to activate your username', [], 'user');
+                $flash->add(
                     'success',
-                    $translator->translate('System Notification', [], 'user'),
-                    $translator->translate('Please check your email to activate your username', [], 'user'),
+                    [
+                        'message' => $translator->translate('System Notification', [], 'user') . PHP_EOL . $message,
+                    ],
                 );
             }
 
             return $serviceUrl->run('login');
         }
 
-        if ($repositorySetting->isConfirmation()) {
+        if ($moduleSettings->isConfirmation()) {
             return $viewRenderer
                 ->withViewPath('@user-view-views')
-                ->render('/recovery/resend', ['body' => $body, 'data' => $formResend]);
+                ->render('recovery/resend', ['body' => $body, 'model' => $formResend]);
         }
 
         return $requestHandler->handle($serverRequest);

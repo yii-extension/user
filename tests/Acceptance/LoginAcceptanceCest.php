@@ -84,7 +84,7 @@ final class LoginAcceptanceCest
         $I->see('Hello!');
         $I->see("Let's start something great with Yii3!");
 
-        $I->click('#logout');
+        $I->click('logout');
 
         $I->expectTo('no see link logout.');
         $I->dontSeeLink('logout');

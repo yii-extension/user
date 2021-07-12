@@ -7,13 +7,13 @@ namespace Yii\Extension\User\Action\Registration;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Yii\Extension\Service\ServiceFlashMessage;
 use Yii\Extension\Service\ServiceUrl;
 use Yii\Extension\User\Form\FormRegister;
 use Yii\Extension\User\Repository\RepositoryUser;
 use Yii\Extension\User\Service\MailerUser;
-use Yii\Extension\User\Settings\RepositorySetting;
+use Yii\Extension\User\Settings\ModuleSettings;
 use Yiisoft\Router\UrlGeneratorInterface;
+use Yiisoft\Session\Flash\Flash;
 use Yiisoft\Translator\TranslatorInterface;
 use Yiisoft\Validator\ValidatorInterface;
 use Yiisoft\Yii\View\ViewRenderer;
@@ -21,13 +21,13 @@ use Yiisoft\Yii\View\ViewRenderer;
 final class Register
 {
     public function run(
+        Flash $flash,
         FormRegister $formRegister,
         MailerUser $mailerUser,
-        RepositorySetting $repositorySetting,
+        ModuleSettings $moduleSettings,
         RepositoryUser $repositoryUser,
         RequestHandlerInterface $requestHandler,
         ServerRequestInterface $serverRequest,
-        ServiceFlashMessage $serviceFlashMessage,
         ServiceUrl $serviceUrl,
         TranslatorInterface $translator,
         UrlGeneratorInterface $urlGenerator,
@@ -47,42 +47,43 @@ final class Register
             $validator->validate($formRegister)->isValid() &&
             $repositoryUser->register(
                 $formRegister,
-                $repositorySetting->isConfirmation(),
-                $repositorySetting->isGeneratingPassword()
+                $moduleSettings->isConfirmation(),
+                $moduleSettings->isGeneratingPassword()
             )
         ) {
             $email = $formRegister->getEmail();
             $params = [
                 'username' => $formRegister->getUsername(),
                 'password' => $formRegister->getPassword(),
-                'url' => $repositorySetting->isConfirmation()
-                    ? $repositoryUser->generateUrlToken($urlGenerator, $repositorySetting->isConfirmation())
+                'url' => $moduleSettings->isConfirmation()
+                    ? $repositoryUser->generateUrlToken($urlGenerator, $moduleSettings->isConfirmation())
                     : null,
-                'showPassword' => $repositorySetting->isGeneratingPassword(),
+                'showPassword' => $moduleSettings->isGeneratingPassword(),
             ];
 
             if ($mailerUser->sendWelcomeMessage($email, $params)) {
-                $bodyMessage = $repositorySetting->isConfirmation()
+                $message = $moduleSettings->isConfirmation()
                     ? $translator->translate('Please check your email to activate your username', [], 'user')
                     : $translator->translate('Your account has been created', [], 'user');
-
-                $serviceFlashMessage->run(
+                $flash->add(
                     'success',
-                    $translator->translate('System Notification', [], 'user'),
-                    $bodyMessage,
+                    [
+                        'message' => $translator->translate('System Notification', [], 'user') . PHP_EOL . $message,
+                    ]
                 );
             }
 
-            $redirect = !$repositorySetting->isConfirmation() && !$repositorySetting->isGeneratingPassword()
+            $redirect = !$moduleSettings->isConfirmation() && !$moduleSettings->isGeneratingPassword()
                 ? 'login'
                 : 'home';
+
             return $serviceUrl->run($redirect);
         }
 
-        if ($repositorySetting->isRegister()) {
+        if ($moduleSettings->isRegister()) {
             return $viewRenderer
                 ->withViewPath('@user-view-views')
-                ->render('/registration/register', ['body' => $body, 'data' => $formRegister]);
+                ->render('registration/register', ['body' => $body, 'model' => $formRegister]);
         }
 
         return $requestHandler->handle($serverRequest);

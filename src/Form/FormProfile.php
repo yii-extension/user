@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace Yii\Extension\User\Form;
 
 use DateTimeZone;
-use Yiisoft\Form\FormModel;
+use Yii\Extension\Simple\Model\BaseModel;
 use Yiisoft\Translator\TranslatorInterface;
 use Yiisoft\Validator\Rule\Email;
 use Yiisoft\Validator\Rule\InRange;
 use Yiisoft\Validator\Rule\Url;
 
-final class FormProfile extends FormModel
+final class FormProfile extends BaseModel
 {
     private string $name = '';
     private string $publicEmail = '';
@@ -105,23 +105,20 @@ final class FormProfile extends FormModel
     {
         $listlistIdentifiers = DateTimeZone::listIdentifiers();
         $timeZoneIdentifiers = is_array($listlistIdentifiers) ? $listlistIdentifiers : [];
-        $email = new Email();
-        $inRange = new InRange($timeZoneIdentifiers);
-        $url = new Url();
 
         return [
             'publicEmail' => [
-                $email
+                Email::rule()
                     ->message($this->translator->translate('This value is not a valid email address', [], 'user'))
                     ->skipOnEmpty(true),
             ],
             'website' => [
-                $url
+                Url::rule()
                     ->message($this->translator->translate('This value is not a valid URL', [], 'user'))
                     ->skipOnEmpty(true),
             ],
             'timezone' => [
-                $inRange->message($this->translator->translate('This value is invalid', [], 'user')),
+                InRange::rule($timeZoneIdentifiers)->message($this->translator->translate('This value is invalid', [], 'user')),
             ],
         ];
     }

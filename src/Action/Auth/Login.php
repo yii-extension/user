@@ -6,9 +6,9 @@ namespace Yii\Extension\User\Action\Auth;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Yii\Extension\Service\ServiceFlashMessage;
 use Yii\Extension\Service\ServiceUrl;
 use Yii\Extension\User\Form\FormLogin;
+use Yiisoft\Session\Flash\Flash;
 use Yiisoft\Translator\TranslatorInterface;
 use Yiisoft\Validator\ValidatorInterface;
 use Yiisoft\Yii\View\ViewRenderer;
@@ -16,9 +16,9 @@ use Yiisoft\Yii\View\ViewRenderer;
 final class Login
 {
     public function run(
+        Flash $flash,
         FormLogin $formLogin,
         ServerRequestInterface $serverRequest,
-        ServiceFlashMessage $serviceFlashMessage,
         ServiceUrl $serviceUrl,
         TranslatorInterface $translator,
         ValidatorInterface $validator,
@@ -35,17 +35,12 @@ final class Login
             $lastLogin = $formLogin->getLastLogout() > 0
                 ? date('Y-m-d G:i:s', $formLogin->getLastLogout())
                 : $translator->translate('This is your first login - Welcome', [], 'user');
-
-            $bodyMessage = $translator->translate(
-                'Sign in successful - {lastLogin}',
-                ['lastLogin' => $lastLogin],
-                'user',
-            );
-
-            $serviceFlashMessage->run(
+            $message = $translator->translate('Sign in successful - {lastLogin}', ['lastLogin' => $lastLogin], 'user');
+            $flash->add(
                 'success',
-                $translator->translate('System Notification', [], 'user'),
-                $bodyMessage,
+                [
+                    'message' => $translator->translate('System Notification', [], 'user') . PHP_EOL . $message,
+                ],
             );
 
             return $serviceUrl->run('home');
@@ -53,6 +48,6 @@ final class Login
 
         return $viewRenderer
             ->withViewPath('@user-view-views')
-            ->render('auth/login', ['body' => $body, 'data' => $formLogin]);
+            ->render('auth/login', ['body' => $body, 'model' => $formLogin]);
     }
 }

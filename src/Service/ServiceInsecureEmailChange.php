@@ -4,18 +4,18 @@ declare(strict_types=1);
 
 namespace Yii\Extension\User\Service;
 
-use Yii\Extension\Service\ServiceFlashMessage;
+use Yiisoft\Session\Flash\Flash;
 use Yii\Extension\User\ActiveRecord\User;
 use Yiisoft\Translator\TranslatorInterface;
 
 final class ServiceInsecureEmailChange
 {
-    private ServiceFlashMessage $serviceFlashMessage;
+    private Flash $flash;
     private TranslatorInterface $translator;
 
-    public function __construct(ServiceFlashMessage $serviceFlashMessage, TranslatorInterface $translator)
+    public function __construct(Flash $flash, TranslatorInterface $translator)
     {
-        $this->serviceFlashMessage = $serviceFlashMessage;
+        $this->flash = $flash;
         $this->translator = $translator;
     }
 
@@ -26,10 +26,12 @@ final class ServiceInsecureEmailChange
         $result = (bool) $user->update();
 
         if ($result) {
-            $this->serviceFlashMessage->run(
+            $message = $this->translator->translate('Your email address has been changed', [], 'user');
+            $this->flash->add(
                 'success',
-                $this->translator->translate('System Notification', [], 'user'),
-                $this->translator->translate('Your email address has been changed', [], 'user'),
+                [
+                    'message' => $this->translator->translate('System Notification', [], 'user') . PHP_EOL . $message,
+                ],
             );
         }
     }

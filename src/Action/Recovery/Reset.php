@@ -7,14 +7,14 @@ namespace Yii\Extension\User\Action\Recovery;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Yii\Extension\Service\ServiceFlashMessage;
 use Yii\Extension\Service\ServiceUrl;
 use Yii\Extension\User\ActiveRecord\Token;
 use Yii\Extension\User\ActiveRecord\User;
+use Yii\Extension\User\Settings\ModuleSettings;
 use Yii\Extension\User\Form\FormReset;
 use Yii\Extension\User\Repository\RepositoryToken;
 use Yii\Extension\User\Repository\RepositoryUser;
-use Yii\Extension\User\Settings\RepositorySetting;
+use Yiisoft\Session\Flash\Flash;
 use Yiisoft\Translator\TranslatorInterface;
 use Yiisoft\Validator\ValidatorInterface;
 use Yiisoft\Yii\View\ViewRenderer;
@@ -22,14 +22,14 @@ use Yiisoft\Yii\View\ViewRenderer;
 final class Reset
 {
     public function run(
+        Flash $flash,
         FormReset $formReset,
-        RepositorySetting $repositorySetting,
         RepositoryToken $repositoryToken,
         RepositoryUser $repositoryUser,
         RequestHandlerInterface $requestHandler,
         ServerRequestInterface $serverRequest,
-        ServiceFlashMessage $serviceFlashMessage,
         ServiceUrl $serviceUrl,
+        ModuleSettings $moduleSettings,
         TranslatorInterface $translator,
         ValidatorInterface $validator,
         ViewRenderer $viewRenderer
@@ -58,7 +58,7 @@ final class Reset
             Token::TYPE_RECOVERY
         );
 
-        if ($token === null || $token->isExpired(0, $repositorySetting->getTokenRecoverWithin())) {
+        if ($token === null || $token->isExpired(0, $moduleSettings->getTokenRecoverWithin())) {
             return $requestHandler->handle($serverRequest);
         }
 
@@ -66,16 +66,16 @@ final class Reset
             $method === 'POST'
             && $formReset->load($body)
             && $validator->validate($formReset)->isValid()
-            && !$token->isExpired(0, $repositorySetting->getTokenRecoverWithin())
+            && !$token->isExpired(0, $moduleSettings->getTokenRecoverWithin())
         ) {
             $token->delete();
-
             $user->passwordHashUpdate($formReset->getPassword());
-
-            $serviceFlashMessage->run(
+            $message = $translator->translate('Your password has been changed', [], 'user');
+            $flash->add(
                 'success',
-                $translator->translate('System Notification', [], 'user'),
-                $translator->translate('Your password has been changed', [], 'user'),
+                [
+                    'message' => $translator->translate('System Notification', [], 'user') . PHP_EOL . $message,
+                ],
             );
 
             return $serviceUrl->run('login');
@@ -83,14 +83,6 @@ final class Reset
 
         return $viewRenderer
             ->withViewPath('@user-view-views')
-            ->render(
-                '/recovery/reset',
-                [
-                    'body' => $body,
-                    'code' => $code,
-                    'data' => $formReset,
-                    'id' => $id,
-                ]
-            );
+            ->render('recovery/reset', ['body' => $body, 'code' => $code, 'model' => $formReset, 'id' => $id]);
     }
 }

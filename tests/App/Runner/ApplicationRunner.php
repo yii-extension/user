@@ -39,29 +39,20 @@ final class ApplicationRunner
     public function run(): void
     {
         $startTime = microtime(true);
+
+        $this->debug();
+
         // Register temporary error handler to catch error while container is building.
-        $errorHandler = new ErrorHandler(new NullLogger(), new HtmlRenderer());
-        $this->registerErrorHandler($errorHandler);
+        $errorHandler = $this->createErrorHandler();
 
-        $config = new Config(
-            dirname(__DIR__, 3),
-            '/config/packages', // Configs path.
-        );
+        $config = $this->createConfig();
 
-        /** @psalm-suppress MixedArgumentTypeCoercion */
-        $container = new Container($this->buildConfig($config), $config->get('providers'));
+        $configContainer = $this->environmentTest($config);
+
+        $container = new Container($configContainer);
 
         // set aliases tests app
-        $aliases = $container->get(Aliases::class);
-        $aliases->set('@root', dirname(__DIR__, 3));
-        $aliases->set('@assets', '@root/tests/_data/public/assets');
-        $aliases->set('@assetsUrl', '/assets');
-        $aliases->set('@npm', '@root/vendor/npm-asset');
-        $aliases->set('@runtime', '@root/tests/_data/runtime');
-        $aliases->set('@resources', '@runtime');
-        $aliases->set('@translations', '@root/storage/translations');
-        $aliases->set('@simple-view-bulma', '@vendor/yii-extension/simple-view-bulma');
-        $aliases->set('@vendor', '@root/vendor');
+        $this->setAliases($container->get(Aliases::class));
 
         // Register error handler with real container-configured dependencies.
         $this->registerErrorHandler($container->get(ErrorHandler::class), $errorHandler);
@@ -96,17 +87,31 @@ final class ApplicationRunner
         }
     }
 
-    private function buildConfig(Config $config): array
+    private function createConfig(?string $enviroment = null): Config
+    {
+        return new Config(dirname(__DIR__, 3), '/config/packages', $enviroment);
+    }
+
+    private function createErrorHandler(): ErrorHandler
+    {
+        $errorHandler = new ErrorHandler(new NullLogger(), new HtmlRenderer());
+
+        $this->registerErrorHandler($errorHandler);
+
+        return $errorHandler;
+    }
+
+    private function environmentTest(Config $config): array
     {
         return array_merge(
-            // build config tests
+            $config->get('common'),
+            $config->get('web'),
             require(dirname(__DIR__, 2) . '/_data/config/psr-http-message.php'),
             require(dirname(__DIR__, 2) . '/_data/config/psr-log.php'),
             require(dirname(__DIR__, 2) . '/_data/config/yiisoft-db.php'),
             require(dirname(__DIR__, 2) . '/_data/config/yiisoft-router.php'),
             require(dirname(__DIR__, 2) . '/_data/config/yiisoft-web.php'),
-            $config->get('common'),
-            $config->get('web'),
+            require(dirname(__DIR__, 2) . '/_data/config/user.php'),
         );
     }
 
@@ -126,5 +131,18 @@ final class ApplicationRunner
         }
 
         $registered->register();
+    }
+
+    private function setAliases(Aliases $aliases): void
+    {
+        $aliases->set('@root', dirname(__DIR__, 3));
+        $aliases->set('@assets', '@root/tests/_data/public/assets');
+        $aliases->set('@assetsUrl', '/assets');
+        $aliases->set('@npm', '@root/node_modules');
+        $aliases->set('@runtime', '@root/tests/_data/runtime');
+        $aliases->set('@resources', '@runtime');
+        $aliases->set('@translations', '@root/storage/translations');
+        $aliases->set('@simple-view-bulma', '@vendor/yii-extension/simple-view-bulma');
+        $aliases->set('@vendor', '@root/vendor');
     }
 }

@@ -16,14 +16,14 @@ jobs:
           - ubuntu-20.04
 
         php:
-          - "7.4"
+          - 8.0
 
     steps:
       - name: Checkout
         uses: actions/checkout@v2.3.4
 
       - name: Install PHP
-        uses: shivammathur/setup-php@v2
+        uses: shivammathur/setup-php@2.11.0
         with:
           php-version: "${{ matrix.php }}"
           tools: composer:v2, cs2pr
@@ -32,8 +32,11 @@ jobs:
       - name: Update composer
         run: composer self-update
 
-      - name: Install user-view-bulma
-        run: composer require yii-extension/user-view-bulma:@dev --dev --ansi
+      - name: Install user-view-bootstrap5
+        run: composer require yii-extension/user-view-bootstrap5:@dev --dev --ansi
+
+      - name: Install simple-view-bootstrap5
+        run: composer require yii-extension/simple-view-bootstrap5:@dev --dev --ansi
 
       - name: Static analysis
         run: vendor/bin/psalm --shepherd --stats --output-format=checkstyle | cs2pr --graceful-warnings --colorize

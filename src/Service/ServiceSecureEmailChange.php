@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Yii\Extension\User\Service;
 
-use Yii\Extension\Service\ServiceFlashMessage;
+use Yiisoft\Session\Flash\Flash;
 use Yii\Extension\User\ActiveRecord\Token;
 use Yii\Extension\User\ActiveRecord\User;
 use Yii\Extension\User\Repository\RepositoryToken;
@@ -13,22 +13,22 @@ use Yiisoft\Translator\TranslatorInterface;
 
 final class ServiceSecureEmailChange
 {
+    private Flash $flash;
     private MailerUser $mailerUser;
     private RepositoryToken $repositoryToken;
-    private ServiceFlashMessage $serviceFlashMessage;
     private TranslatorInterface $translator;
     private UrlGeneratorInterface $urlGenerator;
 
     public function __construct(
+        Flash $flash,
         MailerUser $mailerUser,
         RepositoryToken $repositoryToken,
-        ServiceFlashMessage $serviceFlashMessage,
         TranslatorInterface $translator,
         UrlGeneratorInterface $urlGenerator
     ) {
+        $this->flash = $flash;
         $this->mailerUser = $mailerUser;
         $this->repositoryToken = $repositoryToken;
-        $this->serviceFlashMessage = $serviceFlashMessage;
         $this->translator = $translator;
         $this->urlGenerator = $urlGenerator;
     }
@@ -53,15 +53,17 @@ final class ServiceSecureEmailChange
             ];
 
             if ($this->mailerUser->sendReconfirmationMessage($email, $params)) {
-                $this->serviceFlashMessage->run(
+                $message = $this->translator->translate(
+                    'We have sent confirmation links to both old email: {email} and new email: {newEmail} addresses.' .
+                    ' You must click both links to complete your request',
+                    ['email' => $user->getEmail(), 'newEmail' => $user->getUnconfirmedEmail()],
+                    'user',
+                );
+                $this->flash->add(
                     'info',
-                    $this->translator->translate('System Notification', [], 'user'),
-                    $this->translator->translate(
-                        'We have sent confirmation links to both old email: {email} and new email: {newEmail} addresses.' .
-                        ' You must click both links to complete your request',
-                        ['email' => $user->getEmail(), 'newEmail' => $user->getUnconfirmedEmail()],
-                        'user',
-                    ),
+                    [
+                        'message' => $this->translator->translate('System Notification', [], 'user') . PHP_EOL . $message,
+                    ],
                 );
             }
 
