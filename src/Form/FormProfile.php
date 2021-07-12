@@ -21,9 +21,8 @@ final class FormProfile extends BaseModel
     private string $timezone = '';
     private TranslatorInterface $translator;
 
-    public function __construct(
-        TranslatorInterface $translator
-    ) {
+    public function __construct(TranslatorInterface $translator)
+    {
         $this->translator = $translator;
 
         parent::__construct();

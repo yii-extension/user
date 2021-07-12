@@ -22,10 +22,8 @@ final class FormResend extends BaseModel
     private RepositoryUser $repositoryUser;
     private TranslatorInterface $translator;
 
-    public function __construct(
-        RepositoryUser $repositoryUser,
-        TranslatorInterface $translator
-    ) {
+    public function __construct(RepositoryUser $repositoryUser, TranslatorInterface $translator)
+    {
         $this->repositoryUser = $repositoryUser;
         $this->translator = $translator;
 

@@ -12,6 +12,7 @@ use Yii\Extension\User\Form\FormRegister;
 use Yii\Extension\User\Repository\RepositoryUser;
 use Yii\Extension\User\Service\MailerUser;
 use Yii\Extension\User\Settings\ModuleSettings;
+use Yiisoft\Db\Exception\Exception;
 use Yiisoft\Router\UrlGeneratorInterface;
 use Yiisoft\Session\Flash\Flash;
 use Yiisoft\Translator\TranslatorInterface;
@@ -20,6 +21,9 @@ use Yiisoft\Yii\View\ViewRenderer;
 
 final class Register
 {
+    /**
+     * @throws Exception
+     */
     public function run(
         Flash $flash,
         FormRegister $formRegister,

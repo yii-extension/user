@@ -13,6 +13,7 @@ use Yii\Extension\User\Settings\ModuleSettings;
 use Yii\Extension\User\Form\FormRequest;
 use Yii\Extension\User\Repository\RepositoryToken;
 use Yii\Extension\User\Service\MailerUser;
+use Yiisoft\Db\Exception\Exception;
 use Yiisoft\Router\UrlGeneratorInterface;
 use Yiisoft\Session\Flash\Flash;
 use Yiisoft\Translator\TranslatorInterface;
@@ -21,6 +22,9 @@ use Yiisoft\Yii\View\ViewRenderer;
 
 final class Request
 {
+    /**
+     * @throws Exception
+     */
     public function run(
         Flash $flash,
         FormRequest $formRequest,

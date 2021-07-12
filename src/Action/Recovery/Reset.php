@@ -7,6 +7,7 @@ namespace Yii\Extension\User\Action\Recovery;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use Throwable;
 use Yii\Extension\Service\ServiceUrl;
 use Yii\Extension\User\ActiveRecord\Token;
 use Yii\Extension\User\ActiveRecord\User;
@@ -14,6 +15,7 @@ use Yii\Extension\User\Settings\ModuleSettings;
 use Yii\Extension\User\Form\FormReset;
 use Yii\Extension\User\Repository\RepositoryToken;
 use Yii\Extension\User\Repository\RepositoryUser;
+use Yiisoft\Db\Exception\StaleObjectException;
 use Yiisoft\Session\Flash\Flash;
 use Yiisoft\Translator\TranslatorInterface;
 use Yiisoft\Validator\ValidatorInterface;
@@ -21,6 +23,9 @@ use Yiisoft\Yii\View\ViewRenderer;
 
 final class Reset
 {
+    /**
+     * @throws StaleObjectException|Throwable
+     */
     public function run(
         Flash $flash,
         FormReset $formReset,

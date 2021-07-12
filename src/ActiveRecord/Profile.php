@@ -6,6 +6,7 @@ namespace Yii\Extension\User\ActiveRecord;
 
 use Yiisoft\ActiveRecord\ActiveQuery;
 use Yiisoft\ActiveRecord\ActiveRecord;
+use Yiisoft\Db\Exception\InvalidArgumentException;
 
 /**
  * ProfileAR Active Record - Module AR User.
@@ -62,31 +63,49 @@ final class Profile extends ActiveRecord
         return $this->hasOne(User::class, ['id' => 'user_id']);
     }
 
+    /**
+     * @throws InvalidArgumentException
+     */
     public function name(string $value): void
     {
         $this->setAttribute('name', $value);
     }
 
+    /**
+     * @throws InvalidArgumentException
+     */
     public function publicEmail(string $value): void
     {
         $this->setAttribute('public_email', $value);
     }
 
+    /**
+     * @throws InvalidArgumentException
+     */
     public function location(string $value): void
     {
         $this->setAttribute('location', $value);
     }
 
+    /**
+     * @throws InvalidArgumentException
+     */
     public function website(string $value): void
     {
         $this->setAttribute('website', $value);
     }
 
+    /**
+     * @throws InvalidArgumentException
+     */
     public function bio(string $value): void
     {
         $this->setAttribute('bio', $value);
     }
 
+    /**
+     * @throws InvalidArgumentException
+     */
     public function timezone(string $value): void
     {
         $this->setAttribute('timezone', $value);

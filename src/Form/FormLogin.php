@@ -21,7 +21,6 @@ final class FormLogin extends BaseModel
 {
     private string $login = '';
     private string $password = '';
-    private bool $remember = false;
     private string $ip = '';
     private int $lastLogout = 0;
     private CurrentUser $currentUser;
@@ -48,7 +47,6 @@ final class FormLogin extends BaseModel
         return [
             'login' => $this->translator->translate('Username', [], 'user'),
             'password' => $this->translator->translate('Password', [], 'user'),
-            'remember' => $this->translator->translate('Remember me', [], 'user'),
         ];
     }
 
@@ -72,10 +70,6 @@ final class FormLogin extends BaseModel
         return [
             'login' => [Required::rule()->message($this->translator->translate('Value cannot be blank', [], 'user'))],
             'password' => $this->passwordRules(),
-            'remember' => [
-                Boolean::rule()
-                    ->message($this->translator->translate('The value must be either "1" or "0"', [], 'user')),
-            ],
         ];
     }
 

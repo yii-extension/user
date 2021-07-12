@@ -14,9 +14,8 @@ final class FormReset extends BaseModel
     private string $password = '';
     private TranslatorInterface $translator;
 
-    public function __construct(
-        TranslatorInterface $translator
-    ) {
+    public function __construct(TranslatorInterface $translator)
+    {
         $this->translator = $translator;
 
         parent::__construct();
