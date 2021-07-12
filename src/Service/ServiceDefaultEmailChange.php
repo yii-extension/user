@@ -4,9 +4,13 @@ declare(strict_types=1);
 
 namespace Yii\Extension\User\Service;
 
+use Throwable;
 use Yii\Extension\User\ActiveRecord\Token;
 use Yii\Extension\User\ActiveRecord\User;
 use Yii\Extension\User\Repository\RepositoryToken;
+use Yiisoft\Db\Exception\Exception;
+use Yiisoft\Db\Exception\InvalidArgumentException;
+use Yiisoft\Db\Exception\StaleObjectException;
 use Yiisoft\Router\UrlGeneratorInterface;
 use Yiisoft\Session\Flash\Flash;
 use Yiisoft\Translator\TranslatorInterface;
@@ -33,6 +37,9 @@ final class ServiceDefaultEmailChange
         $this->urlGenerator = $urlGenerator;
     }
 
+    /**
+     * @throws Exception|InvalidArgumentException|StaleObjectException|Throwable
+     */
     public function run(string $email, User $user, bool $flash = true): void
     {
         $user->unconfirmedEmail($email);

@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace Yii\Extension\User\Service;
 
-use Yiisoft\Session\Flash\Flash;
+use Throwable;
 use Yii\Extension\User\ActiveRecord\User;
+use Yiisoft\Db\Exception\InvalidArgumentException;
+use Yiisoft\Db\Exception\StaleObjectException;
+use Yiisoft\Session\Flash\Flash;
 use Yiisoft\Translator\TranslatorInterface;
 
 final class ServiceInsecureEmailChange
@@ -19,6 +22,9 @@ final class ServiceInsecureEmailChange
         $this->translator = $translator;
     }
 
+    /**
+     * @throws InvalidArgumentException|StaleObjectException|Throwable
+     */
     public function run(string $email, User $user): void
     {
         $user->email($email);

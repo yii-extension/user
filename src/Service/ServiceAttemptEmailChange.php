@@ -4,11 +4,15 @@ declare(strict_types=1);
 
 namespace Yii\Extension\User\Service;
 
+use Throwable;
 use Yii\Extension\User\ActiveRecord\Token;
 use Yii\Extension\User\ActiveRecord\User;
-use Yii\Extension\User\Settings\ModuleSettings;
 use Yii\Extension\User\Repository\RepositoryToken;
 use Yii\Extension\User\Repository\RepositoryUser;
+use Yii\Extension\User\Settings\ModuleSettings;
+use Yiisoft\Db\Exception\Exception;
+use Yiisoft\Db\Exception\InvalidArgumentException;
+use Yiisoft\Db\Exception\StaleObjectException;
 use Yiisoft\Session\Flash\Flash;
 use Yiisoft\Translator\TranslatorInterface;
 
@@ -34,7 +38,10 @@ final class ServiceAttemptEmailChange
         $this->translator = $translator;
     }
 
-    public function run(string $id, string $code, User $user): bool
+    /**
+     * @throws Exception|InvalidArgumentException|StaleObjectException|Throwable
+     */
+    public function run(string $code, User $user): bool
     {
         $result = true;
 
