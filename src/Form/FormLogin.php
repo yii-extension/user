@@ -12,7 +12,6 @@ use Yiisoft\Security\PasswordHasher;
 use Yiisoft\Translator\TranslatorInterface;
 use Yiisoft\User\CurrentUser;
 use Yiisoft\Validator\Result;
-use Yiisoft\Validator\Rule\Boolean;
 use Yiisoft\Validator\Rule\Required;
 
 use function strtolower;

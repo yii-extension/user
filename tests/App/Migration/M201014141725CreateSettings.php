@@ -52,7 +52,7 @@ final class M201014141725CreateSettings implements RevertibleMigrationInterface
                 'tokenRecoverWithin',
                 'userNameCaseSensitive',
                 'userNameRegExp',
-                'emailChangeStrategy'
+                'emailChangeStrategy',
             ],
             [
                 [
@@ -66,7 +66,7 @@ final class M201014141725CreateSettings implements RevertibleMigrationInterface
                     true,
                     '/^[-a-zA-Z0-9_\.@]+$/',
                     1,
-                ]
+                ],
             ]
         );
     }
