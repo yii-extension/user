@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Yii\Extension\User\Form;
 
 use Yii\Extension\Simple\Model\BaseModel;
-use Yii\Extension\User\ActiveRecord\Token;
 use Yii\Extension\User\ActiveRecord\User;
 use Yii\Extension\User\Repository\RepositoryUser;
 use Yiisoft\Translator\TranslatorInterface;
@@ -22,14 +21,9 @@ final class FormRequest extends BaseModel
     private string $username = '';
     private RepositoryUser $repositoryUser;
     private TranslatorInterface $translator;
-    private Token $token;
 
-    public function __construct(
-        Token $token,
-        RepositoryUser $repositoryUser,
-        TranslatorInterface $translator
-    ) {
-        $this->token = $token;
+    public function __construct(RepositoryUser $repositoryUser, TranslatorInterface $translator)
+    {
         $this->repositoryUser = $repositoryUser;
         $this->translator = $translator;
 

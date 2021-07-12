@@ -8,10 +8,15 @@ use Psr\Http\Message\ResponseInterface;
 use Yii\Extension\Service\ServiceUrl;
 use Yii\Extension\User\ActiveRecord\User;
 use Yii\Extension\User\Repository\RepositoryUser;
+use Yiisoft\Db\Exception\Exception;
+use Yiisoft\Db\Exception\NotSupportedException;
 use Yiisoft\User\CurrentUser;
 
 final class Logout
 {
+    /**
+     * @throws Exception|NotSupportedException
+     */
     public function run(
         CurrentUser $currentUser,
         RepositoryUser $repositoryUser,

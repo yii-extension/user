@@ -7,7 +7,6 @@ namespace Yii\Extension\User\Form;
 use Yii\Extension\Simple\Model\BaseModel;
 use Yii\Extension\User\ActiveRecord\User;
 use Yii\Extension\User\Repository\RepositoryUser;
-use Yii\Extension\User\Settings\ModuleSettings;
 use Yiisoft\Translator\TranslatorInterface;
 use Yiisoft\User\CurrentUser;
 use Yiisoft\Validator\Result;
@@ -19,7 +18,6 @@ final class FormEmailChange extends BaseModel
     private string $email = '';
     private string $oldEmail = '';
     private RepositoryUser $repositoryUser;
-    private ModuleSettings $moduleSettings;
     private TranslatorInterface $translator;
     private User $user;
 
@@ -28,12 +26,10 @@ final class FormEmailChange extends BaseModel
      */
     public function __construct(
         CurrentUser $currentUser,
-        ModuleSettings $moduleSettings,
         RepositoryUser $repositoryUser,
         TranslatorInterface $translator
     ) {
         $this->repositoryUser = $repositoryUser;
-        $this->moduleSettings = $moduleSettings;
         $this->translator = $translator;
         $this->user = $currentUser->getIdentity();
         $this->loadData();

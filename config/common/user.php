@@ -52,7 +52,7 @@ return [
             86400,
             /* int The time before a recovery token becomes invalid. */
             21600,
-            /* */
+
             true,
             /* string Regex username */
             '/^[-a-zA-Z0-9_\.@]+$/',
@@ -63,6 +63,6 @@ return [
              * addresses.
              */
             SettingsDto::STRATEGY_DEFAULT,
-        ]
+        ],
     ],
 ];

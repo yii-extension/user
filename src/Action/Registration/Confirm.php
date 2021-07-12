@@ -7,18 +7,25 @@ namespace Yii\Extension\User\Action\Registration;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use Throwable;
 use Yii\Extension\Service\ServiceUrl;
 use Yii\Extension\User\ActiveRecord\Token;
 use Yii\Extension\User\ActiveRecord\User;
 use Yii\Extension\User\Settings\ModuleSettings;
 use Yii\Extension\User\Repository\RepositoryToken;
 use Yii\Extension\User\Repository\RepositoryUser;
+use Yiisoft\Db\Exception\Exception;
+use Yiisoft\Db\Exception\NotSupportedException;
+use Yiisoft\Db\Exception\StaleObjectException;
 use Yiisoft\Session\Flash\Flash;
 use Yiisoft\Translator\TranslatorInterface;
 use Yiisoft\User\CurrentUser;
 
 final class Confirm
 {
+    /**
+     * @throws Exception|NotSupportedException|StaleObjectException|Throwable
+     */
     public function run(
         CurrentUser $currentUser,
         Flash $flash,

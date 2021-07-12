@@ -7,7 +7,6 @@ namespace Yii\Component;
 use Yii\Extension\User\Settings\ModuleSettings;
 use Yii\Extension\User\Tests\App\ActiveRecord\SettingsTest;
 use Yiisoft\ActiveRecord\ActiveRecordFactory;
-use Yiisoft\Factory\Definition\DynamicReference;
 
 return [
     /** Config yii-extension-user */

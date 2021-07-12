@@ -7,6 +7,9 @@ namespace Yii\Extension\User\ActiveRecord;
 use Yiisoft\ActiveRecord\ActiveQuery;
 use Yiisoft\ActiveRecord\ActiveRecord;
 use Yiisoft\Auth\IdentityInterface;
+use Yiisoft\Db\Exception\Exception;
+use Yiisoft\Db\Exception\InvalidArgumentException;
+use Yiisoft\Db\Exception\NotSupportedException;
 use Yiisoft\Security\PasswordHasher;
 use Yiisoft\Security\Random;
 
@@ -109,16 +112,25 @@ final class User extends ActiveRecord implements IdentityInterface
         return (string) $this->getAttribute('unconfirmed_email');
     }
 
+    /**
+     * @throws InvalidArgumentException
+     */
     public function username(string $value): void
     {
         $this->setAttribute('username', $value);
     }
 
+    /**
+     * @throws InvalidArgumentException
+     */
     public function email(string $value): void
     {
         $this->setAttribute('email', $value);
     }
 
+    /**
+     * @throws InvalidArgumentException
+     */
     public function unconfirmedEmail(?string $value): void
     {
         $this->setAttribute('unconfirmed_email', $value);
@@ -129,41 +141,65 @@ final class User extends ActiveRecord implements IdentityInterface
         $this->password = $value;
     }
 
+    /**
+     * @throws InvalidArgumentException
+     */
     public function passwordHash(string $value): void
     {
         $this->setAttribute('password_hash', (new PasswordHasher(PASSWORD_ARGON2I))->hash($value));
     }
 
+    /**
+     * @throws Exception|NotSupportedException
+     */
     public function passwordHashUpdate(string $value): void
     {
         $this->updateAttributes(['password_hash' => (new PasswordHasher(PASSWORD_ARGON2I))->hash($value)]);
     }
 
+    /**
+     * @throws \Exception|InvalidArgumentException
+     */
     public function authKey(): void
     {
         $this->setAttribute('auth_key', Random::string());
     }
 
+    /**
+     * @throws InvalidArgumentException
+     */
     public function registrationIp(string $value): void
     {
         $this->setAttribute('registration_ip', $value);
     }
 
+    /**
+     * @throws InvalidArgumentException
+     */
     public function confirmedAt(): void
     {
         $this->setAttribute('confirmed_at', time());
     }
 
+    /**
+     * @throws InvalidArgumentException
+     */
     public function createdAt(): void
     {
         $this->setAttribute('created_at', time());
     }
 
+    /**
+     * @throws InvalidArgumentException
+     */
     public function updatedAt(): void
     {
         $this->setAttribute('updated_at', time());
     }
 
+    /**
+     * @throws InvalidArgumentException
+     */
     public function flags(int $value): void
     {
         $this->setAttribute('flags', $value);
