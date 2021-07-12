@@ -6,8 +6,8 @@ namespace Yii\Extension\User\Form;
 
 use Yii\Extension\Simple\Model\BaseModel;
 use Yii\Extension\User\ActiveRecord\User;
-use Yii\Extension\User\Settings\ModuleSettings;
 use Yii\Extension\User\Repository\RepositoryUser;
+use Yii\Extension\User\Settings\ModuleSettings;
 use Yiisoft\Security\PasswordHasher;
 use Yiisoft\Translator\TranslatorInterface;
 use Yiisoft\User\CurrentUser;
@@ -23,8 +23,8 @@ final class FormLogin extends BaseModel
     private string $ip = '';
     private int $lastLogout = 0;
     private CurrentUser $currentUser;
-    private RepositoryUser $repositoryUser;
     private ModuleSettings $moduleSettings;
+    private RepositoryUser $repositoryUser;
     private TranslatorInterface $translator;
 
     public function __construct(

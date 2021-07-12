@@ -4,11 +4,14 @@ declare(strict_types=1);
 
 namespace Yii\Extension\User\Service;
 
-use Yiisoft\Session\Flash\Flash;
+use Throwable;
 use Yii\Extension\User\ActiveRecord\Token;
 use Yii\Extension\User\ActiveRecord\User;
 use Yii\Extension\User\Repository\RepositoryToken;
+use Yiisoft\Db\Exception\Exception;
+use Yiisoft\Db\Exception\StaleObjectException;
 use Yiisoft\Router\UrlGeneratorInterface;
+use Yiisoft\Session\Flash\Flash;
 use Yiisoft\Translator\TranslatorInterface;
 
 final class ServiceSecureEmailChange
@@ -33,6 +36,9 @@ final class ServiceSecureEmailChange
         $this->urlGenerator = $urlGenerator;
     }
 
+    /**
+     * @throws Exception|StaleObjectException|Throwable
+     */
     public function run(User $user): void
     {
         $result = $this->repositoryToken->register($user->getId(), Token::TYPE_CONFIRM_OLD_EMAIL);

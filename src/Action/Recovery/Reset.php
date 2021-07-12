@@ -11,10 +11,10 @@ use Throwable;
 use Yii\Extension\Service\ServiceUrl;
 use Yii\Extension\User\ActiveRecord\Token;
 use Yii\Extension\User\ActiveRecord\User;
-use Yii\Extension\User\Settings\ModuleSettings;
 use Yii\Extension\User\Form\FormReset;
 use Yii\Extension\User\Repository\RepositoryToken;
 use Yii\Extension\User\Repository\RepositoryUser;
+use Yii\Extension\User\Settings\ModuleSettings;
 use Yiisoft\Db\Exception\StaleObjectException;
 use Yiisoft\Session\Flash\Flash;
 use Yiisoft\Translator\TranslatorInterface;
@@ -29,12 +29,12 @@ final class Reset
     public function run(
         Flash $flash,
         FormReset $formReset,
+        ModuleSettings $moduleSettings,
         RepositoryToken $repositoryToken,
         RepositoryUser $repositoryUser,
         RequestHandlerInterface $requestHandler,
         ServerRequestInterface $serverRequest,
         ServiceUrl $serviceUrl,
-        ModuleSettings $moduleSettings,
         TranslatorInterface $translator,
         ValidatorInterface $validator,
         ViewRenderer $viewRenderer

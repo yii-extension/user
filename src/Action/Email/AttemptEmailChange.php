@@ -34,7 +34,7 @@ final class AttemptEmailChange
         }
 
         /** @var User $user */
-        if ($serviceAttemptEmailChange->run($id, $code, $user) === false) {
+        if ($serviceAttemptEmailChange->run($code, $user) === false) {
             return $requestHandler->handle($serverRequest);
         }
 

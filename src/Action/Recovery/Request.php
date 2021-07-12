@@ -9,10 +9,10 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Yii\Extension\Service\ServiceUrl;
 use Yii\Extension\User\ActiveRecord\Token;
-use Yii\Extension\User\Settings\ModuleSettings;
 use Yii\Extension\User\Form\FormRequest;
 use Yii\Extension\User\Repository\RepositoryToken;
 use Yii\Extension\User\Service\MailerUser;
+use Yii\Extension\User\Settings\ModuleSettings;
 use Yiisoft\Db\Exception\Exception;
 use Yiisoft\Router\UrlGeneratorInterface;
 use Yiisoft\Session\Flash\Flash;
@@ -29,11 +29,11 @@ final class Request
         Flash $flash,
         FormRequest $formRequest,
         MailerUser $mailerUser,
+        ModuleSettings $moduleSettings,
         RepositoryToken $repositoryToken,
         RequestHandlerInterface $requestHandler,
         ServerRequestInterface $serverRequest,
         ServiceUrl $serviceUrl,
-        ModuleSettings $moduleSettings,
         TranslatorInterface $translator,
         UrlGeneratorInterface $urlGenerator,
         ValidatorInterface $validator,
