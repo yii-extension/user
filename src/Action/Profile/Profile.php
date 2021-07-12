@@ -54,6 +54,6 @@ final class Profile
 
         return $viewRenderer
             ->withViewPath('@user-view-views')
-            ->render('profile/profile', ['body' => $body, 'data' => $formProfile]);
+            ->render('profile/profile', ['body' => $body, 'model' => $formProfile]);
     }
 }

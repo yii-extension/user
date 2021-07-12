@@ -73,7 +73,7 @@ final class Request
         if ($moduleSettings->isPasswordRecovery()) {
             return $viewRenderer
                 ->withViewPath('@user-view-views')
-                ->render('recovery/request', ['body' => $body, 'data' => $formRequest]);
+                ->render('recovery/request', ['body' => $body, 'model' => $formRequest]);
         }
 
         return $requestHandler->handle($serverRequest);

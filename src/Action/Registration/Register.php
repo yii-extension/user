@@ -83,7 +83,7 @@ final class Register
         if ($moduleSettings->isRegister()) {
             return $viewRenderer
                 ->withViewPath('@user-view-views')
-                ->render('registration/register', ['body' => $body, 'data' => $formRegister]);
+                ->render('registration/register', ['body' => $body, 'model' => $formRegister]);
         }
 
         return $requestHandler->handle($serverRequest);

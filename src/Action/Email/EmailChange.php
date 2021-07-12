@@ -61,6 +61,6 @@ final class EmailChange
 
         return $viewRenderer
             ->withViewPath('@user-view-views')
-            ->render('email/change', ['body' => $body, 'data' => $formEmailChange]);
+            ->render('email/change', ['body' => $body, 'model' => $formEmailChange]);
     }
 }

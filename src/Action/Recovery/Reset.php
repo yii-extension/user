@@ -83,6 +83,6 @@ final class Reset
 
         return $viewRenderer
             ->withViewPath('@user-view-views')
-            ->render('recovery/reset', ['body' => $body, 'code' => $code, 'data' => $formReset, 'id' => $id]);
+            ->render('recovery/reset', ['body' => $body, 'code' => $code, 'model' => $formReset, 'id' => $id]);
     }
 }

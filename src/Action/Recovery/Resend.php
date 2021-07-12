@@ -70,7 +70,7 @@ final class Resend
         if ($moduleSettings->isConfirmation()) {
             return $viewRenderer
                 ->withViewPath('@user-view-views')
-                ->render('recovery/resend', ['body' => $body, 'data' => $formResend]);
+                ->render('recovery/resend', ['body' => $body, 'model' => $formResend]);
         }
 
         return $requestHandler->handle($serverRequest);
